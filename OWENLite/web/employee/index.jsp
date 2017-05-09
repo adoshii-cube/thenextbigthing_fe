@@ -70,11 +70,17 @@
                         <li class="mdl-menu__item">Settings</li>
                         <li disabled class="mdl-menu__item">Sign Out</li>
                     </ul>
-                    <a href="index">
-                        <span class="android-mobile-title mdl-layout-title">
+                    <a>
+                        <span class="android-mobile-title mdl-layout-title" id="switchUserMobile">
                             <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                         </span>
                     </a>
+                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                        for="switchUserMobile">
+                        <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
+                        <li class="mdl-menu__item">Admin</li>
+                        <li class="mdl-menu__item">HR</li>
+                    </ul>
                 </div>
             </header>
             <div class="mdl-layout__drawer">
