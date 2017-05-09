@@ -507,9 +507,9 @@ textarea{
 }
 
 .android-card-container .mdl-card__title {
-    background: transparent;
-    height: auto;
-    display: inline-block;
+    /*background: transparent;*/
+    /*height: auto;*/
+    /*display: inline-block;*/
 }
 
 .android-card-container .mdl-card__subtitle h5{
@@ -523,14 +523,15 @@ textarea{
 }
 
 .android-card-container .mdl-card__supporting-text {
-    height: auto;
-    color: black;
-    padding-bottom: 56px;
+    margin: 0 auto;
+    /*height: auto;*/
+    /*color: black;*/
+    /*padding-bottom: 56px;*/
 }
 
 .android-card-container .mdl-card__actions {
-    position: absolute;
-    bottom: 0;
+    /*position: absolute;*/
+    /*bottom: 0;*/
 }
 
 .android-card-container .mdl-card__actions a {
@@ -1448,6 +1449,10 @@ div .mdl-textfield__label:after {
     table{
         width: 90%;
     }
+    
+    .role-container{
+        flex-direction: column;
+    }
 }
 /*MDB ACCORDION*/
 .panel {
@@ -1759,4 +1764,44 @@ table td{
 
 .mdl-radio.is-upgraded {
     padding-left: 16px;
+}
+
+/*LOGIN*/
+.login{
+    /*background: #f5f5f5;*/
+}
+
+.mdl-layout__content{
+    background-color: #f5f5f5;
+}
+
+.login-page{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 70vh;
+}
+
+/*USER*/
+.role-container{
+    display: flex;
+    margin: 8px;
+}
+
+.admin > .mdl-card__title {
+    background: url(../images/icon-admin.png) center right 5% no-repeat #f5f5f5;
+    background-size: contain;
+}
+
+.hr > .mdl-card__title {
+    background: url(../images/icon-hr.png) center right 5% no-repeat #f5f5f5;
+    background-size: contain;
+}
+
+.employee > .mdl-card__title {
+    background: url(../images/icon-employee.png) center right 5% no-repeat #f5f5f5;
+    background-size: contain;
 }

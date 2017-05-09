@@ -40,11 +40,17 @@
             <header class="mdl-layout__header mdl-layout__header--waterfall">
                 <div class="mdl-layout__header-row">
                     <!-- Title -->
-                    <a href="index">
+                    <a id="switchUser">
                         <span class="android-title mdl-layout-title">
                             <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                         </span>
                     </a>
+                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                        for="switchUser">
+                        <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
+                        <li class="mdl-menu__item">Admin</li>
+                        <li class="mdl-menu__item">HR</li>
+                    </ul>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation -->
