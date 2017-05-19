@@ -1209,24 +1209,19 @@ table td{
     height: 70vh;
 }
 
-/*USER*/
+/*ADMIN*/
 .role-container{
     display: flex;
     margin: 8px;
 }
 
-.admin > .mdl-card__title {
-    background: url(../images/icon-admin.png) center right 5% no-repeat #f5f5f5;
+.download > .mdl-card__title {
+    background: url(../images/icon-download.png) center right 5% no-repeat #f5f5f5;
     background-size: contain;
 }
 
-.hr > .mdl-card__title {
-    background: url(../images/icon-hr.png) center right 5% no-repeat #f5f5f5;
-    background-size: contain;
-}
-
-.employee > .mdl-card__title {
-    background: url(../images/icon-employee.png) center right 5% no-repeat #f5f5f5;
+.upload > .mdl-card__title {
+    background: url(../images/icon-upload.png) center right 5% no-repeat #f5f5f5;
     background-size: contain;
 }
 
@@ -1369,9 +1364,4 @@ table td{
 
 a:hover{
     text-decoration: none;
-}
-
-.answered{
-    background-color: #B2DFDB;
-    border: 5px solid #90a4ae;
 }

@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="common.jsp" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -60,7 +62,9 @@
                             <div class="mdl-card__title">
                                 Please select a role
                             </div>
+
                             <div class="role-container">
+                                <%if (isAdmin) {%>
                                 <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--8-col-phone mdl-card mdl-shadow--3dp admin">
                                     <div class="mdl-card__title mdl-card--expand">
                                         <h2 class="mdl-card__title-text">ADMIN</h2>
@@ -73,11 +77,13 @@
                                         </p>
                                     </div>
                                     <div class="mdl-card__actions mdl-card--border">
-                                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href='admin/'>
                                             PROCEED
                                         </a>
                                     </div>
                                 </div>
+                                <%}%>
+                                <%if (isHR) {%> 
                                 <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--8-col-phone mdl-card mdl-shadow--3dp hr">
                                     <div class="mdl-card__title mdl-card--expand">
                                         <h2 class="mdl-card__title-text">HR</h2>
@@ -90,11 +96,13 @@
                                         </p>
                                     </div>
                                     <div class="mdl-card__actions mdl-card--border">
-                                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href='hr/'>
                                             PROCEED
                                         </a>
                                     </div>
                                 </div>
+                                <%}%>
+                                <%if (isEmployee) {%>
                                 <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--8-col-phone mdl-card mdl-shadow--3dp employee">
                                     <div class="mdl-card__title mdl-card--expand">
                                         <h2 class="mdl-card__title-text">EMPLOYEE</h2>
@@ -112,6 +120,7 @@
                                         </a>
                                     </div>
                                 </div>
+                                <%}%>
                             </div>
                         </div>
                     </div>
@@ -119,6 +128,5 @@
             </main>
         </div>
         <script src="assets/js/material.min.js"></script>
-        <script src="assets/js/scripts.js"></script>
     </body>
 </html>

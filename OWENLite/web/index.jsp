@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%--<%@include file="common.jsp" %>--%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +17,7 @@
         <meta charset="utf-8">
 
         <link href="assets/css/material.min.css" rel="stylesheet" type="text/css">
-        <!--<link href="assets/css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />-->
+        
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link href="assets/css/styles.css" rel="stylesheet" type="text/css">
 
@@ -33,23 +35,7 @@
     </head>
     <body>
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-            <!--            <header class="mdl-layout__header mdl-layout__header--waterfall">
-                            <div class="mdl-layout__header-row">
-                                 Title 
-                                <a href="index">
-                                    <span class="android-title mdl-layout-title">
-                                        <img class="android-logo-image" src="assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
-                                    </span>
-                                </a>
-                                 Add spacer, to align navigation to the right 
-                                <div class="mdl-layout-spacer"></div>
-                                <a href="index">
-                                    <span class="android-mobile-title mdl-layout-title">
-                                        <img class="android-logo-image" src="assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
-                                    </span>
-                                </a>
-                            </div>
-                        </header>-->
+
             <main class="android-content mdl-layout__content">
                 <div class="page-content login-page">
                     <div class="android-card-container mdl-grid">
@@ -59,7 +45,7 @@
                                 <img class="android-logo-image" src="assets/images/OWEN_Logo.png" alt="OWEN Logo">
                             </div>
                             <div class="mdl-card__supporting-text">
-                                <form method="post" action="user.jsp">
+                                <form method="post" action="login-check.jsp">
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-width">
                                         <input class="mdl-textfield__input" pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" type="text" id="username" name="username">
                                         <label class="mdl-textfield__label" for="username">Username</label>
@@ -72,9 +58,7 @@
                                     </div>
                                     <div class="mdl-card__actions">
                                         <div class="mdl-layout-spacer"></div>
-                                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--indigo-500 mdl-color-text--white" href="user.jsp">
-                                            LOGIN
-                                        </a>
+                                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--indigo-500 mdl-color-text--white" type="submit" >LOGIN</button>
                                     </div>
                                 </form>
                             </div>
@@ -83,8 +67,27 @@
                     </div>
                 </div>
             </main>
+            <div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <button class="mdl-snackbar__action" type="button"></button>
+            </div>
         </div>
         <script src="assets/js/material.min.js"></script>
-        <script src="assets/js/scripts.js"></script>
+        <% if (request.getParameter("loginFailure") != null ) {%>
+        <script>
+            componentHandler.upgradeDom('MaterialSnackbar');
+            (function () {
+                'use strict';
+                var snackbarContainer = document.querySelector('#demo-snackbar-example');
+                var data = {
+                    message: 'Invalid username/password. Please try again.',
+                    timeout: 7000
+                };
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            }());
+        </script>
+
+        <% }%>
+
     </body>
 </html>
