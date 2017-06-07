@@ -65,8 +65,8 @@
                     <!-- Navigation -->
                     <!--<div class="android-navigation-container">-->
                     <nav class="mdl-navigation">
-                        <a class="mdl-navigation__link" href="">Employee Details</a>
-                        <a class="mdl-navigation__link" href="questions.jsp">Add/Remove Questions</a>
+                        <a class="mdl-navigation__link" href="">Data</a>
+                        <a class="mdl-navigation__link" href="questions.jsp">Survey</a>
                     </nav>
                     <!--</div>-->
                     <!-- Right aligned menu below button -->
@@ -137,7 +137,7 @@
                                         </p>
                                     </div>
                                     <div class="mdl-card__actions mdl-card--border">
-                                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="admin/">DOWNLOAD</a>
+                                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#" id="btnExport" >DOWNLOAD</a>
                                     </div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp upload">
@@ -152,7 +152,19 @@
                                         </p>
                                     </div>
                                     <div class="mdl-card__actions mdl-card--border">
-                                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="hr/">UPLOAD</a>
+                                        <form action = "uploadFile.jsp" method = "post"
+                                              enctype = "multipart/form-data">
+
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
+                                                <input class="mdl-textfield__input" placeholder="Upload file here" type="text" id="uploadFile" readonly/>
+                                                <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">
+                                                    <i class="material-icons">attach_file</i>
+                                                    <input type="file" name = "file" id="uploadBtn" size = "50">
+                                                </div>
+                                            </div>
+                                            <input class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type = "submit" value = "Upload File" />
+                                        </form>
+                                        <!--<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="upload.jsp">UPLOAD</a>-->
                                     </div>
                                 </div>
                             </div>
@@ -162,5 +174,7 @@
             </main>
         </div>
         <script src="../assets/js/material.min.js"></script>
+        <script src="../assets/js/admin/admin.js"></script>
+        <script src="../assets/js/admin/download.js"></script>
     </body>
 </html>

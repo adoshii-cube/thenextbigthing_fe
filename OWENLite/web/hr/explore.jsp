@@ -61,13 +61,13 @@
                         <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                     </span>
                 </a>
-                <%if (isEmployee || isHR) {%>
+                <%if (isEmployee || isAdmin) {%>
 
                 <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
                     for="switchUser">
                     <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
-                        <%if (isHR) {%>
-                    <a href="../hr/index.jsp">
+                        <%if (isAdmin) {%>
+                    <a href="../admin/index.jsp">
                         <li class="mdl-menu__item">HR</li>
                     </a>
                     <%}
@@ -108,13 +108,13 @@
                         <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                     </span>
                 </a>
-                <%if (isEmployee || isHR) {%>
+                <%if (isEmployee || isAdmin) {%>
                 <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
                     for="switchUserMobile">
                     <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
-                        <%if (isHR) {%>
-                    <a href="../hr/index.jsp">
-                        <li class="mdl-menu__item">HR</li>
+                        <%if (isAdmin) {%>
+                    <a href="../admin/index.jsp">
+                        <li class="mdl-menu__item">Admin</li>
                     </a>
                     <%
                         }

@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="org.owen.relationship.RelationshipHelper"%>
+
 <%@include file="../common.jsp" %>
 
 <!DOCTYPE html>
@@ -53,11 +55,15 @@
                         for="switchUser">
                         <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
                             <%if (isAdmin) {%>
-                        <li class="mdl-menu__item">Admin</li>
-                            <%}
-                                if (isEmployee) {%>
-                        <li class="mdl-menu__item">Employee</li>
-                            <%}%>
+                        <a href="../admin/index.jsp">
+                            <li class="mdl-menu__item">Admin</li>
+                        </a>
+                        <%}
+                                if (isEmployee) {%>         
+                        <a href="../employee/index.jsp">
+                            <li class="mdl-menu__item">Employee</li>
+                        </a>
+                        <%}%>
                     </ul>
                     <%}%>
                     <!-- Add spacer, to align navigation to the right -->
@@ -116,6 +122,15 @@
                 <div class="page-content">
                     <div class="android-card-container mdl-grid filterPanelParent">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-shadow--3dp filterPanel">
+                            
+                            <%
+                                RelationshipHelper rh = new RelationshipHelper();
+                                String relValues = rh.getRelationshipValues(comId);
+                               
+
+                            %>
+                            
+                            
                             <form >
                                 <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                     <select id="dropdown_function" name="function" class="mdl-selectfield__select" required>

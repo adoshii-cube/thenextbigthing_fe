@@ -825,9 +825,9 @@ div .mdl-textfield__label:after {
         width: 90% !important;
     }
 
-    table{
-        width: 90%;
-    }
+    /*    table{
+            width: 90%;
+        }*/
 
     .role-container{
         flex-direction: column;
@@ -1108,105 +1108,21 @@ label{
     white-space: inherit;
 }
 
-table{
+/*table{
     width: 90%;
     margin: 64px 0 64px;
     table-layout: fixed;
-}
+}*/
 
-table td{
-    /*width: 20%;*/
-}
-
-.meScore tr:first-child td:first-child{
-    display: block;
-    text-align: left;
-}
-
-.meScore tr:first-child td:last-child{
-    text-align: right;
-}
-.radioButtons{
-    height: 50px;
-}
-
-.score td:nth-child(1){
-    background-color: rgba(255, 87, 34, 0.87);
-    height: 60px;
-}
-
-.score td:nth-child(2){
-    background-color: rgba(255, 152, 0, .87);
-}
-
-.score td:nth-child(3){
-    background-color: rgba(255, 235, 59, 0.87);
-}
-
-.score td:nth-child(4){
-    background-color: rgba(205, 220, 57, 0.87);
-}
-
-.score td:nth-child(5){
-    background-color: rgba(76, 175, 80, 0.87);
-}
-
-.mood td{
-    font-size: 0;
-}
-.mood td:nth-child(1){
-    background: url("../images/emoji-saddest.png") no-repeat center;
-    background-size: contain;
-    height: 60px;
-}
-
-.mood td:nth-child(2){
-    background: url("../images/emoji-sad.png") no-repeat center;
-    background-size: contain;
-    height: 60px;
-}
-
-.mood td:nth-child(3){
-    background: url("../images/emoji-neutral.png") no-repeat center;
-    background-size: contain;
-    height: 60px;
-}
-
-.mood td:nth-child(4){
-    background: url("../images/emoji-happy.png") no-repeat center;
-    background-size: contain;
-    height: 60px;
-}
-
-.mood td:nth-child(5){
-    background: url("../images/emoji-happiest.png") no-repeat center;
-    background-size: contain;
-    height: 60px;
-}
-
-.mdl-radio.is-upgraded {
-    padding-left: 16px;
-}
+/*table td{
+    width: 20%;
+}*/
 
 /*LOGIN*/
-.login{
-    /*background: #f5f5f5;*/
-}
-
 .mdl-layout__content{
     background-color: #f5f5f5;
     overflow: overlay;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-}
-
-.login-page{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    height: 70vh;
 }
 
 /*ADMIN*/
@@ -1225,15 +1141,194 @@ table td{
     background-size: contain;
 }
 
-.searchBar{
-    width: 80%;
-    height: 114.83px !important;
+form{
+    display: inline-block;
 }
 
-.searchBar .mdl-textfield{
+.mdl-textfield{
+    /*width: 50%;*/
+    /*float: left;*/
+    padding: 0;
+}
+
+.mdl-button--file input {
+    cursor: pointer;
+    height: 100%;
+    right: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 300px;
+    z-index: 4;
+}
+
+.mdl-textfield--file .mdl-textfield__input {
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+}
+
+.mdl-textfield--file .mdl-button--file {
+    right: 0;
+    bottom: 0px;
+}
+
+.mdl-data-table{
+    white-space: inherit;
     width: 100%;
 }
 
+.admin-container{
+    width: 100%;
+}
+
+/*.admin thead th{
+    width: 70px;
+}*/
+
+.mdl-mega-footer {
+    background-color: #ffffff;
+}
+
+.mdl-dialog__title {
+    padding: 16px 24px 0;
+    font-size: 1.5rem;
+}
+
+.newQuestionsContainer tr{
+    position: relative !important;
+}
+
+.newQuestionsContainer tr td:nth-child(2){
+    width: 25%;
+}
+
+.newQuestionsContainerPopup table thead th:nth-child(1){
+    width: 10%;
+}
+
+.newQuestionsContainerPopup table thead th:nth-child(2){
+    width: 24%;
+}
+
+.newQuestionsContainerPopup{
+    width: 50%;
+    /*height: 80%;*/
+}
+
+.newQuestionsContainerPopup .mdl-dialog__content{
+    padding: 0px 24px;
+}
+
+.newQuestionsContainerPopup .mdl-grid{
+    padding: 0px;
+}
+
+.questionContainer,
+.newQuestionsContainerPopup table{
+    display: block;
+}
+
+
+.questionContainer thead th:nth-child(1),
+.questionContainer tbody td:nth-child(1){
+    /*width: 8%;*/
+}
+
+.questionContainer thead th:nth-child(2),
+.questionContainer tbody td:nth-child(2){
+    width: 12%;
+}
+
+.questionContainer thead th:nth-child(3),
+.questionContainer tbody td:nth-child(3){
+    width: 80%;
+}
+
+
+.questionContainer thead,
+.newQuestionsContainerPopup thead{
+    padding-bottom: 0px;
+}
+
+.questionContainer thead,
+.newQuestionsContainerPopup table thead{
+    display: block;
+    overflow: hidden;
+}
+
+.questionContainer tbody,
+.newQuestionsContainerPopup table tbody{
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.questionContainer tbody{
+    /*height: 320px;*/
+    max-height: 320px;
+}
+
+.newQuestionsContainerPopup table tbody{
+    height: 160px;
+    max-height: 160px;
+}
+
+
+.questionContainer thead tr,
+.newQuestionsContainerPopup thead tr{
+    width: 100%;
+    display: inline-table;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.mdl-data-table td{
+    border-top: 0;
+}
+
+.removeQuestions{
+    float: right;
+}
+
+.actions-container{
+    display: flex;
+}
+
+.actions-container div{
+    margin: 8px
+}
+
+
+.searchBarAdmin{
+    width: 100%;
+    height: 99px !important;
+}
+
+.searchBarAdmin .mdl-textfield{
+    width: 100%;
+}
+
+.searchBarAdmin .mdl-list__item{
+    padding-top: 0px;
+}
+
+.questionContainer .mdl-grid{
+    padding: 0px;
+}
+
+.questionContainer tbody{
+    cursor: pointer;
+}
+
+.selectedCell{
+    background: url("../images/select-question.png") center no-repeat;
+    background-size: 45%;
+    font-size: 0;
+    /*width: 5%;*/
+}
+
+.selectedQuestion{
+    background-color: #C5CAE9;
+}
 .mdl-list__item--three-line{
     border-top: 1px solid #E0E0E0;
     border-bottom: 1px solid #E0E0E0;
@@ -1344,23 +1439,6 @@ table td{
     text-decoration: none;
 }
 
-.thankyou{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.thankyou div{
-    background: #f5f5f5;
-    text-align: center;
-    min-height: inherit;
-}
-
-.thankyou .image{
-    background: url(../images/cookie.png) no-repeat center;
-    background-size: contain;
-    height: 10em;
-}
 
 a:hover{
     text-decoration: none;
