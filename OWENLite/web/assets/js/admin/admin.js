@@ -101,6 +101,10 @@ $(document).ready(function () {
         snackbarMsg(2);
     });
 
+    dialog.querySelector('.cancel').addEventListener('click', function () {
+        dialog.close();
+    });
+
     $(".newQuestionsContainerPopup table tr").on("click", function () {
         setTimeout(function () {
             if ($(".newQuestionsContainer:has(.is-selected)").length > 0) {
@@ -133,30 +137,50 @@ $(document).ready(function () {
         }
     });
 
-    $('#date-start').bootstrapMaterialDatePicker({
-        weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date(), currentDate: new Date($("#startDate").val())
-    }).on('change', function (e, date) {
-        $(this).parent().addClass("is-focused");
-        //Clear end date    
-        $("#date-end")[0].value = "";
-        //Set earliest end date as new start date    
-        $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
-        $("#saveDates").prop("disabled", true);
-        snackbarMsg(3);
-    });
+    //Check for Empty State. If empty generate empty date picker, else pass values from DB
+    if ($("#startDate").length === 0) {
+        $('#date-start').bootstrapMaterialDatePicker({
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date()
+        }).on('change', function (e, date) {
+            $(this).parent().addClass("is-focused");
+            //Clear end date    
+            $("#date-end")[0].value = "";
+            //Set earliest end date as new start date    
+            $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
+            $("#saveDates").prop("disabled", true);
+            snackbarMsg(3);
+        });
+    } else {
+        $('#date-start').bootstrapMaterialDatePicker({
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date(), currentDate: new Date($("#startDate").val())
+        }).on('change', function (e, date) {
+            $(this).parent().addClass("is-focused");
+            //Clear end date    
+            $("#date-end")[0].value = "";
+            //Set earliest end date as new start date    
+            $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
+            $("#saveDates").prop("disabled", true);
+            snackbarMsg(3);
+        });
+    }
 
-    $('#date-end').bootstrapMaterialDatePicker({
-        weekStart: 0, time: false, format: 'YYYY-MM-DD', currentDate: new Date($("#endDate").val())
-    }).on('change', function (e, date) {
-        $(this).parent().addClass("is-focused");
-        $("#saveDates").prop("disabled", false);
-    });
-
+    if ($("#endDate").length === 0) {
+        $('#date-end').bootstrapMaterialDatePicker({
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date()
+        });
+    } else {
+        $('#date-end').bootstrapMaterialDatePicker({
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', currentDate: new Date($("#endDate").val())
+        }).on('change', function (e, date) {
+            $(this).parent().addClass("is-focused");
+            $("#saveDates").prop("disabled", false);
+        });
+    }
     //To ensure that the text for end date does not get overwritten by the label
     if ($("#date-end")[0].value.length > 0) {
         $("#date-end").parent().addClass("is-focused");
     }
-    
+
     var today = new Date();
     //If today's date is greater than or equal to the start date, disable the start date, so it cannot be edited
     if (today >= new Date($("#date-start")[0].value)) {

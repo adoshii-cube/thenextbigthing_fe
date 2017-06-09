@@ -1200,6 +1200,7 @@ form .mdl-textfield{
 
 .newQuestionsContainer tr{
     position: relative !important;
+    top: 0px !important;
 }
 
 .newQuestionsContainer tr td:nth-child(1){

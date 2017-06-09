@@ -263,7 +263,8 @@
                 </div>
             </div>
             <div class="mdl-dialog__actions">
-                <button type="button" class="mdl-button mdl-js-button mdl-color-text--blue-grey add" id="addQuestions">Add</button>
+                <button type="button" class="mdl-button mdl-js-button add" id="addQuestions" disabled>Add</button>
+                <button type="button" class="mdl-button mdl-js-button mdl-color-text--blue-grey cancel">Cancel</button>
             </div>
         </dialog>
         <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
