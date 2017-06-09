@@ -5,6 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="../common.jsp" %>
+
+<%@page import = "org.owen.admin.AdminHelper"%>
+<%@page import = "java.util.List"%>
+<%@page import = "org.owen.survey.Question"%>
+<%@page import = "java.util.Date"%>
+<%--<%@page import = ""%>--%>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,19 +30,12 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
         <link href="../assets/css/admin.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/vex.css" rel="stylesheet"/>
-        <link href="../assets/css/vex-theme-os.css" rel="stylesheet"/>
-
         <link href="../assets/css/bootstrap-material-datetimepicker.css" rel="stylesheet" type="text/css">
-
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
-
-        <script src="../assets/js/admin/vex.combined.min.js"></script>
 
         <!--<script src="../assets/js/admin/jquery.fixedheadertable.js"></script>-->
         <link rel='shortcut icon' type='image/x-icon' href='../assets/images/OWEN_Favicon.ico'/>
@@ -120,6 +122,14 @@
                             <!--<h2 class="mdl-card__title-text">Current Questions</h2>-->
                             <!--</div>-->
                             <!--<div class="mdl-card__supporting-text">-->
+                            <%
+                                AdminHelper ah = new AdminHelper();
+                                Date startDate = null;
+                                Date endDate = null;
+                                List<Question> qList = ah.getVisibleQuestionList(comId);
+                                if (qList.size() > 0) {
+                                    int count = 1;
+                            %>
                             <table class="mdl-data-table mdl-js-data-table questionContainer">
                                 <thead>
                                     <tr>
@@ -129,71 +139,42 @@
                                         <th class="mdl-data-table__cell--non-numeric">
                                             <button class="mdl-button mdl-js-button mdl-button--icon" disabled id="deleteQuestions"><i class="material-icons">delete_forever</i></button>
                                         </th>
-                                    </tr>
+                                <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="deleteQuestions">
+                                    Delete questions
+                                </div>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Component 1</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
+                                    <%for (int i = 0; i < qList.size(); i++) {
+                                            Question q = qList.get(i);
+                                            startDate = q.getStartDate();
+                                            endDate = q.getEndDate();
+                                            System.out.println(startDate);
+                                    %>
+                                <input type="hidden" id="startDate" value ="<%=startDate.toString()%>"/>
+                                <input type="hidden" id="endDate" value ="<%=endDate.toString()%>"/>                                
+                                    <tr id="<%=q.getQuestionId()%>">
+                                        <td><%=count++%></td>
+                                        <td class="mdl-data-table__cell--non-numeric"><%=q.getRelationshipName()%></td>
+                                        <td class="mdl-data-table__cell--non-numeric"><%=q.getQuestionText()%></td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Theme 2</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Social Cohesion</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Collaboration</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Component 3</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Component 3</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Component 3</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Component 3</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>9</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Component 3</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>10</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Component 3</td>
-                                        <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-
-                                    </tr>
+                                    <%}%>
                                 </tbody>
                             </table>
+                            <%} else {%>
+                            <div class="emptyState">
+                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone image"></div>
+                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone messageMainText">
+                                    <h4>Ouhh..it's empty in here</h4>
+                                </div>
+                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone messageSubText">
+                                    <p>You do not have any active questions<br>
+                                        Add some questions, and start a survey.<br>
+                                        Click on the '+' button below to begin.
+                                    </p>
+                                </div>
+                            </div>
+                            <%}%>
                             <!--</div>-->
                         </div>
                         <div class="actions-container">
@@ -201,6 +182,9 @@
                                 <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="addQuestions">
                                     <i class="material-icons">add</i>
                                 </button>
+                                <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--right" for="addQuestions">
+                                    Add questions
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -212,18 +196,18 @@
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="date-start">
+                                <input class="mdl-textfield__input" type="text" id="date-start" >
                                 <label class="mdl-textfield__label" for="date-start">Start Date</label>
                             </div>
                         </div>
                         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="date-end">
+                                <input class="mdl-textfield__input" type="text" id="date-end" >
                                 <label class="mdl-textfield__label" for="date-end">End Date</label>
                             </div>
                         </div>
                         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="saveDates" disabled>
                                 Save
                             </button>
                         </div>
@@ -246,11 +230,13 @@
                                     <i class="material-icons">search</i>
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                         <input class="mdl-textfield__input quicksearch" type="text" id="searchField">
-                                        <label class="mdl-textfield__label" for="searchField">Search</label>
+                                        <label class="mdl-textfield__label mdl-color-text--blue-grey" for="searchField">Search</label>
                                     </div>
                                 </span>
                             </div>
                         </div>
+
+
                         <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
                             <thead>
                                 <tr>
@@ -259,44 +245,35 @@
                                 </tr>
                             </thead>
                             <tbody class="newQuestionsContainer">
+                                <%
+                                    List<Question> qMasterList = ah.getQuestionMasterList(comId);
+                                    for (int j = 1; j < qMasterList.size(); j++) {
+                                        Question q1 = qMasterList.get(j);
+
+                                %>
                                 <tr>
-                                    <td class="mdl-data-table__cell--non-numeric">Component 1</td>
-                                    <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
+                                    <td class="mdl-data-table__cell--non-numeric"><%=q1.getRelationshipName()%></td>
+                                    <td class="mdl-data-table__cell--non-numeric"><%=q1.getQuestionText()%></td>
                                 </tr>
-                                <tr>
-                                    <td class="mdl-data-table__cell--non-numeric">Component 2</td>
-                                    <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-                                </tr>
-                                <tr>
-                                    <td class="mdl-data-table__cell--non-numeric">Mentorship</td>
-                                    <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-                                </tr>
-                                <tr>
-                                    <td class="mdl-data-table__cell--non-numeric">Social Cohesion</td>
-                                    <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-                                </tr>
-                                <tr>
-                                    <td class="mdl-data-table__cell--non-numeric">Collaboration</td>
-                                    <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-                                </tr>
-                                <tr>
-                                    <td class="mdl-data-table__cell--non-numeric">Innovation</td>
-                                    <td class="mdl-data-table__cell--non-numeric">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</td>
-                                </tr>
+                                <%}%>
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
             <div class="mdl-dialog__actions">
-                <button type="button" class="mdl-button add">Add</button>
+                <button type="button" class="mdl-button mdl-js-button mdl-color-text--blue-grey add" id="addQuestions">Add</button>
             </div>
         </dialog>
+        <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
         <script src="../assets/js/material.min.js"></script>
         <script src="../assets/js/employee/isotope.pkgd.min.js"></script>
-        
+
         <script src="../assets/js/admin/bootstrap-material-datetimepicker.js"></script>
         <script src="../assets/js/admin/admin.js"></script>
-        <script>vex.defaultOptions.className = 'vex-theme-os';</script>
     </body>
 </html>

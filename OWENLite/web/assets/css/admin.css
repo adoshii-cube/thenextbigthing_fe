@@ -603,8 +603,13 @@ section.section--center {
 }
 
 div .mdl-textfield__label:after {
-    background: #303f9f;
+    background: #546e7a;
 }
+
+/*RIPPLE COLOR ON CHECKBOX*/
+/*.mdl-checkbox__ripple-container .mdl-ripple {
+    background: #E91E63;
+}*/
 
 .section-content{
     display: table-cell;
@@ -1126,29 +1131,11 @@ label{
 }
 
 /*ADMIN*/
-.role-container{
-    display: flex;
-    margin: 8px;
-}
 
-.download > .mdl-card__title {
-    background: url(../images/icon-download.png) center right 5% no-repeat #f5f5f5;
-    background-size: contain;
-}
-
-.upload > .mdl-card__title {
-    background: url(../images/icon-upload.png) center right 5% no-repeat #f5f5f5;
-    background-size: contain;
-}
-
-form{
-    display: inline-block;
-}
-
-.mdl-textfield{
-    /*width: 50%;*/
-    /*float: left;*/
-    padding: 0;
+.questionContainer tbody tr,
+.newQuestionsContainer tr{
+    display: inline-table;
+    width: 100%;
 }
 
 .mdl-button--file input {
@@ -1166,10 +1153,27 @@ form{
     box-sizing: border-box;
     width: calc(100% - 32px);
 }
-
 .mdl-textfield--file .mdl-button--file {
-    right: 0;
+    right: 0px;
     bottom: 0px;
+}
+
+form .mdl-textfield{
+    padding: 0;
+}
+.role-container{
+    display: flex;
+    margin: 8px;
+}
+
+.download > .mdl-card__title {
+    background: url(../images/icon-download.png) center right 5% no-repeat #f5f5f5;
+    background-size: contain;
+}
+
+.upload > .mdl-card__title {
+    background: url(../images/icon-upload.png) center right 5% no-repeat #f5f5f5;
+    background-size: contain;
 }
 
 .mdl-data-table{
@@ -1196,6 +1200,10 @@ form{
 
 .newQuestionsContainer tr{
     position: relative !important;
+}
+
+.newQuestionsContainer tr td:nth-child(1){
+    width: 10%;
 }
 
 .newQuestionsContainer tr td:nth-child(2){
@@ -1324,6 +1332,39 @@ form{
     background-size: 45%;
     font-size: 0;
     /*width: 5%;*/
+}
+
+.emptyState{
+    width: 100%;
+    text-align: center;
+    /*background: #ffffff;*/
+    /*min-height: inherit;*/
+    /*height: 50%;*/
+}
+
+.emptyState .image{
+    background: url("../images/emptyState2.png") center no-repeat;
+    background-size: 45%;
+    height: 150px;
+}
+
+.emptyState .messageMainText{
+    color: #9e9e9e;
+    /*font-size: 1em;*/
+}
+
+.emptyState .messageSubText{
+    color: #9e9e9e;
+    padding-bottom: 24px;
+}
+
+.mdl-mega-footer__top-section .mdl-cell{
+    display: flex;
+    align-items: center;
+}
+
+.mdl-mega-footer__top-section .mdl-cell:nth-child(3){
+    justify-content: flex-end;
 }
 
 .selectedQuestion{
