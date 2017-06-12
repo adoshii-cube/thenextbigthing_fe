@@ -13,6 +13,8 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.owen.admin.AdminHelper"%>
+<%@page import = "org.owen.survey.Question"%>
+<%@page import = "java.util.Date"%>
 
 
 <%
@@ -36,3 +38,30 @@
     }
     out.print(respJOBJ.toString());
 %>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>deleteQuestion</title>
+    </head>
+    <body>
+    <tbody>
+        <%
+            List<Question> qList = ah.getVisibleQuestionList(comId);
+            int count = 1;
+            for (int i = 0; i < qList.size(); i++) {
+                Question q = qList.get(i);
+                Date startDate = q.getStartDate();
+                Date endDate = q.getEndDate();
+        %>
+    <input type="hidden" id="startDate" value ="<%=startDate.toString()%>"/>
+    <input type="hidden" id="endDate" value ="<%=endDate.toString()%>"/>                                
+    <tr id="<%=q.getQuestionId()%>">
+        <td><%=count++%></td>
+        <td class="mdl-data-table__cell--non-numeric"><%=q.getRelationshipName()%></td>
+        <td class="mdl-data-table__cell--non-numeric"><%=q.getQuestionText()%></td>
+    </tr>
+    <%}%>
+</tbody>
+</body>
+</html>
