@@ -116,7 +116,7 @@
             <main class="android-content mdl-layout__content">
                 <div class="page-content">
                     <div class="android-card-container mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="questionTable">
                             <!--<div class="mdl-card mdl-shadow--3dp admin-container">-->
                             <!--<div class="mdl-card__title">-->
                             <!--<h2 class="mdl-card__title-text">Current Questions</h2>-->
@@ -221,7 +221,6 @@
                 <p>
                     Select one or more questions and click the add button
                 </p>
-
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
                         <div class="searchBarAdmin mdl-list">
@@ -235,8 +234,6 @@
                                 </span>
                             </div>
                         </div>
-
-
                         <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
                             <thead>
                                 <tr>
@@ -275,5 +272,6 @@
 
         <script src="../assets/js/admin/bootstrap-material-datetimepicker.js"></script>
         <script src="../assets/js/admin/admin.js"></script>
+        <script src="../assets/js/admin/dialog.js"></script>
     </body>
 </html>

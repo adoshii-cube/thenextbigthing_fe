@@ -28,14 +28,12 @@ $(document).ready(function () {
             type: "POST",
             url: "../admin/deleteQuestion.jsp",
             data: postData,
-            dataType: 'JSON',
+//            dataType: 'JSON',
 //            async: false,
             success: function (resp) {
-                //TODO : REFRESH DIV OF QUESTION LISTS 
-//                console.log("response object ::: " + resp);
-                $(".questionContainer").html(resp);
+                $(".questionContainer").remove();
+                $("#questionTable").html(resp);
                 componentHandler.upgradeDom('MaterialDataTable');
-                componentHandler.upgradeDom('MaterialTooltip');
             },
             error: function (resp, err) {
                 console.log("deleteQuestions error messsage : " + err);
@@ -59,13 +57,15 @@ $(document).ready(function () {
             type: "POST",
             url: "../admin/addQuestion.jsp",
             data: postData,
-            dataType: 'JSON',
-            async: false,
+//            dataType: 'JSON',
+//            async: false,
             success: function (resp) {
-                //TODO : REFRESH DIV OF QUESTION LISTS 
+                $(".questionContainer").remove();
+                $("#questionTable").html(resp);
+                componentHandler.upgradeDom('MaterialDataTable');
             },
             error: function (resp, err) {
-                console.log("deleteQuestions error message : " + err);
+                console.log("adding questions error message : " + err);
             }
         });
     });
@@ -87,29 +87,6 @@ $(document).ready(function () {
         }
     }
     );
-
-    var dialog = document.querySelector('dialog');
-    var showDialogButton = document.querySelector('#addQuestions');
-    if (!dialog.showModal) {
-        dialogPolyfill.registerDialog(dialog);
-    }
-
-    //Click on '+' button
-    showDialogButton.addEventListener('click', function () {
-        dialog.showModal();
-        //If questions are selected, they are cleared; delete button is changed from enabled to disabled
-        $(".questionContainer tbody tr td:nth-child(1)").removeClass("selectedCell");
-        $("#deleteQuestions").prop('disabled', true);
-    });
-
-    dialog.querySelector('.add').addEventListener('click', function () {
-        dialog.close();
-        snackbarMsg(2);
-    });
-
-    dialog.querySelector('.cancel').addEventListener('click', function () {
-        dialog.close();
-    });
 
     $(".newQuestionsContainerPopup table tr").on("click", function () {
         setTimeout(function () {
@@ -194,6 +171,27 @@ $(document).ready(function () {
     }
 
     $("#saveDates").on("click", function () {
+        var startDate = $("#date-start").val();
+        var endDate = $("#date-end").val();
+        var jsonObj = {
+            "startDate": startDate,
+            "endDate": endDate
+        };
+        var postData = {'jsonObj': JSON.stringify(jsonObj)};
+        jQuery.ajax({
+            type: "POST",
+            url: "../admin/updateQuestionDate.jsp",
+            data: postData,
+//            dataType: 'JSON',
+            async: false,
+            success: function (resp) {
+                //TODO : REFRESH DIV OF QUESTION LISTS
+                console.log("updated question date successfully");
+            },
+            error: function (resp, err) {
+                console.log("update question date error messsage : " + err);
+            }
+        });
         $(this).prop("disabled", true);
         snackbarMsg(4);
     });

@@ -38,14 +38,14 @@
             <header class="mdl-layout__header mdl-layout__header--waterfall">
                 <div class="mdl-layout__header-row">
                     <!--Title--> 
-                    <a href="index">
+                    <a>
                         <span class="android-title mdl-layout-title">
                             <img class="android-logo-image" src="assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                         </span>
                     </a>
                     <!--Add spacer, to align navigation to the right--> 
                     <div class="mdl-layout-spacer"></div>
-                    <a href="index">
+                    <a>
                         <span class="android-mobile-title mdl-layout-title">
                             <img class="android-logo-image" src="assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                         </span>

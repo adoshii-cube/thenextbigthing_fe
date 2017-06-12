@@ -1132,6 +1132,17 @@ label{
 
 /*ADMIN*/
 
+.mdl-progress{
+    width: 99%;
+    /*display: none;*/
+    visibility: hidden;
+    margin: 0 auto;
+}
+
+#questionTable{
+    margin-top: 0;
+}
+
 .questionContainer tbody tr,
 .newQuestionsContainer tr{
     display: inline-table;
