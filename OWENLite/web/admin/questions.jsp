@@ -153,12 +153,12 @@
                                     %>
                                 <input type="hidden" id="startDate" value ="<%=startDate.toString()%>"/>
                                 <input type="hidden" id="endDate" value ="<%=endDate.toString()%>"/>                                
-                                    <tr id="<%=q.getQuestionId()%>">
-                                        <td><%=count++%></td>
-                                        <td class="mdl-data-table__cell--non-numeric"><%=q.getRelationshipName()%></td>
-                                        <td class="mdl-data-table__cell--non-numeric"><%=q.getQuestionText()%></td>
-                                    </tr>
-                                    <%}%>
+                                <tr id="<%=q.getQuestionId()%>">
+                                    <td><%=count++%></td>
+                                    <td class="mdl-data-table__cell--non-numeric"><%=q.getRelationshipName()%></td>
+                                    <td class="mdl-data-table__cell--non-numeric"><%=q.getQuestionText()%></td>
+                                </tr>
+                                <%}%>
                                 </tbody>
                             </table>
                             <%} else {%>
@@ -249,9 +249,8 @@
                                     List<Question> qMasterList = ah.getQuestionMasterList(comId);
                                     for (int j = 1; j < qMasterList.size(); j++) {
                                         Question q1 = qMasterList.get(j);
-
                                 %>
-                                <tr>
+                                <tr id="<%=q1.getQuestionMasterId()%>">
                                     <td class="mdl-data-table__cell--non-numeric"><%=q1.getRelationshipName()%></td>
                                     <td class="mdl-data-table__cell--non-numeric"><%=q1.getQuestionText()%></td>
                                 </tr>
@@ -263,7 +262,7 @@
                 </div>
             </div>
             <div class="mdl-dialog__actions">
-                <button type="button" class="mdl-button mdl-js-button add" id="addQuestions" disabled>Add</button>
+                <button type="button" class="mdl-button mdl-js-button add" id="addMasterQuestions" disabled>Add</button>
                 <button type="button" class="mdl-button mdl-js-button mdl-color-text--blue-grey cancel">Cancel</button>
             </div>
         </dialog>

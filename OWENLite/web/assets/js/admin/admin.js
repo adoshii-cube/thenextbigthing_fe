@@ -29,9 +29,13 @@ $(document).ready(function () {
             url: "../admin/deleteQuestion.jsp",
             data: postData,
             dataType: 'JSON',
-            async: false,
+//            async: false,
             success: function (resp) {
                 //TODO : REFRESH DIV OF QUESTION LISTS 
+//                console.log("response object ::: " + resp);
+                $(".questionContainer").html(resp);
+                componentHandler.upgradeDom('MaterialDataTable');
+                componentHandler.upgradeDom('MaterialTooltip');
             },
             error: function (resp, err) {
                 console.log("deleteQuestions error messsage : " + err);
@@ -39,11 +43,13 @@ $(document).ready(function () {
         });
     });
 
-    $("#addQuestions").on("click", function () {
+    $("#addMasterQuestions").on("click", function () {
         var qIdArray = [];
-        $(".questionContainer tbody tr.selectedRow").each(function (o, v) {
+        $(".newQuestionsContainer tr.is-selected").each(function (o, v) {
             var jsonObj = {
-                "questionId": $(this).attr("id")
+                "questionId": $(this).attr("id"),
+                "startDate": $("#startDate").val(),
+                "endDate": $("#endDate").val()
             };
             qIdArray.push(jsonObj);
         });
@@ -51,7 +57,7 @@ $(document).ready(function () {
         var postData = {'qIdArray': JSON.stringify(qIdArray)};
         jQuery.ajax({
             type: "POST",
-            url: "../admin/deleteQuestion.jsp",
+            url: "../admin/addQuestion.jsp",
             data: postData,
             dataType: 'JSON',
             async: false,
@@ -170,8 +176,7 @@ $(document).ready(function () {
         });
     } else {
         $('#date-end').bootstrapMaterialDatePicker({
-            weekStart: 0, time: false, format: 'YYYY-MM-DD', currentDate: new Date($("#endDate").val())
-        }).on('change', function (e, date) {
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date($("#startDate").val()), currentDate: new Date($("#endDate").val())}).on('change', function (e, date) {
             $(this).parent().addClass("is-focused");
             $("#saveDates").prop("disabled", false);
         });
@@ -189,6 +194,7 @@ $(document).ready(function () {
     }
 
     $("#saveDates").on("click", function () {
+        $(this).prop("disabled", true);
         snackbarMsg(4);
     });
 
