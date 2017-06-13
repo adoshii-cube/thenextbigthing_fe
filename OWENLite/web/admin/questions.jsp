@@ -137,7 +137,7 @@
                                         <th class="mdl-data-table__cell--non-numeric">Relationship</th>
                                         <th class="mdl-data-table__cell--non-numeric">Question</th>
                                         <th class="mdl-data-table__cell--non-numeric">
-                                            <button class="mdl-button mdl-js-button mdl-button--icon" disabled id="deleteQuestions"><i class="material-icons">delete_forever</i></button>
+                                            <button class="mdl-button mdl-js-button mdl-button--icon" disabled id="deleteQuestions" onclick="deleteQuestions()"><i class="material-icons">delete_forever</i></button>
                                         </th>
                                 <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="deleteQuestions">
                                     Delete questions
@@ -153,7 +153,7 @@
                                     %>
                                 <input type="hidden" id="startDate" value ="<%=startDate.toString()%>"/>
                                 <input type="hidden" id="endDate" value ="<%=endDate.toString()%>"/>                                
-                                <tr id="<%=q.getQuestionId()%>">
+                                <tr id="<%=q.getQuestionId()%>" onclick="selectQuestionsToDelete(this)">
                                     <td><%=count++%></td>
                                     <td class="mdl-data-table__cell--non-numeric"><%=q.getRelationshipName()%></td>
                                     <td class="mdl-data-table__cell--non-numeric"><%=q.getQuestionText()%></td>
@@ -222,7 +222,7 @@
                     Select one or more questions and click the add button
                 </p>
                 <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="questionMasterContainer">
                         <div class="searchBarAdmin mdl-list">
                             <div class="mdl-list__item">
                                 <span class="mdl-list__item-primary-content">
@@ -234,7 +234,7 @@
                                 </span>
                             </div>
                         </div>
-                        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" id="questionMaster">
                             <thead>
                                 <tr>
                                     <th class="mdl-data-table__cell--non-numeric">Relationship</th>
@@ -247,7 +247,7 @@
                                     for (int j = 1; j < qMasterList.size(); j++) {
                                         Question q1 = qMasterList.get(j);
                                 %>
-                                <tr id="<%=q1.getQuestionMasterId()%>">
+                                <tr id="<%=q1.getQuestionMasterId()%>" onclick="selectQuestionsToAdd()">
                                     <td class="mdl-data-table__cell--non-numeric"><%=q1.getRelationshipName()%></td>
                                     <td class="mdl-data-table__cell--non-numeric"><%=q1.getQuestionText()%></td>
                                 </tr>
@@ -259,7 +259,7 @@
                 </div>
             </div>
             <div class="mdl-dialog__actions">
-                <button type="button" class="mdl-button mdl-js-button add" id="addMasterQuestions" disabled>Add</button>
+                <button type="button" class="mdl-button mdl-js-button add" id="addMasterQuestions" disabled onclick="addQuestions()">Add</button>
                 <button type="button" class="mdl-button mdl-js-button mdl-color-text--blue-grey cancel">Cancel</button>
             </div>
         </dialog>

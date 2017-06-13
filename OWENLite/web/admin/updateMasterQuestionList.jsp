@@ -25,6 +25,17 @@
         <title>addQuestion</title>
     </head>
     <body>
+        <div class="searchBarAdmin mdl-list">
+            <div class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons">search</i>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input quicksearch" type="text" id="searchField">
+                        <label class="mdl-textfield__label mdl-color-text--blue-grey" for="searchField">Search</label>
+                    </div>
+                </span>
+            </div>
+        </div>
         <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" id="questionMaster">
             <thead>
                 <tr>

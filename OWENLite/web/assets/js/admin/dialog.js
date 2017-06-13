@@ -15,7 +15,6 @@ $(document).ready(function () {
 
     dialog.querySelector('.add').addEventListener('click', function () {
         dialog.close();
-        snackbarMsg(2);
     });
 
     dialog.querySelector('.cancel').addEventListener('click', function () {

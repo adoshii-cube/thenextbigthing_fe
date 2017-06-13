@@ -14,90 +14,6 @@ $(document).ready(function () {
         };
     }
 
-    $("#deleteQuestions").on("click", function () {
-        var qIdArray = [];
-        $(".questionContainer tbody tr.selectedRow").each(function (o, v) {
-            var jsonObj = {
-                "questionId": $(this).attr("id")
-            };
-            qIdArray.push(jsonObj);
-        });
-        console.log(qIdArray);
-        var postData = {'qIdArray': JSON.stringify(qIdArray)};
-        jQuery.ajax({
-            type: "POST",
-            url: "../admin/deleteQuestion.jsp",
-            data: postData,
-//            dataType: 'JSON',
-//            async: false,
-            success: function (resp) {
-                $(".questionContainer").remove();
-                $("#questionTable").html(resp);
-                componentHandler.upgradeDom('MaterialDataTable');
-            },
-            error: function (resp, err) {
-                console.log("deleteQuestions error messsage : " + err);
-            }
-        });
-    });
-
-    $("#addMasterQuestions").on("click", function () {
-        var qIdArray = [];
-        $(".newQuestionsContainer tr.is-selected").each(function (o, v) {
-            var jsonObj = {
-                "questionId": $(this).attr("id"),
-                "startDate": $("#startDate").val(),
-                "endDate": $("#endDate").val()
-            };
-            qIdArray.push(jsonObj);
-        });
-        console.log(qIdArray);
-        var postData = {'qIdArray': JSON.stringify(qIdArray)};
-        jQuery.ajax({
-            type: "POST",
-            url: "../admin/addQuestion.jsp",
-            data: postData,
-//            dataType: 'JSON',
-//            async: false,
-            success: function (resp) {
-                $(".questionContainer").remove();
-                $("#questionTable").html(resp);
-                componentHandler.upgradeDom('MaterialDataTable');
-            },
-            error: function (resp, err) {
-                console.log("adding questions error message : " + err);
-            }
-        });
-    });
-
-    $(".questionContainer tr").on("click", function () {
-        //Check if row is header. Do not change class of header
-        var is_element_header_row = $(this).parent().is("thead"); //true or false
-
-        if (!is_element_header_row) {
-//            $(this).toggleClass("selectedQuestion");
-            $(this).find("td:first-child").toggleClass("selectedCell");
-            $(this).toggleClass("selectedRow");
-            if ($(".questionContainer:has(.selectedCell)").length > 0) {
-                $("#deleteQuestions").prop('disabled', false);
-            }
-            if ($(".questionContainer:has(.selectedCell)").length === 0) {
-                $("#deleteQuestions").prop('disabled', true);
-            }
-        }
-    }
-    );
-
-    $(".newQuestionsContainerPopup table tr").on("click", function () {
-        setTimeout(function () {
-            if ($(".newQuestionsContainer:has(.is-selected)").length > 0) {
-                $(".add").prop("disabled", false);
-            } else {
-                $(".add").prop("disabled", true);
-            }
-        }, 1000);
-    });
-
     $(document).keypress(function (e) {
         if (($(".quicksearch").val().length > 0) & (e.which === 13)) {
 
@@ -196,9 +112,6 @@ $(document).ready(function () {
         snackbarMsg(4);
     });
 
-    $("#deleteQuestions").on("click", function () {
-        snackbarMsg(1);
-    });
 });
 
 // debounce so filtering doesn't happen every millisecond
@@ -244,4 +157,115 @@ function snackbarMsg(flag) {
     }
     'use strict';
     snackbarContainer.MaterialSnackbar.showSnackbar(data);
+}
+
+function deleteQuestions() {
+    var qIdArray = [];
+    $(".questionContainer tbody tr.selectedRow").each(function (o, v) {
+        var jsonObj = {
+            "questionId": $(this).attr("id")
+        };
+        qIdArray.push(jsonObj);
+    });
+    console.log(qIdArray);
+    var postData = {'qIdArray': JSON.stringify(qIdArray)};
+    jQuery.ajax({
+        type: "POST",
+        url: "../admin/deleteQuestion.jsp",
+        data: postData,
+//            dataType: 'JSON',
+//            async: false,
+        success: function (resp) {
+            $(".questionContainer").remove();
+            $("#questionTable").html(resp);
+            componentHandler.upgradeDom('MaterialDataTable');
+            updateQuestionMasterList();
+            snackbarMsg(1);
+        },
+        error: function (resp, err) {
+            console.log("deleteQuestions error messsage : " + err);
+        }
+    });
+}
+
+function addQuestions() {
+    var qIdArray = [];
+    $(".newQuestionsContainer tr.is-selected").each(function (o, v) {
+        var jsonObj = {
+            "questionId": $(this).attr("id"),
+            "startDate": $("#startDate").val(),
+            "endDate": $("#endDate").val()
+        };
+        qIdArray.push(jsonObj);
+    });
+//    console.log(qIdArray);
+    var postData = {'qIdArray': JSON.stringify(qIdArray)};
+    jQuery.ajax({
+        type: "POST",
+        url: "../admin/addQuestion.jsp",
+        data: postData,
+//            dataType: 'JSON',
+//            async: false,
+        success: function (resp) {
+            $(".questionContainer").remove();
+            $("#questionTable").html(resp);
+            componentHandler.upgradeDom('MaterialDataTable');
+            updateQuestionMasterList();
+            snackbarMsg(2);
+        },
+        error: function (resp, err) {
+            console.log("adding questions error message : " + err);
+        }
+    });
+}
+
+function selectQuestionsToDelete(questionRow) {
+//    $(".questionContainer tr").on("click", function () {
+//    $(".questionContainer tr").each(function () {
+    //Check if row is header. Do not change class of header
+//    var is_element_header_row = $(item).parent().is("thead"); //true or false
+
+//    if (!is_element_header_row) {
+//            $(this).toggleClass("selectedQuestion");
+    $(questionRow).find("td:first-child").toggleClass("selectedCell");
+    $(questionRow).toggleClass("selectedRow");
+    if ($(".questionContainer:has(.selectedCell)").length > 0) {
+        $("#deleteQuestions").prop('disabled', false);
+    }
+    if ($(".questionContainer:has(.selectedCell)").length === 0) {
+        $("#deleteQuestions").prop('disabled', true);
+    }
+//    }
+//    });
+}
+
+function selectQuestionsToAdd() {
+//    $(".newQuestionsContainerPopup table tr").on("click", function () {
+    setTimeout(function () {
+        if ($(".newQuestionsContainer:has(.is-selected)").length > 0) {
+            $(".add").prop("disabled", false);
+        } else {
+            $(".add").prop("disabled", true);
+        }
+    }, 1000);
+//    });
+}
+
+function updateQuestionMasterList() {
+    jQuery.ajax({
+        type: "POST",
+        url: "../admin/updateMasterQuestionList.jsp",
+//            data: postData,
+//            dataType: 'JSON',
+//            async: false,
+        success: function (resp) {
+            $("#questionMaster").remove();
+            $("#questionMasterContainer").html(resp);
+            componentHandler.upgradeDom('MaterialDataTable');
+            componentHandler.upgradeDom('MaterialTextfield');
+        },
+        error: function (resp, err) {
+            console.log("deleteQuestions error messsage : " + err);
+        }
+    });
 }

@@ -31,7 +31,7 @@
                     <th class="mdl-data-table__cell--non-numeric">Relationship</th>
                     <th class="mdl-data-table__cell--non-numeric">Question</th>
                     <th class="mdl-data-table__cell--non-numeric">
-                        <button class="mdl-button mdl-js-button mdl-button--icon" disabled id="deleteQuestions"><i class="material-icons">delete_forever</i></button>
+                        <button class="mdl-button mdl-js-button mdl-button--icon" disabled id="deleteQuestions" onclick="deleteQuestions()"><i class="material-icons">delete_forever</i></button>
                     </th>
             <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="deleteQuestions">
                 Delete questions
@@ -68,7 +68,7 @@
         %>
     <input type="hidden" id="startDate" value ="<%=startDate.toString()%>"/>
     <input type="hidden" id="endDate" value ="<%=endDate.toString()%>"/>                                
-    <tr id="<%=q.getQuestionId()%>">
+    <tr id="<%=q.getQuestionId()%>" onclick="selectQuestionsToDelete(this)">
         <td><%=count++%></td>
         <td class="mdl-data-table__cell--non-numeric"><%=q.getRelationshipName()%></td>
         <td class="mdl-data-table__cell--non-numeric"><%=q.getQuestionText()%></td>
@@ -76,6 +76,5 @@
     <%}%>
 </tbody>
 </table>
-<script src="../assets/js/admin/admin.js"></script>
 </body>
 </html>
