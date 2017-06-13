@@ -1133,15 +1133,20 @@ label{
 /*ADMIN*/
 
 .mdl-progress{
-    width: 99%;
+    width: 98%;
     /*display: none;*/
     visibility: hidden;
     margin: 0 auto;
+    top: 8px;
 }
 
-#questionTable{
-    margin-top: 0;
+button[disabled], html input[disabled]{
+    cursor: no-drop;
 }
+
+/*#questionTable{
+    margin-top: 0;
+}*/
 
 .questionContainer tbody tr,
 .newQuestionsContainer tr{

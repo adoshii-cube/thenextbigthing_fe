@@ -15,6 +15,7 @@ $(document).ready(function () {
 
     dialog.querySelector('.add').addEventListener('click', function () {
         dialog.close();
+        $(".add").prop("disabled", true);
     });
 
     dialog.querySelector('.cancel').addEventListener('click', function () {

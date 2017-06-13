@@ -50,7 +50,7 @@
                     for (int j = 1; j < qMasterList.size(); j++) {
                         Question q1 = qMasterList.get(j);
                 %>
-                <tr id="<%=q1.getQuestionMasterId()%>">
+                <tr id="<%=q1.getQuestionMasterId()%>" onclick="selectQuestionsToAdd()">
                     <td class="mdl-data-table__cell--non-numeric"><%=q1.getRelationshipName()%></td>
                     <td class="mdl-data-table__cell--non-numeric"><%=q1.getQuestionText()%></td>
                 </tr>

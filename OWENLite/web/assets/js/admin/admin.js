@@ -36,56 +36,6 @@ $(document).ready(function () {
         }
     });
 
-    //Check for Empty State. If empty generate empty date picker, else pass values from DB
-    if ($("#startDate").length === 0) {
-        $('#date-start').bootstrapMaterialDatePicker({
-            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date()
-        }).on('change', function (e, date) {
-            $(this).parent().addClass("is-focused");
-            //Clear end date    
-            $("#date-end")[0].value = "";
-            //Set earliest end date as new start date    
-            $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
-            $("#saveDates").prop("disabled", true);
-            snackbarMsg(3);
-        });
-    } else {
-        $('#date-start').bootstrapMaterialDatePicker({
-            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date(), currentDate: new Date($("#startDate").val())
-        }).on('change', function (e, date) {
-            $(this).parent().addClass("is-focused");
-            //Clear end date    
-            $("#date-end")[0].value = "";
-            //Set earliest end date as new start date    
-            $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
-            $("#saveDates").prop("disabled", true);
-            snackbarMsg(3);
-        });
-    }
-
-    if ($("#endDate").length === 0) {
-        $('#date-end').bootstrapMaterialDatePicker({
-            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date()
-        });
-    } else {
-        $('#date-end').bootstrapMaterialDatePicker({
-            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date($("#startDate").val()), currentDate: new Date($("#endDate").val())}).on('change', function (e, date) {
-            $(this).parent().addClass("is-focused");
-            $("#saveDates").prop("disabled", false);
-        });
-    }
-    //To ensure that the text for end date does not get overwritten by the label
-    if ($("#date-end")[0].value.length > 0) {
-        $("#date-end").parent().addClass("is-focused");
-    }
-
-    var today = new Date();
-    //If today's date is greater than or equal to the start date, disable the start date, so it cannot be edited
-    if (today >= new Date($("#date-start")[0].value)) {
-        $("#date-start").parent().addClass("is-focused");
-        $("#date-start").prop("disabled", true);
-    }
-
     $("#saveDates").on("click", function () {
         var startDate = $("#date-start").val();
         var endDate = $("#date-end").val();
@@ -111,6 +61,9 @@ $(document).ready(function () {
         $(this).prop("disabled", true);
         snackbarMsg(4);
     });
+
+    updateStartDate();
+    updateEndDate();
 
 });
 
@@ -160,6 +113,7 @@ function snackbarMsg(flag) {
 }
 
 function deleteQuestions() {
+    $("#loader").css("visibility", "visible");
     var qIdArray = [];
     $(".questionContainer tbody tr.selectedRow").each(function (o, v) {
         var jsonObj = {
@@ -167,19 +121,19 @@ function deleteQuestions() {
         };
         qIdArray.push(jsonObj);
     });
-    console.log(qIdArray);
     var postData = {'qIdArray': JSON.stringify(qIdArray)};
     jQuery.ajax({
         type: "POST",
         url: "../admin/deleteQuestion.jsp",
         data: postData,
-//            dataType: 'JSON',
-//            async: false,
         success: function (resp) {
             $(".questionContainer").remove();
             $("#questionTable").html(resp);
             componentHandler.upgradeDom('MaterialDataTable');
             updateQuestionMasterList();
+            updateStartDate();
+            updateEndDate();
+            $("#loader").css("visibility", "hidden");
             snackbarMsg(1);
         },
         error: function (resp, err) {
@@ -189,28 +143,42 @@ function deleteQuestions() {
 }
 
 function addQuestions() {
+    $("#loader").css("visibility", "visible");
     var qIdArray = [];
+
+    var startDateCalc = new Date(new Date().getTime() + (2 * 24 * 60 * 60 * 1000));
+    var startDate = startDateCalc.getFullYear() + "-" + (startDateCalc.getMonth() + 1) + '-' + startDateCalc.getDate();
+
+    var endDateCalc = new Date(new Date().getTime() + (9 * 24 * 60 * 60 * 1000));
+    var endDate = endDateCalc.getFullYear() + "-" + (endDateCalc.getMonth() + 1) + '-' + endDateCalc.getDate();
+
+    if ($("#startDate").val() !== undefined) {
+        startDate = $("#startDate").val();
+    }
+    if ($("#endDate").val() !== undefined) {
+        endDate = $("#endDate").val();
+    }
     $(".newQuestionsContainer tr.is-selected").each(function (o, v) {
         var jsonObj = {
             "questionId": $(this).attr("id"),
-            "startDate": $("#startDate").val(),
-            "endDate": $("#endDate").val()
+            "startDate": startDate.toString(),
+            "endDate": endDate.toString()
         };
         qIdArray.push(jsonObj);
     });
-//    console.log(qIdArray);
     var postData = {'qIdArray': JSON.stringify(qIdArray)};
     jQuery.ajax({
         type: "POST",
         url: "../admin/addQuestion.jsp",
         data: postData,
-//            dataType: 'JSON',
-//            async: false,
         success: function (resp) {
             $(".questionContainer").remove();
             $("#questionTable").html(resp);
             componentHandler.upgradeDom('MaterialDataTable');
             updateQuestionMasterList();
+            updateStartDate();
+            updateEndDate();
+            $("#loader").css("visibility", "hidden");
             snackbarMsg(2);
         },
         error: function (resp, err) {
@@ -220,13 +188,6 @@ function addQuestions() {
 }
 
 function selectQuestionsToDelete(questionRow) {
-//    $(".questionContainer tr").on("click", function () {
-//    $(".questionContainer tr").each(function () {
-    //Check if row is header. Do not change class of header
-//    var is_element_header_row = $(item).parent().is("thead"); //true or false
-
-//    if (!is_element_header_row) {
-//            $(this).toggleClass("selectedQuestion");
     $(questionRow).find("td:first-child").toggleClass("selectedCell");
     $(questionRow).toggleClass("selectedRow");
     if ($(".questionContainer:has(.selectedCell)").length > 0) {
@@ -235,12 +196,9 @@ function selectQuestionsToDelete(questionRow) {
     if ($(".questionContainer:has(.selectedCell)").length === 0) {
         $("#deleteQuestions").prop('disabled', true);
     }
-//    }
-//    });
 }
 
 function selectQuestionsToAdd() {
-//    $(".newQuestionsContainerPopup table tr").on("click", function () {
     setTimeout(function () {
         if ($(".newQuestionsContainer:has(.is-selected)").length > 0) {
             $(".add").prop("disabled", false);
@@ -248,16 +206,12 @@ function selectQuestionsToAdd() {
             $(".add").prop("disabled", true);
         }
     }, 1000);
-//    });
 }
 
 function updateQuestionMasterList() {
     jQuery.ajax({
         type: "POST",
         url: "../admin/updateMasterQuestionList.jsp",
-//            data: postData,
-//            dataType: 'JSON',
-//            async: false,
         success: function (resp) {
             $("#questionMaster").remove();
             $("#questionMasterContainer").html(resp);
@@ -268,4 +222,68 @@ function updateQuestionMasterList() {
             console.log("deleteQuestions error messsage : " + err);
         }
     });
+}
+
+function updateStartDate() {
+    //Check for Empty State. If empty generate empty date picker, else pass values from DB
+    if ($("#startDate").length === 0) {
+        $('#date-start').val("");
+        $('#date-start').parent().removeClass("is-focused");
+        $('#date-start').bootstrapMaterialDatePicker({
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date()
+        }).on('change', function (e, date) {
+            $(this).parent().addClass("is-focused");
+            //Clear end date    
+            $("#date-end")[0].value = "";
+            //Set earliest end date as new start date    
+            $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
+            $("#saveDates").prop("disabled", true);
+            snackbarMsg(3);
+        });
+    } else {
+        $('#date-start').bootstrapMaterialDatePicker({
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date(), currentDate: new Date($("#startDate").val())
+        }).on('change', function (e, date) {
+            $(this).parent().addClass("is-focused");
+            //Clear end date    
+            $("#date-end")[0].value = "";
+            //Set earliest end date as new start date    
+            $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
+            $("#saveDates").prop("disabled", true);
+            snackbarMsg(3);
+        });
+        $("#date-start")[0].value = $("#startDate").val();
+        $("#date-start").parent().addClass("is-focused");
+        $('#date-start').parent().removeClass("is-disabled");
+    }
+    var today = new Date();
+    //If today's date is greater than or equal to the start date, disable the start date, so it cannot be edited
+    if (today >= new Date($("#date-start")[0].value)) {
+        console.log("taking care...");
+        $("#date-start").parent().addClass("is-focused");
+        $("#date-start").prop("disabled", true);
+    }
+}
+
+function updateEndDate() {
+    if ($("#endDate").length === 0) {
+        $('#date-end').val("");
+        $('#date-end').parent().removeClass("is-focused");
+
+        $('#date-end').bootstrapMaterialDatePicker({
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date()
+        });
+    } else {
+        $('#date-end').bootstrapMaterialDatePicker({
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date($("#startDate").val()), currentDate: new Date($("#endDate").val())}).on('change', function (e, date) {
+            $(this).parent().addClass("is-focused");
+            $("#saveDates").prop("disabled", false);
+        });
+        $("#date-end")[0].value = $("#endDate").val();
+        $('#date-end').parent().removeClass("is-disabled");
+    }
+    //To ensure that the text for end date does not get overwritten by the label
+    if ($("#date-end")[0].value.length > 0) {
+        $("#date-end").parent().addClass("is-focused");
+    }
 }

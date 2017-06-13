@@ -116,6 +116,7 @@
             <main class="android-content mdl-layout__content">
                 <div class="page-content">
                     <div class="android-card-container mdl-grid">
+                        <div id="loader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="questionTable">
                             <!--<div class="mdl-card mdl-shadow--3dp admin-container">-->
                             <!--<div class="mdl-card__title">-->
@@ -149,7 +150,6 @@
                                             Question q = qList.get(i);
                                             startDate = q.getStartDate();
                                             endDate = q.getEndDate();
-                                            System.out.println(startDate);
                                     %>
                                 <input type="hidden" id="startDate" value ="<%=startDate.toString()%>"/>
                                 <input type="hidden" id="endDate" value ="<%=endDate.toString()%>"/>                                
