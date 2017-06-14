@@ -106,14 +106,14 @@
                     <%}%>
                 </div>
             </header>
-            <div class="mdl-layout__drawer">
+<!--            <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">
                     <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
                 </span>
                 <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" href="">Link</a>
                 </nav>
-            </div>
+            </div>-->
             <main class="android-content mdl-layout__content">
                 <div class="page-content">
                     <div class="android-card-container mdl-grid">
@@ -137,7 +137,7 @@
                                         </p>
                                     </div>
                                     <div class="mdl-card__actions mdl-card--border">
-                                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#" id="btnExport" >DOWNLOAD</a>
+                                        <a class="mdl-button mdl-button--colored mdl-js-button" href="#" id="btnExport" >DOWNLOAD</a>
                                     </div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp upload">
@@ -162,7 +162,7 @@
                                                     <input type="file" name = "file" id="uploadBtn" size = "50">
                                                 </div>
                                             </div>
-                                            <input class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type = "submit" value = "Upload File" />
+                                            <input class="mdl-button mdl-button--colored mdl-js-button" type = "submit" value = "Upload File" />
                                         </form>
                                         <!--<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="upload.jsp">UPLOAD</a>-->
                                     </div>
@@ -174,7 +174,7 @@
             </main>
         </div>
         <script src="../assets/js/material.min.js"></script>
-        <script src="../assets/js/admin/admin.js"></script>
+        <script src="../assets/js/admin/template.js"></script>
         <script src="../assets/js/admin/download.js"></script>
     </body>
 </html>

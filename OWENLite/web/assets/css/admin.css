@@ -16,7 +16,8 @@
 
 body {
     margin: 0;
-    font-family: 'Roboto', 'sans-serif';
+    font-family: 'Roboto', Arial, sans-serif;
+    /*font-family: 'Roboto', 'sans-serif';*/
 }
 
 /* Disable ugly boxes around images in IE10 */
@@ -25,8 +26,13 @@ a img{
 }
 
 a{
-    color:#303f9f;
+    color: #546e7a;
     text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+    color: #546e7a;
 }
 
 ::-moz-selection {
@@ -1176,6 +1182,7 @@ button[disabled], html input[disabled]{
 
 form .mdl-textfield{
     padding: 0;
+    padding-left: 16px;
 }
 .role-container{
     display: flex;
@@ -1494,10 +1501,5 @@ form .mdl-textfield{
 }
 
 .submit a{
-    text-decoration: none;
-}
-
-
-a:hover{
     text-decoration: none;
 }

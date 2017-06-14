@@ -86,7 +86,9 @@
                         for="header-menu">
                         <li class="mdl-menu__item">Help & Feedback</li>
                         <li class="mdl-menu__item">Settings</li>
-                        <li disabled class="mdl-menu__item">Sign Out</li>
+                        <li class="mdl-menu__item">
+                            <a href="../signout.jsp" id="signOut">Sign out</a>
+                        </li>
                     </ul>
                     <a>
                         <span class="android-mobile-title mdl-layout-title" id="switchUserMobile">
@@ -105,14 +107,14 @@
                     </ul>
                 </div>
             </header>
-            <div class="mdl-layout__drawer">
+<!--            <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">
                     <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
                 </span>
                 <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" href="">Link</a>
                 </nav>
-            </div>
+            </div>-->
             <main class="android-content mdl-layout__content">
                 <div class="page-content">
                     <div class="android-card-container mdl-grid">
@@ -179,7 +181,7 @@
                         </div>
                         <div class="actions-container">
                             <div>
-                                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="addQuestions">
+                                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" id="addQuestions">
                                     <i class="material-icons">add</i>
                                 </button>
                                 <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--right" for="addQuestions">

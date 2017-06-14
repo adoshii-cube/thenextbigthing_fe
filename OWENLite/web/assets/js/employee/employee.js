@@ -16,19 +16,21 @@ $(document).ready(function () {
         $(this).toggleClass("mdl-shadow--3dp");
     });
 
-    $(".radioButtons td").on("click", function () {
-        var id = $(this).parent().parent().parent().attr("id");
+    $(".radioButtons label").on("click", function () {
+        var id = $(this).parent().parent().parent().parent().attr("id");
         var qId = id.split("-")[1];
         if (answeredQuestions.length === 0 || (answeredQuestions.length > 0 && !answeredQuestions.includes(qId))) {
             answeredQuestions.push(qId);
             mQuestionAnswered++;
             $("#mQuestionCounter").text('');
             $("#mQuestionCounter").text(mQuestionAnswered + "/" + $("#mQListSize").val());
-            $(this).parent().parent().parent().parent().addClass("answered");
+            $(this).parent().parent().parent().parent().parent().addClass("answered");
+            if (mQuestionAnswered === parseInt($("#mQListSize").val())) {
+                $(".sectionMe").addClass("completed");
+            }
             submitEnableDisable();
         }
     });
-
 
     $("#submit").on("click", function () {
         if (!($("#submit").attr("disabled"))) {
@@ -64,6 +66,9 @@ $(document).ready(function () {
             $("#mQuestionCounter").text('');
             $("#mQuestionCounter").text(mQuestionAnswered + "/" + $("#mQListSize").val());
             $(this).parent().parent().parent().parent().addClass("answered");
+            if (mQuestionAnswered === parseInt($("#mQListSize").val())) {
+                $(".sectionMe").addClass("completed");
+            }
             submitEnableDisable();
         }
     });
@@ -79,9 +84,13 @@ $(document).ready(function () {
             $("#mQuestionCounter").text('');
             $("#mQuestionCounter").text(mQuestionAnswered + "/" + $("#mQListSize").val());
             $(this).parent().parent().parent().parent().addClass("answered");
+            if (mQuestionAnswered === parseInt($("#mQListSize").val())) {
+                $(".sectionMe").addClass("completed");
+            }
             submitEnableDisable();
         }
     });
+
     $(".listOfPeople .mdl-list__item").on("click", function () {
         var id = $(this).parent().attr("id").split("-");
         var qId = id[1];
@@ -107,6 +116,9 @@ $(document).ready(function () {
                     $("#wQuestionCounter").text('');
                     $("#wQuestionCounter").text(wQuestionAnswered + "/" + $("#wQListSize").val());
                     $(this).parent().parent().parent().addClass("answered");
+                    if (wQuestionAnswered === parseInt($("#wQListSize").val())) {
+                        $(".sectionWe").addClass("completed");
+                    }
                     submitEnableDisable();
                 }
             }
@@ -125,7 +137,7 @@ $(document).ready(function () {
                 //Iterate through listOfNames to see if name exists
                 for (i = 0; i < listOfNames.length; i++) {
                     //If name exists
-                    if (listOfNames[i] === $(this).find("span").eq(1).text()) {
+                    if (listOfNames[i].trim() === $(this).find("span").eq(1).text()) {
                         var index = listOfNames.indexOf(listOfNames[i]);
                         listOfNames.splice(index, 1);
                     }
@@ -157,6 +169,9 @@ $(document).ready(function () {
                 $("#wQuestionCounter").text('');
                 $("#wQuestionCounter").text(wQuestionAnswered + "/" + $("#wQListSize").val());
                 $(this).parent().parent().parent().removeClass("answered");
+                if (wQuestionAnswered !== parseInt($("#wQListSize").val())) {
+                    $(".sectionWe").removeClass("completed");
+                }
                 submitEnableDisable();
             }
         }
@@ -305,6 +320,9 @@ function doneTyping() {
             $("#oQuestionCounter").text('');
             $("#oQuestionCounter").text(oQuestionAnswered + "/" + $("#oQListSize").val());
             $(this).parent().parent().addClass("answered");
+            if (oQuestionAnswered === parseInt($("#oQListSize").val())) {
+                $(".sectionOpenText").addClass("completed");
+            }
             submitEnableDisable();
         } else if (value.length === 0 && answeredQuestions.includes(qId)) {
             answeredQuestions.pop(qId);
@@ -312,6 +330,9 @@ function doneTyping() {
             $("#oQuestionCounter").text('');
             $("#oQuestionCounter").text(oQuestionAnswered + "/" + $("#oQListSize").val());
             $(this).parent().parent().removeClass("answered");
+            if (oQuestionAnswered !== parseInt($("#oQListSize").val())) {
+                $(".sectionOpenText").removeClass("completed");
+            }
             submitEnableDisable();
         }
     });

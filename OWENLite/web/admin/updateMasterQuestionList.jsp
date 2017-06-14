@@ -57,6 +57,5 @@
                 <%}%>
             </tbody>
         </table>
-        <script src="../assets/js/admin/admin.js"></script>
     </body>
 </html>

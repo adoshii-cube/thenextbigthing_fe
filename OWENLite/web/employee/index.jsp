@@ -114,14 +114,14 @@ Author     : adoshi
                     <%}%>
                 </div>
             </header>
-            <div class="mdl-layout__drawer">
+<!--            <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">
                     <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
                 </span>
                 <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" href="">Link</a>
                 </nav>
-            </div>
+            </div>-->
             <main class="android-content mdl-layout__content">
                 <div class="page-content">
                     <!--<div class="android-screen-section mdl-typography--text-center">-->
@@ -170,17 +170,18 @@ Author     : adoshi
                                     </div>
 
                                     <div class="panel-collapse collapse" id="one">
+                                        <!--                                        <div class="mdl-grid">-->
+                                        <%for (int i = 0; i < mQuestionList.size(); i++) {
+                                                Question q = mQuestionList.get(i);
+                                        %>
                                         <div class="mdl-grid">
-                                            <%for (int i = 0; i < mQuestionList.size(); i++) {
-                                                    Question q = mQuestionList.get(i);
-                                            %>
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card question"id="mQuestion-<%=q.getQuestionId()%>">
                                                 <div class="questionText">
                                                     <h2><%=q.getQuestionText()%></h2>
                                                 </div>
-                                                <div class="helpText">
+<!--                                                <div class="helpText">
                                                     <h5>Help text goes here</h5>
-                                                </div>
+                                                </div>-->
                                                 <table class="meScore" id="table-<%=q.getQuestionId()%>">
                                                     <tr>
                                                         <td><label>Strongly Disagree</label></td>
@@ -230,8 +231,9 @@ Author     : adoshi
                                                 </table>
                                                 <input type="hidden" id="qtype_<%= q.getQuestionId()%>" value="<% out.print(q.getQuestionType());%>" /> 
                                             </div>
-                                            <%}%>
                                         </div>
+                                        <%}%>
+                                        <!--</div>-->
                                     </div>
                                 </div>
                                 <%}%>
@@ -248,18 +250,19 @@ Author     : adoshi
                                         </div>
                                     </div>
                                     <div id="two" class="panel-collapse collapse">
+                                        <!--<div class="mdl-grid">-->
+                                        <%for (int i = 0; i < wQuestionList.size(); i++) {
+                                                Question q = wQuestionList.get(i);
+                                                List<Employee> mapSmartList = q.getSmartListForQuestion(comId, empId, q.getQuestionId());
+                                        %>
                                         <div class="mdl-grid">
-                                            <%for (int i = 0; i < wQuestionList.size(); i++) {
-                                                    Question q = wQuestionList.get(i);
-                                                    List<Employee> mapSmartList = q.getSmartListForQuestion(comId, empId, q.getQuestionId());
-                                            %>
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card question" id="wQuestion-<%=q.getQuestionId()%>">
                                                 <div class="questionText">
                                                     <h2><%=q.getQuestionText()%></h2>
                                                 </div>
-                                                <div class="helpText">
+<!--                                                <div class="helpText">
                                                     <h5>Help text goes here</h5>
-                                                </div>
+                                                </div>-->
                                                 <div class="searchBar mdl-list">
                                                     <div class="mdl-list__item">
                                                         <span class="mdl-list__item-primary-content">
@@ -300,12 +303,13 @@ Author     : adoshi
                                                 </div>                                                
                                                 <div class="listOfSelectedPeopleContainer">
                                                     <div class="listOfSelectedPeople" id="listOfSelectedPeople-<%=q.getQuestionId()%>"></div>
-                                                    <div id="listOfSelectedId-<%=q.getQuestionId()%>"></div>                                               
+                                                    <div class="hidden" id="listOfSelectedId-<%=q.getQuestionId()%>"></div>                                               
                                                 </div>
                                                 <%}%>
                                             </div>
-                                            <%}%>
                                         </div>
+                                        <%}%>
+                                        <!--</div>-->
                                     </div>
                                 </div>
                                 <%}%>
@@ -330,9 +334,9 @@ Author     : adoshi
                                                 <div class="questionText">
                                                     <h2><%=q.getQuestionText()%></h2>
                                                 </div>
-                                                <div class="helpText">
+<!--                                                <div class="helpText">
                                                     <h5>Some help text here</h5>
-                                                </div>
+                                                </div>-->
                                                 <div class="mdl-textfield mdl-js-textfield openTextField">
                                                     <textarea class="mdl-textfield__input openTextResponse" type="text" rows="3" maxrows="6" id="openText-<%=q.getQuestionId()%>" ></textarea>
                                                     <label class="mdl-textfield__label" for="openText"><i>Note: Your responses are <b>confidential</b></i></label>

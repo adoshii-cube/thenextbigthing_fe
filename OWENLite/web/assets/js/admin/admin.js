@@ -8,12 +8,6 @@
 $(document).ready(function () {
     changeFooterStatus();
 
-    if ($(".uploadBtn").length > 0) {
-        document.getElementById("uploadBtn").onchange = function () {
-            document.getElementById("uploadFile").value = this.files[0].name;
-        };
-    }
-
     $(document).keypress(function (e) {
         if (($(".quicksearch").val().length > 0) & (e.which === 13)) {
 
@@ -52,14 +46,14 @@ $(document).ready(function () {
             async: false,
             success: function (resp) {
                 //TODO : REFRESH DIV OF QUESTION LISTS
-                console.log("updated question date successfully");
+//                console.log("updated question date successfully");
+                snackbarMsg(4);
             },
             error: function (resp, err) {
                 console.log("update question date error messsage : " + err);
             }
         });
         $(this).prop("disabled", true);
-        snackbarMsg(4);
     });
 
     updateStartDate();
@@ -215,6 +209,7 @@ function updateQuestionMasterList() {
         success: function (resp) {
             $("#questionMaster").remove();
             $("#questionMasterContainer").html(resp);
+            changeFooterStatus();
             componentHandler.upgradeDom('MaterialDataTable');
             componentHandler.upgradeDom('MaterialTextfield');
         },
@@ -230,36 +225,45 @@ function updateStartDate() {
         $('#date-start').val("");
         $('#date-start').parent().removeClass("is-focused");
         $('#date-start').bootstrapMaterialDatePicker({
-            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date()
+            weekStart: 0,
+            time: false,
+            format: 'YYYY-MM-DD',
+            minDate: new Date()
         }).on('change', function (e, date) {
             $(this).parent().addClass("is-focused");
             //Clear end date    
             $("#date-end")[0].value = "";
             //Set earliest end date as new start date    
             $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
-            $("#saveDates").prop("disabled", true);
-            snackbarMsg(3);
         });
     } else {
+
+        var minimumDateCalc = new Date(new Date().getTime() + (1 * 24 * 60 * 60 * 1000));
+        var minimumDate = minimumDateCalc.getFullYear() + "-" + (minimumDateCalc.getMonth() + 1) + '-' + minimumDateCalc.getDate();
+        
         $('#date-start').bootstrapMaterialDatePicker({
-            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date(), currentDate: new Date($("#startDate").val())
+            weekStart: 0,
+            time: false,
+            format: 'YYYY-MM-DD',
+            minDate: new Date(minimumDate),
+            currentDate: new Date($("#startDate").val())
         }).on('change', function (e, date) {
             $(this).parent().addClass("is-focused");
             //Clear end date    
             $("#date-end")[0].value = "";
             //Set earliest end date as new start date    
             $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
-            $("#saveDates").prop("disabled", true);
-            snackbarMsg(3);
+            $("#date-end")[0].value = $("#date-start")[0].value;
+            $("#saveDates").prop("disabled", false);
         });
         $("#date-start")[0].value = $("#startDate").val();
         $("#date-start").parent().addClass("is-focused");
         $('#date-start').parent().removeClass("is-disabled");
+        $('#date-start').prop("disabled", false);
     }
     var today = new Date();
     //If today's date is greater than or equal to the start date, disable the start date, so it cannot be edited
     if (today >= new Date($("#date-start")[0].value)) {
-        console.log("taking care...");
         $("#date-start").parent().addClass("is-focused");
         $("#date-start").prop("disabled", true);
     }
@@ -275,12 +279,14 @@ function updateEndDate() {
         });
     } else {
         $('#date-end').bootstrapMaterialDatePicker({
-            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date($("#startDate").val()), currentDate: new Date($("#endDate").val())}).on('change', function (e, date) {
+            weekStart: 0, time: false, format: 'YYYY-MM-DD', minDate: new Date($("#startDate").val()), currentDate: new Date($("#endDate").val())
+        }).on('change', function (e, date) {
             $(this).parent().addClass("is-focused");
             $("#saveDates").prop("disabled", false);
         });
         $("#date-end")[0].value = $("#endDate").val();
         $('#date-end').parent().removeClass("is-disabled");
+        $('#date-end').prop("disabled", false);
     }
     //To ensure that the text for end date does not get overwritten by the label
     if ($("#date-end")[0].value.length > 0) {
