@@ -87,9 +87,11 @@ Author     : adoshi
                         for="header-menu">
                         <li class="mdl-menu__item">Help & Feedback</li>
                         <li class="mdl-menu__item">Settings</li>
-                        <li class="mdl-menu__item"> 
-                            <a href="../signout.jsp" id="signOut">Sign out</a>
-                        </li>
+                        <a href="../signout.jsp" id="signOut">
+                            <li class="mdl-menu__item"> 
+                                Sign out
+                            </li>
+                        </a>
                     </ul>
                     <a>
                         <span class="android-mobile-title mdl-layout-title" id="switchUserMobile">
@@ -114,14 +116,14 @@ Author     : adoshi
                     <%}%>
                 </div>
             </header>
-<!--            <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">
-                    <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
-                </span>
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="">Link</a>
-                </nav>
-            </div>-->
+            <!--            <div class="mdl-layout__drawer">
+                            <span class="mdl-layout-title">
+                                <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
+                            </span>
+                            <nav class="mdl-navigation">
+                                <a class="mdl-navigation__link" href="">Link</a>
+                            </nav>
+                        </div>-->
             <main class="android-content mdl-layout__content">
                 <div class="page-content">
                     <!--<div class="android-screen-section mdl-typography--text-center">-->
@@ -179,9 +181,9 @@ Author     : adoshi
                                                 <div class="questionText">
                                                     <h2><%=q.getQuestionText()%></h2>
                                                 </div>
-<!--                                                <div class="helpText">
-                                                    <h5>Help text goes here</h5>
-                                                </div>-->
+                                                <!--                                                <div class="helpText">
+                                                                                                    <h5>Help text goes here</h5>
+                                                                                                </div>-->
                                                 <table class="meScore" id="table-<%=q.getQuestionId()%>">
                                                     <tr>
                                                         <td><label>Strongly Disagree</label></td>
@@ -260,9 +262,9 @@ Author     : adoshi
                                                 <div class="questionText">
                                                     <h2><%=q.getQuestionText()%></h2>
                                                 </div>
-<!--                                                <div class="helpText">
-                                                    <h5>Help text goes here</h5>
-                                                </div>-->
+                                                <!--                                                <div class="helpText">
+                                                                                                    <h5>Help text goes here</h5>
+                                                                                                </div>-->
                                                 <div class="searchBar mdl-list">
                                                     <div class="mdl-list__item">
                                                         <span class="mdl-list__item-primary-content">
@@ -334,9 +336,9 @@ Author     : adoshi
                                                 <div class="questionText">
                                                     <h2><%=q.getQuestionText()%></h2>
                                                 </div>
-<!--                                                <div class="helpText">
-                                                    <h5>Some help text here</h5>
-                                                </div>-->
+                                                <!--                                                <div class="helpText">
+                                                                                                    <h5>Some help text here</h5>
+                                                                                                </div>-->
                                                 <div class="mdl-textfield mdl-js-textfield openTextField">
                                                     <textarea class="mdl-textfield__input openTextResponse" type="text" rows="3" maxrows="6" id="openText-<%=q.getQuestionId()%>" ></textarea>
                                                     <label class="mdl-textfield__label" for="openText"><i>Note: Your responses are <b>confidential</b></i></label>

@@ -17,7 +17,7 @@
         <meta charset="utf-8">
 
         <link href="assets/css/material.min.css" rel="stylesheet" type="text/css">
-        
+
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link href="assets/css/styles.css" rel="stylesheet" type="text/css">
 
@@ -73,7 +73,7 @@
             </div>
         </div>
         <script src="assets/js/material.min.js"></script>
-        <% if (request.getParameter("loginFailure") != null ) {%>
+        <% if (request.getParameter("loginFailure") != null) {%>
         <script>
             componentHandler.upgradeDom('MaterialSnackbar');
             (function () {
@@ -86,8 +86,19 @@
                 snackbarContainer.MaterialSnackbar.showSnackbar(data);
             }());
         </script>
-
-        <% }%>
-
+        <% } else if (request.getParameter("signOut") != null) {%>
+        <script>
+            componentHandler.upgradeDom('MaterialSnackbar');
+            (function () {
+                'use strict';
+                var snackbarContainer = document.querySelector('#demo-snackbar-example');
+                var data = {
+                    message: 'You have been successfully signed out.',
+                    timeout: 7000
+                };
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            }());
+        </script>
+        <%}%>
     </body>
 </html>

@@ -86,9 +86,11 @@
                         for="header-menu">
                         <li class="mdl-menu__item">Help & Feedback</li>
                         <li class="mdl-menu__item">Settings</li>
-                        <li class="mdl-menu__item">
-                            <a href="../signout.jsp" id="signOut">Sign out</a>
-                        </li>
+                        <a href="../signout.jsp" id="signOut">
+                            <li class="mdl-menu__item"> 
+                                Sign out
+                            </li>
+                        </a>
                     </ul>
                     <a>
                         <span class="android-mobile-title mdl-layout-title" id="switchUserMobile">
@@ -107,14 +109,14 @@
                     </ul>
                 </div>
             </header>
-<!--            <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">
-                    <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
-                </span>
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="">Link</a>
-                </nav>
-            </div>-->
+            <!--            <div class="mdl-layout__drawer">
+                            <span class="mdl-layout-title">
+                                <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
+                            </span>
+                            <nav class="mdl-navigation">
+                                <a class="mdl-navigation__link" href="">Link</a>
+                            </nav>
+                        </div>-->
             <main class="android-content mdl-layout__content">
                 <div class="page-content">
                     <div class="android-card-container mdl-grid">

@@ -71,7 +71,7 @@
                         <li class="mdl-menu__item">HR</li>
                     </a>
                     <%}
-                            if (isEmployee) {%>
+                        if (isEmployee) {%>
                     <a href="../employee/index.jsp">
                         <li class="mdl-menu__item">Employee</li>
                     </a>
@@ -96,9 +96,11 @@
                     for="header-menu">
                     <li class="mdl-menu__item">Help & Feedback</li>
                     <li class="mdl-menu__item">Settings</li>
-                    <li class="mdl-menu__item"> 
-                        <a href="../signout.jsp" id="signOut">Sign out</a>
-                    </li>
+                    <a href="../signout.jsp" id="signOut">
+                        <li class="mdl-menu__item"> 
+                            Sign out
+                        </li>
+                    </a>
                 </ul>
                 <!--</div>-->
                 <!-- Right aligned menu below button -->
