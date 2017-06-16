@@ -21,7 +21,7 @@ $(document).ready(function () {
     plotOpenTextImage(2);
 
     go();
-    plotRelationship();
+    
 
     //WORDCLOUD
     var data = "data.json";
@@ -380,7 +380,8 @@ function go() {
             keyPeople = JSON.parse(response.keyPeople);
             selfPerception = JSON.parse(response.selfPerception);
             wordCloud = JSON.parse(response.wordCloud);
-            console.log("fetched data successfully");
+            
+            plotRelationship();
         },
         error: function (resp, err) {
             console.log("unable to fetch data error messsage : " + err);
