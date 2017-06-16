@@ -4,8 +4,15 @@
     Author     : adoshi
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.lang.String"%>
+<%@page import="java.lang.Integer"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
+<%@page import="org.owen.filter.FilterHelper"%>
+<%@page import="org.owen.filter.Filter"%>
 <%@page import="org.owen.relationship.RelationshipHelper"%>
+<%@page import="org.owen.relationship.Relationship"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@include file="../common.jsp" %>
 
@@ -59,7 +66,7 @@
                             <li class="mdl-menu__item">Admin</li>
                         </a>
                         <%}
-                                if (isEmployee) {%>         
+                            if (isEmployee) {%>         
                         <a href="../employee/index.jsp">
                             <li class="mdl-menu__item">Employee</li>
                         </a>
@@ -84,9 +91,11 @@
                         for="header-menu">
                         <li class="mdl-menu__item">Help & Feedback</li>
                         <li class="mdl-menu__item">Settings</li>
-                        <li class="mdl-menu__item"> 
-                            <a href="../signout.jsp" id="signOut">Sign out</a>
-                        </li>
+                        <a href="../signout.jsp" id="signOut">
+                            <li class="mdl-menu__item"> 
+                                Sign out
+                            </li>
+                        </a>
                     </ul>
                     <!--</div>-->
                     <!-- Right aligned menu below button -->
@@ -121,44 +130,55 @@
             <main class="android-content mdl-layout__content">
                 <div class="page-content">
                     <div class="android-card-container mdl-grid filterPanelParent">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-shadow--3dp filterPanel">
-                            
-                            <%
-                                RelationshipHelper rh = new RelationshipHelper();
-                                String relValues = rh.getRelationshipValues(comId);
-                               
-
-                            %>
-                            
-                            
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-shadow--3dp filterPanel">                            
                             <form >
                                 <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                     <select id="dropdown_function" name="function" class="mdl-selectfield__select" required>
-                                        <option value="0">Advertising</option>
-                                        <option value="1">Finance</option>
-                                        <option value="2">HR</option>
+                                        <%
+                                            FilterHelper fh = new FilterHelper();
+                                            Filter function = fh.getFilterValues(comId, "Function");
+                                            Map<Integer, String> filterValues = function.getFilterValues();
+                                            for (Map.Entry<Integer, String> entry : filterValues.entrySet()) {
+                                                int id = entry.getKey();
+                                                String value = entry.getValue();
+                                        %>
+                                        <option value="<%=id%>"><%=value%></option>
+                                        <%}%>
                                     </select>
                                     <label class="mdl-selectfield__label" for="myselect">FUNCTION</label>
                                     <span class="mdl-selectfield__error">Please select a function</span>
                                 </div>
                                 <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                     <select id="dropdown_position" name="position" class="mdl-selectfield__select" required>
-                                        <option value="0">Asst. Manager</option>
-                                        <option value="1">Sr. Advisor</option>
-                                        <option value="2">Consultant</option>
+                                        <%
+                                            Filter position = fh.getFilterValues(comId, "Position");
+                                            Map<Integer, String> positionValues = position.getFilterValues();
+                                            for (Map.Entry<Integer, String> entry : positionValues.entrySet()) {
+                                                int id = entry.getKey();
+                                                String value = entry.getValue();
+                                        %>
+                                        <option value="<%=id%>"><%=value%></option>
+                                        <%}%>
                                     </select>
                                     <label class="mdl-selectfield__label" for="myselect">POSITION</label>
                                     <span class="mdl-selectfield__error">Please select a position</span>
                                 </div>
                                 <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                     <select id="dropdown_location" name="location" class="mdl-selectfield__select" required>
-                                        <option value="0">Mumbai</option>
-                                        <option value="1">Paris</option>
+                                        <%
+                                            Filter location = fh.getFilterValues(comId, "Location");
+                                            Map<Integer, String> locationValues = location.getFilterValues();
+                                            for (Map.Entry<Integer, String> entry : locationValues.entrySet()) {
+                                                int id = entry.getKey();
+                                                String value = entry.getValue();
+                                        %>
+                                        <option value="<%=id%>"><%=value%></option>
+                                        <%}%>
                                     </select>
                                     <label class="mdl-selectfield__label" for="myselect">LOCATION</label>
                                     <span class="mdl-selectfield__error">Please select a location</span>
                                 </div>
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--orange-A700 mdl-color-text--white">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--orange-A700 mdl-color-text--white" onclick="go()">
                                     Button
                                 </button>
                             </form>
@@ -168,19 +188,10 @@
                             <div class="mdl-card__title font2x">RELATIONSHIP</div>
                             <div class="mdl-grid sectionGridLayoutWidth">
                                 <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
-                                    <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                                        <select id="dropdown_relationship" name="relationship" class="mdl-selectfield__select" required>
-                                            <option value="0">Collaboration</option>
-                                            <option value="1">Innovation</option>
-                                            <option value="2">Mentorship</option>
-                                            <option value="3">Social Cohesion</option>
-                                        </select>
-                                        <label class="mdl-selectfield__label" for="myselect">RELATIONSHIP</label>
-                                        <span class="mdl-selectfield__error">Please select a Relationship type</span>
-                                    </div>
+                                    <div id="dropdown_relationship"></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
-                                    <div class="responseCountContainer">Responses:<div class="responseCount">279</div></div>
+                                    <div class="responseCountContainer">Responses:<div class="responseCount" id="weSectionResponses"></div></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">Network Diagram</div>
@@ -188,17 +199,34 @@
                                 </div>
                                 <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">Index Value</div>
-                                    <div class="mdl-card__supporting-text weSectionIndex"></div>
+                                    <div class="mdl-card__supporting-text" id="weSectionIndex"></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">List of Key People</div>
-                                    <div class="mdl-card__supporting-text weSectionListOfPeople"></div>
+                                    <div class="mdl-card__supporting-text">
+                                        <table class="mdl-data-table mdl-js-data-table" id="weSectionListOfPeople">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">People</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">EXPLANATION</div>
-                                    <div class="mdl-card__supporting-text weSectionExplanation">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+                                    <div class="mdl-card__supporting-text " >
+                                        <table class="mdl-data-table mdl-js-data-table" id="weSectionExplanation">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">Explanation</th>
+                                                    <th class="mdl-data-table__cell--non-numeric">Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+<!--                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title weSectionAction">ACTION</div>
                                     <div class="mdl-card__supporting-text">
                                         <ul>
@@ -208,7 +236,7 @@
                                             <li>Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp openText">
@@ -216,15 +244,7 @@
                             <div class="mdl-card__title font2x">Sentiment</div>
                             <div class="mdl-grid sectionGridLayoutWidth">
                                 <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
-                                    <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                                        <select id="dropdown_theme" name="theme" class="mdl-selectfield__select" required>
-                                            <option value="0">Theme 1</option>
-                                            <option value="1">Theme 2</option>
-                                            <option value="2">Theme 3</option>
-                                        </select>
-                                        <label class="mdl-selectfield__label" for="myselect">RELATIONSHIP</label>
-                                        <span class="mdl-selectfield__error">Please select a Relationship type</span>
-                                    </div>
+                                    <div id="dropdown_theme"></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
                                     <div class="responseCountContainer">Responses:<div class="responseCount">279</div></div>
@@ -239,64 +259,64 @@
 
                                     </div>
                                 </div>
-                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
-                                    <div class="mdl-card__title">Word Association (Bigrams)</div>
-                                    <div class="mdl-card__supporting-text openTextTable">
-                                        <table class="mdl-data-table mdl-js-data-table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="mdl-data-table__cell--non-numeric">Word</th>
-                                                    <th class="mdl-data-table__cell--non-numeric">Bigram Pair</th>
-                                                    <th>Value</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric" rowspan="5">Word 1</td>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 1 word 1</td>
-                                                    <td>70</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 2 word 1</td>
-                                                    <td>60</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 3 word 1</td>
-                                                    <td>50</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 4 word 1</td>
-                                                    <td>40</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 5 word 1</td>
-                                                    <td>30</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric" rowspan="5">Word 2</td>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 1 word 2</td>
-                                                    <td>70</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 2 word 2</td>
-                                                    <td>60</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 3 word 2</td>
-                                                    <td>50</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 4 word 2</td>
-                                                    <td>40</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 5 word 2</td>
-                                                    <td>30</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                <!--                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                                    <div class="mdl-card__title">Word Association (Bigrams)</div>
+                                                                    <div class="mdl-card__supporting-text openTextTable">
+                                                                        <table class="mdl-data-table mdl-js-data-table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th class="mdl-data-table__cell--non-numeric">Word</th>
+                                                                                    <th class="mdl-data-table__cell--non-numeric">Bigram Pair</th>
+                                                                                    <th>Value</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric" rowspan="5">Word 1</td>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 1 word 1</td>
+                                                                                    <td>70</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 2 word 1</td>
+                                                                                    <td>60</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 3 word 1</td>
+                                                                                    <td>50</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 4 word 1</td>
+                                                                                    <td>40</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 5 word 1</td>
+                                                                                    <td>30</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric" rowspan="5">Word 2</td>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 1 word 2</td>
+                                                                                    <td>70</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 2 word 2</td>
+                                                                                    <td>60</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 3 word 2</td>
+                                                                                    <td>50</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 4 word 2</td>
+                                                                                    <td>40</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td class="mdl-data-table__cell--non-numeric">Bigram 5 word 2</td>
+                                                                                    <td>30</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>-->
                                 <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">EXPLANATION</div>
                                     <div class="mdl-card__supporting-text openTextExplanation">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
@@ -317,15 +337,7 @@
                             <div class="mdl-card__title">SELF PERCEPTION</div>
                             <div class="mdl-grid sectionGridLayoutWidth">
                                 <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
-                                    <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                                        <select id="dropdown_component" name="component" class="mdl-selectfield__select" required>
-                                            <option value="0">Component 1</option>
-                                            <option value="1">Component 2</option>
-                                            <option value="2">Component 3</option>
-                                        </select>
-                                        <label class="mdl-selectfield__label" for="myselect">RELATIONSHIP</label>
-                                        <span class="mdl-selectfield__error">Please select a Relationship type</span>
-                                    </div>
+                                    <div id="dropdown_component"></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
                                     <div class="responseCountContainer">Responses:<div class="responseCount">279</div></div>

@@ -4,6 +4,15 @@
  * and open the template in the editor.
  */
 
+var metricList;
+var sentimentList;
+var selfPerceptionList;
+var sentimentScore;
+var indexValue;
+var keyPeople;
+var selfPerception;
+var wordCloud;
+
 //$(window).on("load", function () {
 $(document).ready(function () {
     $('.filterPanel').Stickyfill();
@@ -11,10 +20,13 @@ $(document).ready(function () {
     //Function call with value to change smiley of sentiment 
     plotOpenTextImage(2);
 
+    go();
+    plotRelationship();
+
     //WORDCLOUD
     var data = "data.json";
     d3.json(data, function (key) {
-        console.log(key);
+//        console.log(key);
         var ndx = crossfilter(key);
         plotWordCloud(ndx);
     });
@@ -51,6 +63,62 @@ $(document).ready(function () {
 
 });
 
+function plotRelationship() {
+
+// merging multiple datasets into one
+    var joined = {};
+    metricList.forEach(function (u) {
+        joined[u.relId] = u;
+    });
+
+    indexValue.forEach(function (u) {
+        joined[u.relId].indexValue = u.indexValue;
+        joined[u.relId].explanation = u.explanation;
+        joined[u.relId].action = u.action;
+        joined[u.relId].responseCount = u.responseCount;
+    });
+
+    keyPeople.forEach(function (u) {
+        joined[u.relId].keyPeople = u.keyPeople;
+    });
+
+    var dataSet = [];
+    for (var relId in joined) {
+        dataSet.push(joined[relId]);
+    }
+
+    var cf = crossfilter(dataSet);
+
+    var rel = cf.dimension(function (d) {
+        return d.relName;
+    });
+    var relGroup = rel.group();
+    plotDcDropdown("dropdown_relationship", rel, relGroup, ".weSection");
+
+    var index = cf.dimension(function (d) {
+        return d.indexValue;
+    });
+    plotDcNumber("weSectionIndex", index, index.group(), ".weSection");
+
+    var keyPeopleDim = cf.dimension(function (d) {
+        return d.keyPeople;
+    });
+    plotTable("weSectionListOfPeople", keyPeopleDim, ".weSection");
+
+    var explanationDim = cf.dimension(function (d) {
+        return d.explanation;
+    });
+    plotTableExplanation("weSectionExplanation", explanationDim, ".weSection");
+    
+    var responseDim = cf.dimension(function (d){
+        return d.responseCount;
+    });
+        plotDcNumber("weSectionResponses", responseDim, responseDim.group(), ".weSection");
+
+    
+
+}
+
 //Used across Network, Open Text and Self Perception to select relationship, theme and component
 function plotDcDropdown(chartId, cfDimension, cfGroup, panelId) {
     var chart = dc.selectMenu("#" + chartId, panelId);
@@ -65,9 +133,9 @@ function plotDcDropdown(chartId, cfDimension, cfGroup, panelId) {
 function plotDcNumber(chartId, cfDimension, cfGroup, panelId) {
     var chart = dc.numberDisplay("#" + chartId, panelId);
     chart
-            .formatNumber(d3.format(".3s"))
+//            .formatNumber(d3.format(".3s"))
             .valueAccessor(function (d) {
-                return d.value.avg;
+                return d.key;
             })
             .group(cfGroup);
 
@@ -208,7 +276,7 @@ function plotWordCloud(ndx) {
     var wordcloudChart = dc.wordcloudChart('.openTextWordCloud');
 
     var wordDim = ndx.dimension(function (d) {
-        console.log(d);
+//        console.log(d);
         return d.key;
     });
 
@@ -233,4 +301,89 @@ function plotWordCloud(ndx) {
     });
 
     wordcloudChart.render();
+}
+
+function plotTableExplanation(chartId, cfDimension, panelId) {
+    var chart = dc.dataTable("#" + chartId, panelId);
+    chart
+            .width(200)
+            .height(500)
+            .dimension(cfDimension)
+            .group(function (d) {
+                return d.indexValue;
+            })
+            .showGroups(false)
+            .columns([{
+                    label: 'Explanation',
+                    format: function (d) {
+                        return d.explanation;
+                    }
+                },
+                {
+                    label: 'Action',
+                    format: function (d) {
+                        return d.action;
+                    }
+                }]);
+//            .sortBy(function (d) {
+//                return d.value;
+//            });
+//            .order(d3.descending)
+    chart.render();
+}
+
+function plotTable(chartId, cfDimension, panelId) {
+    var chart = dc.dataTable("#" + chartId, panelId);
+    chart
+            .width(200)
+            .height(500)
+            .dimension(cfDimension)
+            .group(function (d) {
+                return d.keyPeople;
+            })
+            .showGroups(false)
+            .columns([{
+                    label: 'Employee Name',
+                    format: function (d) {
+                        return d.keyPeople;
+                    }
+                }]);
+//            .sortBy(function (d) {
+//                return d.value;
+//            });
+//            .order(d3.descending)
+    chart.render();
+}
+
+function go() {
+    var funcId = $('#dropdown_function option:selected').val();
+    var posId = $('#dropdown_position option:selected').val();
+    var locId = $('#dropdown_location option:selected').val();
+    var jsonObj = {
+        "funcId": funcId,
+        "posId": posId,
+        "locId": locId
+    };
+    var postData = {'jsonObj': JSON.stringify(jsonObj)};
+    jQuery.ajax({
+        type: "POST",
+        url: "../hr/fetchData.jsp",
+        data: postData,
+        async: false,
+        success: function (resp) {
+            var response = JSON.parse(resp);
+            metricList = JSON.parse(response.metricList);
+            sentimentList = JSON.parse(response.sentimentList);
+            selfPerceptionList = JSON.parse(response.selfPerceptionList);
+            sentimentScore = JSON.parse(response.sentimentScore);
+            indexValue = JSON.parse(response.indexValue);
+            keyPeople = JSON.parse(response.keyPeople);
+            selfPerception = JSON.parse(response.selfPerception);
+            wordCloud = JSON.parse(response.wordCloud);
+            console.log("fetched data successfully");
+        },
+        error: function (resp, err) {
+            console.log("unable to fetch data error messsage : " + err);
+        }
+    });
 }
