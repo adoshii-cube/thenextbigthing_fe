@@ -524,8 +524,8 @@ textarea{
 }
 
 .android-card-container .mdl-card__title-text {
-    color: black;
-    height: auto;
+/*    color: black;
+    height: auto;*/
 }
 
 .android-card-container .mdl-card__supporting-text {
@@ -1191,12 +1191,12 @@ form .mdl-textfield{
 
 .download > .mdl-card__title {
     background: url(../images/icon-download.png) center right 5% no-repeat #f5f5f5;
-    background-size: contain;
+    background-size: 10%;
 }
 
 .upload > .mdl-card__title {
     background: url(../images/icon-upload.png) center right 5% no-repeat #f5f5f5;
-    background-size: contain;
+    background-size: 10%;
 }
 
 .mdl-data-table{

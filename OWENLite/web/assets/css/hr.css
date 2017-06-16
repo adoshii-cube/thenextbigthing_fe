@@ -522,7 +522,7 @@ textarea{
 }
 
 .android-card-container .mdl-card__supporting-text {
-    /*margin: 0 auto;*/
+    margin: 0 auto;
     /*height: auto;*/
     /*color: black;*/
     /*padding-bottom: 56px;*/
@@ -829,6 +829,7 @@ select {
     /* color: rgba(0,0,0, 0.26); */
     border: none;
     border-bottom: 1px solid rgba(0,0,0, 0.12);
+    outline: none;
 }
 
 #dropdown_relationship,
@@ -842,12 +843,9 @@ select {
     text-align: left;
 }
 
-#weSectionListOfPeople{
-    width: 100%;
-}
-
 .mdl-data-table{
     white-space: inherit;
+    width: 100%;
 }
 
 #weSectionIndex {
@@ -887,9 +885,9 @@ select {
 .filterPanel{
     background-color: #ffffff;
     z-index: 5;
-    /*position: -webkit-sticky;*/
-    /*position: sticky;*/
-    /*top: 16px;*/
+    position: -webkit-sticky;
+    position: sticky;
+    top: 16px;
     width: 100%;
 }
 
@@ -902,6 +900,10 @@ select {
     /*right: 16px;*/
     display: inline-flex;
     float: right;
+}
+
+#weSectionNetwork{
+    height: 350px;
 }
 
 .sectionGridLayoutWidth{
@@ -935,6 +937,10 @@ select {
     display: block;
     background-size: 50% !important;
     height: 100%;
+}
+
+.openTextImage{
+    font-size: 0;
 }
 
 .openTextImage.happiest{

@@ -68,7 +68,7 @@
                     <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
                         <%if (isAdmin) {%>
                     <a href="../admin/index.jsp">
-                        <li class="mdl-menu__item">HR</li>
+                        <li class="mdl-menu__item">Admin</li>
                     </a>
                     <%}
                         if (isEmployee) {%>
@@ -129,14 +129,14 @@
                 <%}%>
             </div>
         </header>
-        <div class="mdl-layout__drawer">
+<!--        <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">
                 <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
             </span>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="">Link</a>
             </nav>
-        </div>
+        </div>-->
         <main class="android-content mdl-layout__content">
             <div class="page-content">
                 <div class="android-card-container mdl-grid explore">
@@ -164,14 +164,14 @@
                     renderers: renderers,
                     cols: ["Party"], rows: ["Province"],
                     rendererName: "Horizontal Stacked Bar Chart",
-                    rowOrder: "value_z_to_a", colOrder: "value_z_to_a",
-                    rendererOptions: {
-                        c3: {data: {colors: {
-                                    Liberal: '#dc3912', Conservative: '#3366cc', NDP: '#ff9900',
-                                    Green: '#109618', 'Bloc Quebecois': '#990099'
-                                }},
-                            size: {height: 200, width: 550}}
-                    }
+                    rowOrder: "value_z_to_a", colOrder: "value_z_to_a"
+//                    rendererOptions: {
+//                        c3: {data: {colors: {
+//                                    Liberal: '#dc3912', Conservative: '#3366cc', NDP: '#ff9900',
+//                                    Green: '#109618', 'Bloc Quebecois': '#990099'
+//                                }},
+//                            size: {height: 200, width: 550}}
+//                    }
                 });
             });
         });

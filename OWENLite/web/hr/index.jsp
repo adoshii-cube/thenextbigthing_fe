@@ -119,19 +119,19 @@
                     <%}%>
                 </div>
             </header>
-            <div class="mdl-layout__drawer">
+<!--            <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">
                     <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
                 </span>
                 <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" href="">Link</a>
                 </nav>
-            </div>
+            </div>-->
             <main class="android-content mdl-layout__content">
                 <div class="page-content">
                     <div class="android-card-container mdl-grid filterPanelParent">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-shadow--3dp filterPanel">                            
-                            <form >
+                            <!--<form >-->
                                 <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                     <select id="dropdown_function" name="function" class="mdl-selectfield__select" required>
                                         <%
@@ -179,9 +179,9 @@
                                     <span class="mdl-selectfield__error">Please select a location</span>
                                 </div>
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--orange-A700 mdl-color-text--white" onclick="go()">
-                                    Button
+                                    GO
                                 </button>
-                            </form>
+                            <!--</form>-->
                         </div>
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp weSection">
                             <a id="relationship"></a>
@@ -195,7 +195,7 @@
                                 </div>
                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">Network Diagram</div>
-                                    <div class="mdl-card__supporting-text weSectionNetwork"></div>
+                                    <div class="mdl-card__supporting-text" id="weSectionNetwork"></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">Index Value</div>
@@ -214,7 +214,7 @@
                                     </div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                    <div class="mdl-card__title">EXPLANATION</div>
+                                    <div class="mdl-card__title">Understanding the charts</div>
                                     <div class="mdl-card__supporting-text " >
                                         <table class="mdl-data-table mdl-js-data-table" id="weSectionExplanation">
                                             <thead>
@@ -226,17 +226,17 @@
                                         </table>
                                     </div>
                                 </div>
-<!--                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                    <div class="mdl-card__title weSectionAction">ACTION</div>
-                                    <div class="mdl-card__supporting-text">
-                                        <ul>
-                                            <li>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</li>
-                                            <li>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</li>
-                                            <li>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</li>
-                                            <li>Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</li>
-                                        </ul>
-                                    </div>
-                                </div>-->
+                                <!--                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                                    <div class="mdl-card__title weSectionAction">ACTION</div>
+                                                                    <div class="mdl-card__supporting-text">
+                                                                        <ul>
+                                                                            <li>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</li>
+                                                                            <li>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</li>
+                                                                            <li>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</li>
+                                                                            <li>Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>-->
                             </div>
                         </div>
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp openText">
@@ -247,15 +247,15 @@
                                     <div id="dropdown_theme"></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
-                                    <div class="responseCountContainer">Responses:<div class="responseCount">279</div></div>
+                                    <div class="responseCountContainer">Responses:<div class="responseCount" id="openTextResponses"></div></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">Sentiment Image</div>
-                                    <div class="mdl-card__supporting-text openTextImage"></div>
+                                    <div class="mdl-card__supporting-text openTextImage" id="openTextImage"></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--8-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">Word Cloud</div>
-                                    <div class="mdl-card__supporting-text openTextWordCloud">
+                                    <div class="mdl-card__supporting-text openTextWordCloud" id="openTextWordCloud">
 
                                     </div>
                                 </div>
@@ -317,19 +317,29 @@
                                                                         </table>
                                                                     </div>
                                                                 </div>-->
-                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">EXPLANATION</div>
-                                    <div class="mdl-card__supporting-text openTextExplanation">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
-                                </div>
-                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                    <div class="mdl-card__title">ACTION</div>
-                                    <div class="mdl-card__supporting-text openTextAction">
-                                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                        <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
-                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-                                        <p>Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+                                    <!--<div class="mdl-card__supporting-text openTextExplanation">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>-->
+                                    <div class="mdl-card__supporting-text">
+                                        <table class="mdl-data-table mdl-js-data-table" id="openTextExplanation">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">Explanation</th>
+                                                    <th class="mdl-data-table__cell--non-numeric">Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
                                     </div>
                                 </div>
+                                <!--                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                                    <div class="mdl-card__title">ACTION</div>
+                                                                    <div class="mdl-card__supporting-text openTextAction">
+                                                                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                                                                        <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                                                        <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+                                                                        <p>Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+                                                                    </div>
+                                                                </div>-->
                             </div>
                         </div>
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp meSection">
@@ -340,27 +350,37 @@
                                     <div id="dropdown_component"></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
-                                    <div class="responseCountContainer">Responses:<div class="responseCount">279</div></div>
+                                    <div class="responseCountContainer">Responses:<div class="responseCount" id="meSectionResponses"></div></div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">Distribution of Scores</div>
                                     <div class="mdl-card__supporting-text meSectionDistribution"></div>
                                 </div>
-                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                     <div class="mdl-card__title">EXPLANATION</div>
-                                    <div class="mdl-card__supporting-text meSectionExplanation">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
-                                </div>
-                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                    <div class="mdl-card__title">ACTION</div>
-                                    <div class="mdl-card__supporting-text meSectionAction">
-                                        <ol>
-                                            <li>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</li>
-                                            <li>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</li>
-                                            <li>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</li>
-                                            <li>Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</li>
-                                        </ol>
+                                    <!--<div class="mdl-card__supporting-text meSectionExplanation">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>-->
+                                    <div class="mdl-card__supporting-text ">
+                                        <table class="mdl-data-table mdl-js-data-table" id="meSectionExplanation">
+                                            <thead>
+                                                <tr>
+                                                    <th class="mdl-data-table__cell--non-numeric">Explanation</th>
+                                                    <th class="mdl-data-table__cell--non-numeric">Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
                                     </div>
                                 </div>
+                                <!--                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                                    <div class="mdl-card__title">ACTION</div>
+                                                                    <div class="mdl-card__supporting-text meSectionAction">
+                                                                        <ol>
+                                                                            <li>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</li>
+                                                                            <li>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</li>
+                                                                            <li>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</li>
+                                                                            <li>Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</li>
+                                                                        </ol>
+                                                                    </div>
+                                                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -370,6 +390,7 @@
         <script src="../assets/js/material.min.js"></script>
         <script src="../assets/js/mdl-selectfield.min.js"></script>
         <script src="../assets/js/hr/index/stickyfill.min.js"></script>
+        <script src="../assets/js/hr/index/vis.min.js"></script>
 
         <!--Wordcloud + dcjs bar chart + dropdown-->
         <script src="../assets/js/hr/index/d3.min.js"></script>
