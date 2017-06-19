@@ -4,6 +4,8 @@
     Author     : rashmi
 --%>
 
+<%@page import="org.owen.hr.Edge"%>
+<%@page import="org.owen.hr.Node"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.owen.relationship.Relationship"%>
 <%@page import="org.owen.relationship.RelationshipHelper"%>
@@ -50,13 +52,15 @@
     int positionId = UtilHelper.getIntValue(jsonObj.getString("posId"));
     int locationId = UtilHelper.getIntValue(jsonObj.getString("locId"));
     HrDashboardHelper hrHelper = new HrDashboardHelper();
-//    Map<String, List<?>> networkData = hrHelper.getTeamNetworkDiagram(comId, functionId, positionId, locationId);
+    String nodes = hrHelper.getNodeList(comId, functionId, positionId, locationId);
+    String edges = hrHelper.getEdgeList(comId, functionId, positionId, locationId);
     String indexValue = hrHelper.getRelIndexValue(comId, functionId, positionId, locationId);
     String keyPeople = hrHelper.getRelKeyPeople(comId, functionId, positionId, locationId);
     String wordCloud = hrHelper.getWordCloud(comId, functionId, positionId, locationId);
     String sentimentScore = hrHelper.getSentimentScore(comId, functionId, positionId, locationId);
     String selfPerception = hrHelper.getSelfPerception(comId, functionId, positionId, locationId);
-
+    result.put("nodes", nodes);
+    result.put("edges", edges);
     result.put("indexValue", indexValue);
     result.put("keyPeople", keyPeople);
     result.put("wordCloud", wordCloud);

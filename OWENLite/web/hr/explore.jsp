@@ -4,6 +4,9 @@
     Author     : adoshi
 --%>
 
+<%@page import="jdk.nashorn.internal.parser.JSONParser"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="org.owen.hr.HrDashboardHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../common.jsp" %>
 
@@ -129,14 +132,14 @@
                 <%}%>
             </div>
         </header>
-<!--        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">
-                <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
-            </span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Link</a>
-            </nav>
-        </div>-->
+        <!--        <div class="mdl-layout__drawer">
+                    <span class="mdl-layout-title">
+                        <img class="android-logo-image" src="../assets/images/OWEN_Logo.png">
+                    </span>
+                    <nav class="mdl-navigation">
+                        <a class="mdl-navigation__link" href="">Link</a>
+                    </nav>
+                </div>-->
         <main class="android-content mdl-layout__content">
             <div class="page-content">
                 <div class="android-card-container mdl-grid explore">
@@ -150,6 +153,12 @@
             </div>
         </main>
     </div>
+    <%
+        HrDashboardHelper hr = new HrDashboardHelper();
+        String exploreData = hr.getExploreData(comId);
+
+    %>
+    <input type="hidden" id="data" value='<%=exploreData%>'/>
     <script src="../assets/js/material.min.js"></script>
     <script type="text/javascript">
 //https://github.com/nicolaskruchten/pivottable
@@ -158,13 +167,14 @@
 
             var renderers = $.extend($.pivotUtilities.renderers,
                     $.pivotUtilities.c3_renderers);
+            var json = $('#data').val();
+            var obj = JSON.parse(json);
 
-            $.getJSON("mps.json", function (mps) {
-                $("#pivotTable").pivotUI(mps, {
-                    renderers: renderers,
-                    cols: ["Party"], rows: ["Province"],
-                    rendererName: "Horizontal Stacked Bar Chart",
-                    rowOrder: "value_z_to_a", colOrder: "value_z_to_a"
+            $("#pivotTable").pivotUI(obj, {
+                renderers: renderers,
+                cols: ["function"], rows: ["location"],
+                rendererName: "Horizontal Stacked Bar Chart",
+                rowOrder: "value_z_to_a", colOrder: "value_z_to_a"
 //                    rendererOptions: {
 //                        c3: {data: {colors: {
 //                                    Liberal: '#dc3912', Conservative: '#3366cc', NDP: '#ff9900',
@@ -172,8 +182,8 @@
 //                                }},
 //                            size: {height: 200, width: 550}}
 //                    }
-                });
             });
+
         });
     </script>
     <!--<script src="../assets/js/hr.js"></script>-->

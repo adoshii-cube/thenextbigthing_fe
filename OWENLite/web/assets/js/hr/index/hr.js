@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 
+
 var metricList;
+var nodes;
+var edges;
 var sentimentList;
 var selfPerceptionList;
 var sentimentScore;
@@ -17,21 +20,7 @@ var wordCloud;
 $(document).ready(function () {
     $('.filterPanel').Stickyfill();
 
-    //Function call with value to change smiley of sentiment 
-    plotOpenTextImage(2);
-
-    go();
-    
-
-    //WORDCLOUD
-    var data = "data.json";
-    d3.json(data, function (key) {
-//        console.log(key);
-        var ndx = crossfilter(key);
-        plotWordCloud(ndx);
-    });
-
-    //Smooth Scroll from Header
+//Smooth Scroll from Header
     var nav = $('a');
     if (nav.length) {
         // Add smooth scrolling to all links
@@ -60,8 +49,45 @@ $(document).ready(function () {
         });
     }
 
-
+    go();
 });
+
+function go() {
+    var funcId = $('#dropdown_function option:selected').val();
+    var posId = $('#dropdown_position option:selected').val();
+    var locId = $('#dropdown_location option:selected').val();
+    var jsonObj = {
+        "funcId": funcId,
+        "posId": posId,
+        "locId": locId
+    };
+    var postData = {'jsonObj': JSON.stringify(jsonObj)};
+    jQuery.ajax({
+        type: "POST",
+        url: "../hr/fetchData.jsp",
+        data: postData,
+        async: false,
+        success: function (resp) {
+            var response = JSON.parse(resp);
+            nodes = JSON.parse(response.nodes);
+            edges = JSON.parse(response.edges);
+            metricList = JSON.parse(response.metricList);
+            sentimentList = JSON.parse(response.sentimentList);
+            selfPerceptionList = JSON.parse(response.selfPerceptionList);
+            sentimentScore = JSON.parse(response.sentimentScore);
+            indexValue = JSON.parse(response.indexValue);
+            keyPeople = JSON.parse(response.keyPeople);
+            selfPerception = JSON.parse(response.selfPerception);
+            wordCloud = JSON.parse(response.wordCloud);
+            plotRelationship();
+            plotSentiment();
+            plotComponent();
+        },
+        error: function (resp, err) {
+            console.log("unable to fetch data error messsage : " + err);
+        }
+    });
+}
 
 function plotRelationship() {
 
@@ -109,14 +135,14 @@ function plotRelationship() {
         return d.explanation;
     });
     plotTableExplanation("weSectionExplanation", explanationDim, ".weSection");
-    
-    var responseDim = cf.dimension(function (d){
+
+    var responseDim = cf.dimension(function (d) {
         return d.responseCount;
     });
-        plotDcNumber("weSectionResponses", responseDim, responseDim.group(), ".weSection");
+    plotDcNumber("weSectionResponses", responseDim, responseDim.group(), ".weSection");
 
-    
 
+    plotVisNetwork("weSectionNetwork", ".weSection");
 }
 
 //Used across Network, Open Text and Self Perception to select relationship, theme and component
@@ -135,120 +161,49 @@ function plotDcNumber(chartId, cfDimension, cfGroup, panelId) {
     chart
 //            .formatNumber(d3.format(".3s"))
             .valueAccessor(function (d) {
+                plotVisNetwork("weSectionNetwork", ".weSection");
+                plotOpenTextImage(d.key);
                 return d.key;
             })
             .group(cfGroup);
 
-    setInterval(function () {
-        chart.redraw();
-    }, 0);
-}
-
-//Used in Self Perception to plot distribution of responses
-function plotDcBar(chartId, cfDimension, cfGroup, panelId) {
-    var chart = dc.barChart("#" + chartId, panelId);
-    chart
-            .margins({top: 0, bottom: 30, left: 50, right: 20})
-            .dimension(cfDimension)
-            .group(cfGroup)
-//            .yAxisLabel("Count")
-            .elasticY(true)
-//            .showYAxis(false)
-            .valueAccessor(function (p) {
-                return p.value.avg;
-            })
-            .x(d3.scale.ordinal().domain(cfDimension)) // Need the empty val to offset the first value
-            .xUnits(dc.units.ordinal) // Tell Dc.js that we're using an ordinal x axis
-            .ordinalColors(['#7986CB'])
-//            .label(function (d) {
-//                return d.key + " = " + d.value;
-//            })
-            .centerBar(false);
-
-    chart.on("renderlet", function (chart) {
-        var gLabels = chart.select(".labels");
-        if (gLabels.empty()) {
-            gLabels = chart.select(".chart-body").append('g').classed('labels', true);
-        }
-
-        var gLabelsData = gLabels.selectAll("text").data(chart.selectAll(".bar")[0]);
-        gLabelsData.exit().remove(); //Remove unused elements
-
-        gLabelsData.enter().append("text"); //Add new elements
-
-        gLabelsData
-                .attr('text-anchor', 'middle')
-                .attr('fill', 'white')
-                .text(function (d) {
-                    return d3.select(d).data()[0].data.value.avg;
-                })
-                .attr('x', function (d) {
-                    return +d.getAttribute('x') + (d.getAttribute('width') / 2);
-                })
-                .attr('y', function (d) {
-                    return +d.getAttribute('y') + 15;
-                })
-                .attr('style', function (d) {
-                    if (+d.getAttribute('height') < 18)
-                        return "display:none";
-                });
-    });
-
-    plotResponsiveCharts(chartId);
+//    setInterval(function () {
+    chart.redraw();
+//    }, 0);
 }
 
 function plotVisNetwork(chartId, panelId) {
-    var selectedM1 = $('#dropdown_function').find(':selected').attr('value');
-    var selectedM2 = $('#dropdown_position').find(':selected').attr('value');
-    var selectedM3 = $('#dropdown_location').find(':selected').attr('value');
-
-//    var relationshipType = $('input[name=options]:checked').val();
-
-//    var container = document.getElementById('engagement_q5_chart6');
-    var ndata = nodes.data;
+    var selectedRelationship = $('#dropdown_relationship').find(':selected').attr('value');
+    var container = document.getElementById(chartId);
+    var ndata = nodes;
 
     ndata.forEach(function (d) {
         d.id = +d.id;
-        d.value = +d.value;
+        d.label = d.firstName + " " + d.lastName;
+        d.shape = 'ellipse';
     });
     var nDataSet = new vis.DataSet(ndata);
-    var items = nDataSet.get({
-        filter: function (item) {
-//            item.m4 = d3.time.format.utc("%d/%m/%y").parse(item.m4);
-//            if (date.length > 1) {
-//                date[0] = d3.time.format.utc("%d/%m/%y").parse(date[0].trim());
-//                date[1] = d3.time.format.utc("%d/%m/%y").parse(date[1].trim());
-//            }
 
-            return ((selectedM1 === "" ? item.m1 !== null : item.m1 === selectedM1)
-                    && (selectedM2 === "" ? item.m2 !== null : item.m2 === selectedM2)
-                    && (selectedM3 === "" ? item.m3 !== null : item.m3 === selectedM3)
-                    && (item.type === type)
-                    && (date.length <= 1
-                            ? item.m4 !== null
-                            : (d3.time.format.utc("%d/%m/%y").parse(item.m4) > d3.time.format.utc("%d/%m/%y").parse(date[0].trim())
-                                    && d3.time.format.utc("%d/%m/%y").parse(item.m4) < d3.time.format.utc("%d/%m/%Y").parse(date[1].trim()))));
-        }
-    });
-    var edata = edges.data;
+    var edata = edges;
     edata.forEach(function (d) {
         d.from = +d.from;
         d.to = +d.to;
-//        d.value = +d.value;
     });
+
     var eDataSet = new vis.DataSet(edata);
+    var items = eDataSet.get({
+        filter: function (item) {
+            return (selectedRelationship === "" ? item.relId !== null : item.relId === selectedRelationship);
+        }
+    });
     var networkData = {
-        nodes: items,
-        edges: eDataSet
+        nodes: nDataSet,
+        edges: items
     };
     var options = {};
     options.nodes = {
         color: '#C5CAE9'
     };
-
-
-
-
     var network = new vis.Network(container, networkData, options);
 }
 
@@ -260,49 +215,23 @@ function plotResponsiveCharts(chartId) {
 
 function plotOpenTextImage(value) {
     if ((value >= 0) && (value <= 1)) {
+
+        $(".openTextImage").removeClass("sad neutral happy happiest");
         $(".openTextImage").addClass("saddest");
     } else if ((value > 1) && (value <= 2)) {
+        $(".openTextImage").removeClass("saddest neutral happy happiest");
         $(".openTextImage").addClass("sad");
     } else if ((value > 2) && (value <= 3)) {
+        $(".openTextImage").removeClass("saddest sad happy happiest");
         $(".openTextImage").addClass("neutral");
     } else if ((value > 3) && (value <= 4)) {
+        $(".openTextImage").removeClass("saddest sad neutral happiest");
         $(".openTextImage").addClass("happy");
     } else if ((value > 4) && (value <= 5)) {
+        $(".openTextImage").removeClass("saddest sad neutral happy");
         $(".openTextImage").addClass("happiest");
     }
 }
-
-function plotWordCloud(ndx) {
-    var wordcloudChart = dc.wordcloudChart('.openTextWordCloud');
-
-    var wordDim = ndx.dimension(function (d) {
-//        console.log(d);
-        return d.key;
-    });
-
-    var wordGroup = wordDim.group().reduceSum(function (d) {
-        return d.value;
-    });
-
-    wordcloudChart.options({
-        height: 282,
-        width: 573,
-        minY: -10,
-        minX: -50,
-//        relativeSize: 20,
-        dimension: wordDim,
-        group: wordGroup,
-        valueAccessor: function (d) {
-            return d.value;
-        },
-        title: function (d) {
-            return [d.key, 'Word Count: ' + d.value].join('\n');
-        }
-    });
-
-    wordcloudChart.render();
-}
-
 function plotTableExplanation(chartId, cfDimension, panelId) {
     var chart = dc.dataTable("#" + chartId, panelId);
     chart
@@ -355,36 +284,236 @@ function plotTable(chartId, cfDimension, panelId) {
     chart.render();
 }
 
-function go() {
-    var funcId = $('#dropdown_function option:selected').val();
-    var posId = $('#dropdown_position option:selected').val();
-    var locId = $('#dropdown_location option:selected').val();
-    var jsonObj = {
-        "funcId": funcId,
-        "posId": posId,
-        "locId": locId
+function plotSentiment() {
+    var joined = {};
+
+    sentimentList.forEach(function (u) {
+        joined[u.relId] = u;
+    });
+
+    sentimentScore.forEach(function (u) {
+        joined[u.relId].metricValue = u.metricValue;
+        joined[u.relId].explanation = u.explanation;
+        joined[u.relId].action = u.action;
+        joined[u.relId].responseCount = u.responseCount;
+    });
+
+//    wordCloud.forEach(function (u) {
+////        console.log(u);
+//        joined[u.relId].wordCloud = u;
+//    });
+
+    var dataSet = [];
+    for (var relId in joined) {
+        dataSet.push(joined[relId]);
+    }
+
+    var cf = crossfilter(dataSet);
+
+    var rel = cf.dimension(function (d) {
+        return d.relName;
+    });
+    var relGroup = rel.group();
+    plotDcDropdown("dropdown_theme", rel, relGroup, ".openText");
+
+    var responseDim = cf.dimension(function (d) {
+        return d.responseCount;
+    });
+    plotDcNumber("openTextResponses", responseDim, responseDim.group(), ".openText");
+
+    var sentimentImageDim = cf.dimension(function (d) {
+        return d.metricValue;
+    });
+    plotDcNumber("openTextImage", sentimentImageDim, sentimentImageDim.group(), ".openText");
+
+    plotWordCloud("openTextWordCloud", ".openText");
+    $("#dropdown_theme select").on('change', function () {
+        plotWordCloud("openTextWordCloud", ".openText");
+    });
+    var explanationDim = cf.dimension(function (d) {
+        return d.explanation;
+    });
+    plotTableExplanation("openTextExplanation", explanationDim, ".openText");
+}
+
+function plotComponent() {
+    var joined = {};
+
+    selfPerceptionList.forEach(function (u) {
+        joined[u.relId] = u;
+    });
+
+    selfPerception.forEach(function (u) {
+//        console.log(u);
+        joined[u.relId].responseCount = u.responseCount;
+        joined[u.relId].explanation = u.explanation;
+        joined[u.relId].action = u.action;
+        joined[u.relId].level = u.level;
+
+//        joined[u.relId].stronglyAgree = u.stronglyAgree;
+//        joined[u.relId].stronglyAgreeOrg = u.stronglyAgreeOrg;
+//        joined[u.relId].agree = u.agree;
+//        joined[u.relId].agreeOrg = u.agreeOrg;
+//
+//        joined[u.relId].neutral = u.neutral;
+//        joined[u.relId].neutralOrg = u.neutralOrg;
+//
+//        joined[u.relId].disagree = u.disagree;
+//        joined[u.relId].disagreeOrg = u.disagreeOrg;
+//        joined[u.relId].stronglyDisagree = u.stronglyDisagree;
+//        joined[u.relId].stronglyDisagreeOrg = u.stronglyDisagreeOrg;
+    });
+
+    var dataSet = [];
+    for (var relId in joined) {
+        dataSet.push(joined[relId]);
+    }
+
+    var cf = crossfilter(dataSet);
+
+    var rel = cf.dimension(function (d) {
+        return d.relName;
+    });
+    var relGroup = rel.group();
+    plotDcDropdown("dropdown_component", rel, relGroup, ".meSection");
+
+    var responseDim = cf.dimension(function (d) {
+        return d.responseCount;
+    });
+    plotDcNumber("meSectionResponses", responseDim, responseDim.group(), ".meSection");
+
+    var distributionDim = cf.dimension(function (d) {
+        return d.level;
+    });
+    var distributionGroup = distributionDim.group().reduce(
+            function (p, v) {
+//                console.log(p, v);
+                p[v.level.org.stronglyAgree] = (p[v.level.org.stronglyAgree] || 0);
+                p[v.level.org.agree] = (p[v.level.org.agree] || 0);
+                p[v.level.org.neutral] = (p[v.level.org.neutral] || 0);
+                p[v.level.org.disagree] = (p[v.level.org.disagree] || 0);
+                p[v.level.org.stronglyDisagree] = (p[v.level.org.stronglyDisagree] || 0);
+                p[v.level.team.stronglyAgree] = (p[v.level.team.stronglyAgree] || 0);
+                p[v.level.team.agree] = (p[v.level.team.agree] || 0);
+                p[v.level.team.neutral] = (p[v.level.team.neutral] || 0);
+                p[v.level.team.disagree] = (p[v.level.team.disagree] || 0);
+                p[v.level.team.stronglyDisagree] = (p[v.level.team.stronglyDisagree] || 0);
+                return p;
+            },
+            function (p, v) {
+                p[v.level.org.stronglyAgree] = (p[v.level.org.stronglyAgree] || 0);
+                p[v.level.org.agree] = (p[v.level.org.agree] || 0);
+                p[v.level.org.neutral] = (p[v.level.org.neutral] || 0);
+                p[v.level.org.disagree] = (p[v.level.org.disagree] || 0);
+                p[v.level.org.stronglyDisagree] = (p[v.level.org.stronglyDisagree] || 0);
+                p[v.level.team.stronglyAgree] = (p[v.level.team.stronglyAgree] || 0);
+                p[v.level.team.agree] = (p[v.level.team.agree] || 0);
+                p[v.level.team.neutral] = (p[v.level.team.neutral] || 0);
+                p[v.level.team.disagree] = (p[v.level.team.disagree] || 0);
+                p[v.level.team.stronglyDisagree] = (p[v.level.team.stronglyDisagree] || 0);
+                return p;
+            },
+            function () {
+                return {};
+            });
+//    plotDcStackedBar("meSectionDistribution", distributionDim, distributionGroup, "meSection");
+
+    var explanationDim = cf.dimension(function (d) {
+        return d.explanation;
+    });
+    plotTableExplanation("meSectionExplanation", explanationDim, ".meSection");
+}
+
+function sel_stack(i) {
+    return function (d) {
+        return d.key[i];
     };
-    var postData = {'jsonObj': JSON.stringify(jsonObj)};
-    jQuery.ajax({
-        type: "POST",
-        url: "../hr/fetchData.jsp",
-        data: postData,
-        async: false,
-        success: function (resp) {
-            var response = JSON.parse(resp);
-            metricList = JSON.parse(response.metricList);
-            sentimentList = JSON.parse(response.sentimentList);
-            selfPerceptionList = JSON.parse(response.selfPerceptionList);
-            sentimentScore = JSON.parse(response.sentimentScore);
-            indexValue = JSON.parse(response.indexValue);
-            keyPeople = JSON.parse(response.keyPeople);
-            selfPerception = JSON.parse(response.selfPerception);
-            wordCloud = JSON.parse(response.wordCloud);
-            
-            plotRelationship();
-        },
-        error: function (resp, err) {
-            console.log("unable to fetch data error messsage : " + err);
+}
+
+function plotDcStackedBar(chartId, cfDimension, cfGroup, panelId) {
+    var chart = dc.barChart("#" + chartId, panelId);
+    chart
+            .height(480)
+            .x(d3.scale.ordinal().domain(cfDimension))
+            .xUnits(dc.units.ordinal)
+            .margins({left: 80, top: 20, right: 80, bottom: 20})
+            .brushOn(false)
+            .elasticY(true)
+            .clipPadding(20)
+//              .title(function(d) {
+//                  return d.key + '[' + this.layer + ']: ' + d.value[this.layer];
+//              })
+            .dimension(cfDimension)
+            .group(cfGroup, "1", sel_stack('1'))
+            .renderLabel(true);
+    chart.legend(
+            dc.legend()
+            .x($('#' + chartId).width() + 18)
+            .y(0)
+            .itemHeight(13)
+            .gap(5)
+//                .horizontal(true)
+//                .legendWidth(250)
+            .autoItemWidth(true));
+    dc.override(chart, 'legendables', function () {
+        var items = chart._legendables();
+        return items.reverse();
+    });
+    for (var i = 2; i < 6; ++i)
+        chart.stack(cfDimension, '' + i, sel_stack(i));
+    chart.render();
+
+//    plotResponsiveCharts(chartId);
+}
+
+function plotWordCloud(chartId, panelId) {
+    var selectedTheme = $('#dropdown_theme select').find(':selected').attr('value');
+    var selectedRel = 0;
+    if (selectedTheme === "theme1") {
+        selectedRel = 5;
+    } else if (selectedTheme === "theme2") {
+        selectedRel = 6;
+    } else if (selectedTheme === "theme3") {
+        selectedRel = 7;
+    }
+    var cf = crossfilter(wordCloud);
+
+    var wordCloudDim = cf.dimension(function (d) {
+        if (selectedRel !== 0) {
+            if (d.relId === selectedRel) {
+                return d.word;
+            }
+        } else {
+            return d.word;
         }
     });
+    var wordCloudGroup = wordCloudDim.group().reduceSum(function (d) {
+        if (selectedRel !== 0) {
+            if (d.relId === selectedRel) {
+                return d.weight;
+            }
+        } else {
+            return d.weight;
+        }
+
+    });
+
+    var wordcloudChart = dc.wordcloudChart("#" + chartId, panelId);
+    wordcloudChart.options({
+        height: 282,
+        width: 573,
+        minY: -10,
+        minX: -50,
+        relativeSize: 20,
+        dimension: wordCloudDim,
+        group: wordCloudGroup,
+        valueAccessor: function (d) {
+            return d.value;
+        },
+        title: function (d) {
+            return [d.key, 'Word Count: ' + d.value].join('\n');
+        }
+    });
+
+    wordcloudChart.render();
 }
