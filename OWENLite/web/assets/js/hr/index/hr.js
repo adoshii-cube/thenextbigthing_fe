@@ -142,7 +142,8 @@ function plotRelationship() {
     plotDcNumber("weSectionResponses", responseDim, responseDim.group(), ".weSection");
 
 
-    plotVisNetwork("weSectionNetwork", ".weSection");
+//    plotVisNetwork("weSectionNetwork", ".weSection");
+    plotCytoNetwork("weSectionNetwork");
 }
 
 //Used across Network, Open Text and Self Perception to select relationship, theme and component
@@ -172,6 +173,68 @@ function plotDcNumber(chartId, cfDimension, cfGroup, panelId) {
 //    }, 0);
 }
 
+function plotCytoNetwork(chartId) {
+    var selectedRelationship = $('#dropdown_relationship').find(':selected').attr('value');
+    var container = document.getElementById(chartId);
+
+    var cy = cytoscape({
+        container: container,
+        layout: {
+            name: 'circle'
+        },
+        style: [
+            {
+                selector: 'node',
+                style: {
+//                    shape: 'hexagon',
+//                    'background-color': 'red',
+                    label: 'data(label)'
+                }
+            }, {
+                selector: 'edge',
+                style: {
+//                    shape: 'hexagon',
+//                    'background-color': 'red',
+//                    label: 'data(weight)'
+                }
+            }]
+    });
+
+    for (var i = 0; i < nodes.length; i++) {
+        cy.add({
+            group: "nodes",
+            data: {
+                id: nodes[i].id,
+                label: nodes[i].label,
+                weight: nodes[i].weight,
+                relId: nodes[i].relId
+            }
+        });
+    }
+
+    for (var i = 0; i < edges.length; i++) {
+        cy.add({
+            group: "edges",
+            data: {
+                id: edges[i].id,
+                source: edges[i].from,
+                target: edges[i].to,
+                weight: edges[i].weight,
+                relId: edges[i].relId
+            }
+        });
+    }
+
+//    cy.nodes().positions(function (node, i) {
+//        return {
+//            x: i * 100,
+//            y: i * 50
+//        };
+//    });
+//    cy.ready(
+//        alert("ready")
+//    );
+}
 function plotVisNetwork(chartId, panelId) {
     var selectedRelationship = $('#dropdown_relationship').find(':selected').attr('value');
     var container = document.getElementById(chartId);
@@ -204,7 +267,7 @@ function plotVisNetwork(chartId, panelId) {
     options.nodes = {
         color: '#C5CAE9'
     };
-    var network = new vis.Network(container, networkData, options);
+//    var network = new vis.Network(container, networkData, options);
 }
 
 function plotResponsiveCharts(chartId) {
@@ -232,6 +295,7 @@ function plotOpenTextImage(value) {
         $(".openTextImage").addClass("happiest");
     }
 }
+
 function plotTableExplanation(chartId, cfDimension, panelId) {
     var chart = dc.dataTable("#" + chartId, panelId);
     chart
@@ -337,39 +401,8 @@ function plotSentiment() {
 }
 
 function plotComponent() {
-    var joined = {};
 
-    selfPerceptionList.forEach(function (u) {
-        joined[u.relId] = u;
-    });
-
-    selfPerception.forEach(function (u) {
-//        console.log(u);
-        joined[u.relId].responseCount = u.responseCount;
-        joined[u.relId].explanation = u.explanation;
-        joined[u.relId].action = u.action;
-        joined[u.relId].level = u.level;
-
-//        joined[u.relId].stronglyAgree = u.stronglyAgree;
-//        joined[u.relId].stronglyAgreeOrg = u.stronglyAgreeOrg;
-//        joined[u.relId].agree = u.agree;
-//        joined[u.relId].agreeOrg = u.agreeOrg;
-//
-//        joined[u.relId].neutral = u.neutral;
-//        joined[u.relId].neutralOrg = u.neutralOrg;
-//
-//        joined[u.relId].disagree = u.disagree;
-//        joined[u.relId].disagreeOrg = u.disagreeOrg;
-//        joined[u.relId].stronglyDisagree = u.stronglyDisagree;
-//        joined[u.relId].stronglyDisagreeOrg = u.stronglyDisagreeOrg;
-    });
-
-    var dataSet = [];
-    for (var relId in joined) {
-        dataSet.push(joined[relId]);
-    }
-
-    var cf = crossfilter(dataSet);
+    var cf = crossfilter(selfPerception);
 
     var rel = cf.dimension(function (d) {
         return d.relName;
@@ -385,43 +418,73 @@ function plotComponent() {
     var distributionDim = cf.dimension(function (d) {
         return d.level;
     });
-    var distributionGroup = distributionDim.group().reduce(
-            function (p, v) {
-//                console.log(p, v);
-                p[v.level.org.stronglyAgree] = (p[v.level.org.stronglyAgree] || 0);
-                p[v.level.org.agree] = (p[v.level.org.agree] || 0);
-                p[v.level.org.neutral] = (p[v.level.org.neutral] || 0);
-                p[v.level.org.disagree] = (p[v.level.org.disagree] || 0);
-                p[v.level.org.stronglyDisagree] = (p[v.level.org.stronglyDisagree] || 0);
-                p[v.level.team.stronglyAgree] = (p[v.level.team.stronglyAgree] || 0);
-                p[v.level.team.agree] = (p[v.level.team.agree] || 0);
-                p[v.level.team.neutral] = (p[v.level.team.neutral] || 0);
-                p[v.level.team.disagree] = (p[v.level.team.disagree] || 0);
-                p[v.level.team.stronglyDisagree] = (p[v.level.team.stronglyDisagree] || 0);
-                return p;
-            },
-            function (p, v) {
-                p[v.level.org.stronglyAgree] = (p[v.level.org.stronglyAgree] || 0);
-                p[v.level.org.agree] = (p[v.level.org.agree] || 0);
-                p[v.level.org.neutral] = (p[v.level.org.neutral] || 0);
-                p[v.level.org.disagree] = (p[v.level.org.disagree] || 0);
-                p[v.level.org.stronglyDisagree] = (p[v.level.org.stronglyDisagree] || 0);
-                p[v.level.team.stronglyAgree] = (p[v.level.team.stronglyAgree] || 0);
-                p[v.level.team.agree] = (p[v.level.team.agree] || 0);
-                p[v.level.team.neutral] = (p[v.level.team.neutral] || 0);
-                p[v.level.team.disagree] = (p[v.level.team.disagree] || 0);
-                p[v.level.team.stronglyDisagree] = (p[v.level.team.stronglyDisagree] || 0);
-                return p;
-            },
-            function () {
-                return {};
-            });
+
+//    var stronglyAgreeGroup = distributionDim.group().reduceSum(function (d) {
+//        return d.stronglyAgree;
+//    });
+//    var agreeGroup = distributionDim.group().reduceSum(function (d) {
+//        return d.agree;
+//    });
+//    var neutralGroup = distributionDim.group().reduceSum(function (d) {
+//        return d.neutral;
+//    });
+//    var disagreeGroup = distributionDim.group().reduceSum(function (d) {
+//        return d.disagree;
+//    });
+//    var stronglyDisagreeGroup = distributionDim.group().reduceSum(function (d) {
+//        return d.stronglyDisagree;
+//    });
+    var stronglyAgreeDim = cf.dimension(function (d) {
+        return d.stronglyAgree;
+    });
+    var stronglyAgreeGroup = stronglyAgreeDim.group();
+    var agreeDim = cf.dimension(function (d) {
+        return d.agree;
+    });
+    var agreeGroup = agreeDim.group();
+    var neutralDim = cf.dimension(function (d) {
+        return d.neutral;
+    });
+    var neutralGroup = neutralDim.group();
+    var disagreeDim = cf.dimension(function (d) {
+        return d.disagree;
+    });
+    var disagreeGroup = disagreeDim.group();
+    var stronglyDisagreeDim = cf.dimension(function (d) {
+        return d.stronglyDisagree;
+    });
+    var stronglyDisagreeGroup = stronglyDisagreeDim.group();
+
 //    plotDcStackedBar("meSectionDistribution", distributionDim, distributionGroup, "meSection");
+    plotStackedBar("meSectionDistribution", distributionDim, stronglyAgreeGroup, agreeGroup, neutralGroup, disagreeGroup, stronglyDisagreeGroup);
 
     var explanationDim = cf.dimension(function (d) {
         return d.explanation;
     });
     plotTableExplanation("meSectionExplanation", explanationDim, ".meSection");
+}
+
+function plotStackedBar(chartId, distributionDim, stronglyAgreeGroup, agreeGroup, neutralGroup, disagreeGroup, stronglyDisagreeGroup) {
+    var stackedBarChart = dc.barChart("#" + chartId);
+
+    stackedBarChart
+            .dimension(distributionDim)
+            .group(stronglyAgreeGroup)
+            .x(d3.scale.ordinal())
+            .xUnits(dc.units.ordinal)
+            .stack(agreeGroup)
+//            .stack(function (d) {
+//                return d3.round(
+//                        (d.value / d3.sum(agreeGroup.all(), function (d) {
+//                            return d.value;
+//                        })) * 100, 1);
+//            })
+            .stack(neutralGroup)
+            .stack(disagreeGroup)
+            .stack(stronglyDisagreeGroup)
+            ;
+
+    stackedBarChart.render();
 }
 
 function sel_stack(i) {
@@ -446,6 +509,7 @@ function plotDcStackedBar(chartId, cfDimension, cfGroup, panelId) {
             .dimension(cfDimension)
             .group(cfGroup, "1", sel_stack('1'))
             .renderLabel(true);
+
     chart.legend(
             dc.legend()
             .x($('#' + chartId).width() + 18)
@@ -455,10 +519,12 @@ function plotDcStackedBar(chartId, cfDimension, cfGroup, panelId) {
 //                .horizontal(true)
 //                .legendWidth(250)
             .autoItemWidth(true));
+
     dc.override(chart, 'legendables', function () {
         var items = chart._legendables();
         return items.reverse();
     });
+
     for (var i = 2; i < 6; ++i)
         chart.stack(cfDimension, '' + i, sel_stack(i));
     chart.render();
