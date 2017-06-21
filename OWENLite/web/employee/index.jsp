@@ -79,6 +79,27 @@ Author     : adoshi
                     <!--</nav>-->
                     <!--</div>-->
                     <!-- Right aligned menu below button -->
+                    
+                    <button id="switch-role-menu"
+                            class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">account_circle</i>
+                    </button>
+                    <%if (isAdmin || isHR) {%>
+                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        for="switch-role-menu">
+                        <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
+                            <%if (isAdmin) {%>
+                        <a href="../admin/index.jsp">
+                            <li class="mdl-menu__item">Admin</li>
+                        </a>
+                        <%}
+                            if (isHR) {%>
+                        <a href="../hr/index.jsp">
+                            <li class="mdl-menu__item">HR</li>
+                        </a>
+                        <%}%>
+                    </ul>
+                    <%}%>
                     <button id="header-menu"
                             class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>

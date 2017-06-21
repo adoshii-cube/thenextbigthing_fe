@@ -525,7 +525,7 @@ textarea{
     margin: 0 auto;
     /*height: auto;*/
     /*color: black;*/
-    /*padding-bottom: 56px;*/
+    padding-top: 0px;
     overflow: visible;
 }
 
@@ -879,16 +879,119 @@ select {
 }
 
 .mdl-selectfield--floating-label.is-dirty .mdl-selectfield__label, .mdl-selectfield--floating-label.is-focused .mdl-selectfield__label{
-    color: #ff9800;
+    color: #303f9f;
+}
+
+.filterPanelParent{
+    padding-bottom: 0;
+}
+
+#dropdown_sentimentContainer{
+    width: 100%;
+}
+
+.mdl-cell{
+    margin-top: 0px;
+}
+
+#HC_Gauge, #HC_StackedBar{
+    height: 200px;
+}
+
+#HC_Gauge{
+    margin-left: 0px;
+}
+
+#HC_StackedBar tspan,
+#HC_StackedBar text,
+#HC_Gauge tspan{
+    font-family: 'Roboto';
+    font-weight: 400;
+}
+
+#HC_WordCloud{
+    height: 400px;
+    background-size: cover !important;
+}
+
+#HC_WordCloud.wc1{
+    background: url(../images/WC_1.png) center no-repeat;
+}
+#HC_WordCloud.wc2{
+    background: url(../images/WC_2.png) center no-repeat;
+}
+#HC_WordCloud.wc3{
+    background: url(../images/WC_3.png) center no-repeat;
+}
+
+#HC_Table table{
+    margin-top: 32px;
+    display: block;
+}
+
+#HC_Table table tbody td{
+    border-bottom: 0;
+}
+
+#HC_Table table thead{
+    display: block;
+    overflow: hidden;
+}
+
+#HC_Table table tbody{
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 270px;
+}
+
+#HC_Table table thead tr,
+#HC_Table table tbody tr{
+    width: 100%;
+    display: inline-table;
+}
+
+#HC_Table table thead th:nth-child(1), #HC_Table table tbody td:nth-child(1) {
+    width: 30%;
+}
+
+td.mdl-data-table__cell--non-numeric.trigram {
+    width: 65%;
+}
+
+#HC_Table table tbody tr:nth-child(1){
+    display: none;
+}
+
+.sectionWe, .sectionMe{
+    background: #e0e0e0;
+}
+
+/*.panelTitle a{
+    padding: 24px !important;
+}*/
+
+#accordion .panelHeading a:before{
+    right: 16px !important;
+}
+
+/*.section{
+    font-size: 20px;
+}*/
+
+.sectionWe a, .sectionMe a{
+    cursor: no-drop;
 }
 
 .filterPanel{
     background-color: #ffffff;
     z-index: 5;
-    position: -webkit-sticky;
-    position: sticky;
+    /*position: -webkit-sticky;*/
+    /*position: sticky;*/
     top: 16px;
     width: 100%;
+
+    margin-bottom: 24px;
 }
 
 .responseCountContainerParent{
