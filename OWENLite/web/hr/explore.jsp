@@ -56,7 +56,7 @@
 
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header mdl-layout__header--waterfall mdl-color--orange-500">
+        <header class="mdl-layout__header mdl-layout__header--waterfall">
             <div class="mdl-layout__header-row">
                 <!-- Title -->
                 <a id="switchUser">
@@ -64,33 +64,37 @@
                         <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                     </span>
                 </a>
-                <%if (isEmployee || isAdmin) {%>
-
-                <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-                    for="switchUser">
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation -->
+                <!--<div class="android-navigation-container">-->
+                <nav class="mdl-navigation">
+                    <!--<a class="mdl-navigation__link" href="index.jsp#relationship">Relationship</a>-->
+                    <!--<a class="mdl-navigation__link" href="index.jsp#sentiment">Sentiment</a>-->
+                    <!--<a class="mdl-navigation__link" href="index.jsp#selfPerception">Self Perception</a>-->
+                    <a class="mdl-navigation__link" href="index.jsp">Dashboard</a>
+                    <a class="mdl-navigation__link" href="explore.jsp">Explore</a>
+                </nav>
+                <button id="switch-role-menu"
+                        class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">account_circle</i>
+                </button>
+                <%if (isAdmin || isEmployee) {%>
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                    for="switch-role-menu">
                     <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
                         <%if (isAdmin) {%>
                     <a href="../admin/index.jsp">
                         <li class="mdl-menu__item">Admin</li>
                     </a>
                     <%}
-                        if (isEmployee) {%>
+                            if (isEmployee) {%>
                     <a href="../employee/index.jsp">
                         <li class="mdl-menu__item">Employee</li>
                     </a>
                     <%}%>
                 </ul>
                 <%}%>
-                <!-- Add spacer, to align navigation to the right -->
-                <div class="mdl-layout-spacer"></div>
-                <!-- Navigation -->
-                <!--<div class="android-navigation-container">-->
-                <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="index.jsp#relationship">Relationship</a>
-                    <a class="mdl-navigation__link" href="index.jsp#sentiment">Sentiment</a>
-                    <a class="mdl-navigation__link" href="index.jsp#selfPerception">Self Perception</a>
-                    <a class="mdl-navigation__link" href="">Explore</a>
-                </nav>
                 <button id="header-menu"
                         class="mdl-button mdl-js-button mdl-button--icon">
                     <i class="material-icons">more_vert</i>
@@ -172,8 +176,8 @@
 
             $("#pivotTable").pivotUI(obj, {
                 renderers: renderers,
-                cols: ["function"], rows: ["location"],
-                rendererName: "Horizontal Stacked Bar Chart",
+                cols: ["relName"], rows: ["indexValue"],
+                rendererName: "Stacked Bar Chart",
                 rowOrder: "value_z_to_a", colOrder: "value_z_to_a"
 //                    rendererOptions: {
 //                        c3: {data: {colors: {

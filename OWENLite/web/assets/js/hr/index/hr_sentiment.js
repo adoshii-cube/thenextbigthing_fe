@@ -140,76 +140,7 @@ $(document).ready(function () {
         plotHCStackedBar(seriesData);
         plotHCTable(jsonData);
     });
-
-
-//Smooth Scroll from Header
-    var nav = $('a');
-    if (nav.length) {
-        // Add smooth scrolling to all links
-        $("a").on('click', function (event) {
-            // Make sure this.hash has a value before overriding default behavior
-            if (this.hash !== "") {
-                // Prevent default anchor click behavior
-                event.preventDefault();
-                // Store hash
-                var hash = this.hash;
-                if ($(hash).length) {
-                    // Using jQuery's animate() method to add smooth page scroll
-                    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-                    $('.mdl-layout__content').animate({
-//                        scrollTop: $(hash).get(0).offsetTop
-                        scrollTop: $(hash).offset().top
-                    }, 800, function () {
-                        // Add hash (#) to URL when done scrolling (default click behavior)
-//                        window.location.hash = hash;
-                    });
-                } else {
-//                    alert("Oops");
-                    window.location.href = $(this).attr('href');
-                }
-            } // End if
-        });
-    }
-
-    go();
 });
-
-function go() {
-    var funcId = $('#dropdown_function option:selected').val();
-    var posId = $('#dropdown_position option:selected').val();
-    var locId = $('#dropdown_location option:selected').val();
-    var jsonObj = {
-        "funcId": funcId,
-        "posId": posId,
-        "locId": locId
-    };
-    var postData = {'jsonObj': JSON.stringify(jsonObj)};
-    jQuery.ajax({
-        type: "POST",
-        url: "../hr/fetchData.jsp",
-        data: postData,
-        async: false,
-        success: function (resp) {
-            var response = JSON.parse(resp);
-            nodes = JSON.parse(response.nodes);
-            edges = JSON.parse(response.edges);
-            metricList = JSON.parse(response.metricList);
-            sentimentList = JSON.parse(response.sentimentList);
-            selfPerceptionList = JSON.parse(response.selfPerceptionList);
-            sentimentScore = JSON.parse(response.sentimentScore);
-            indexValue = JSON.parse(response.indexValue);
-            keyPeople = JSON.parse(response.keyPeople);
-            selfPerception = JSON.parse(response.selfPerception);
-            wordCloud = JSON.parse(response.wordCloud);
-//            plotRelationship();
-//            plotSentiment();
-//            plotComponent();
-        },
-        error: function (resp, err) {
-            console.log("unable to fetch data error messsage : " + err);
-        }
-    });
-}
 
 function plotWordCloud(chartId, panelId) {
     var selectedTheme = $('#dropdown_theme select').find(':selected').attr('value');
@@ -267,13 +198,26 @@ function plotHCGauge(dataValue) {
     var gaugeOptions = {
         chart: {
             type: 'solidgauge',
-            height: 350,
-            width: 400,
+            height: 200,
+//            width: 400,
             spacingTop: 0,
             spacingLeft: 0,
             spacingRight: 0,
             spacingBottom: 0
         },
+//        responsive: {
+//            rules: [{
+//                    condition: {
+//                        maxHeight: 250,
+//                        maxWidth: 250
+//                    },
+//                    chartOptions: {
+//                        legend: {
+//                            enabled: false
+//                        }
+//                    }
+//                }]
+//        },
         title: null,
         pane: {
             center: ['50%'],
@@ -312,7 +256,7 @@ function plotHCGauge(dataValue) {
         plotOptions: {
             solidgauge: {
                 dataLabels: {
-                    y: -15,
+                    y: 100,
                     borderWidth: 0,
                     useHTML: true
                 }
@@ -351,8 +295,8 @@ function plotHCStackedBar(seriesData) {
     Highcharts.chart('HC_StackedBar', {
         chart: {
             type: 'bar',
-            height: 200,
-            width: 400
+            height: 150
+//            width: 400
         },
         colors: ['#DD2C00', '#FFD600', '#64DD17'],
         credits: {
@@ -370,7 +314,11 @@ function plotHCStackedBar(seriesData) {
             }
         },
         legend: {
-            reversed: true
+            reversed: true,
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+//            floating: true
         },
         plotOptions: {
             series: {

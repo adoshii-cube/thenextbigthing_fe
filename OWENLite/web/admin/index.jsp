@@ -43,10 +43,22 @@
                             <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                         </span>
                     </a>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
+                    <!-- Navigation -->
+                    <!--<div class="android-navigation-container">-->
+                    <nav class="mdl-navigation">
+                        <a class="mdl-navigation__link" href="">Data</a>
+                        <a class="mdl-navigation__link" href="questions.jsp">Survey</a>
+                    </nav>
+                    <!--</div>-->
+                    <button id="switch-role-menu"
+                            class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">account_circle</i>
+                    </button>
                     <%if (isEmployee || isHR) {%>
-
-                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-                        for="switchUser">
+                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        for="switch-role-menu">
                         <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
                             <%if (isHR) {%>
                         <a href="../hr/index.jsp">
@@ -60,16 +72,6 @@
                         <%}%>
                     </ul>
                     <%}%>
-                    <!-- Add spacer, to align navigation to the right -->
-                    <div class="mdl-layout-spacer"></div>
-                    <!-- Navigation -->
-                    <!--<div class="android-navigation-container">-->
-                    <nav class="mdl-navigation">
-                        <a class="mdl-navigation__link" href="">Data</a>
-                        <a class="mdl-navigation__link" href="questions.jsp">Survey</a>
-                    </nav>
-                    <!--</div>-->
-                    <!-- Right aligned menu below button -->
                     <button id="header-menu"
                             class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>
@@ -156,7 +158,6 @@
                                     <div class="mdl-card__actions mdl-card--border">
                                         <form action = "uploadFile.jsp" method = "post"
                                               enctype = "multipart/form-data">
-
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
                                                 <input class="mdl-textfield__input" placeholder="Upload file here" type="text" id="uploadFile" readonly/>
                                                 <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">

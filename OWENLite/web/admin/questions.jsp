@@ -58,16 +58,6 @@
                             <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                         </span>
                     </a>
-                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-                        for="switchUser">
-                        <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
-                        <a href="../hr/index.jsp">
-                            <li class="mdl-menu__item">HR</li>
-                        </a>
-                        <a href="../employee/index.jsp">
-                            <li class="mdl-menu__item">Employee</li>
-                        </a>
-                    </ul>
                     <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation -->
@@ -77,7 +67,26 @@
                         <a class="mdl-navigation__link" href="">Survey</a>
                     </nav>
                     <!--</div>-->
-                    <!-- Right aligned menu below button -->
+                    <button id="switch-role-menu"
+                            class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">account_circle</i>
+                    </button>
+                    <%if (isEmployee || isHR) {%>
+                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        for="switch-role-menu">
+                        <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
+                            <%if (isHR) {%>
+                        <a href="../hr/index.jsp">
+                            <li class="mdl-menu__item">HR</li>
+                        </a>
+                        <%}
+                            if (isEmployee) {%>
+                        <a href="../employee/index.jsp">
+                            <li class="mdl-menu__item">Employee</li>
+                        </a>
+                        <%}%>
+                    </ul>
+                    <%}%>
                     <button id="header-menu"
                             class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>

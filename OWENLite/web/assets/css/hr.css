@@ -651,6 +651,12 @@ div .mdl-textfield__label:after {
     max-width: 978px;
 }
 
+.hr-page-content{
+    width: auto;
+    margin: auto;
+    max-width: 868px;
+}
+
 .page-body{
     background-color: #F4F4F4;
     padding: 20px 0 40px;
@@ -833,7 +839,7 @@ select {
 }
 
 #dropdown_relationship,
-#dropdown_theme,
+#dropdown_sentiment,
 #dropdown_component{
     width: 100%;
 }
@@ -848,7 +854,7 @@ select {
     width: 100%;
 }
 
-#weSectionIndex {
+#relationshipIndex {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -876,10 +882,11 @@ select {
 .mdl-cell .mdl-selectfield{
     margin: 0 2%;
     overflow: visible;
+    width: 96%;
 }
 
 .mdl-selectfield--floating-label.is-dirty .mdl-selectfield__label, .mdl-selectfield--floating-label.is-focused .mdl-selectfield__label{
-    color: #ff9800;
+    /*color: #ff9800;*/
 }
 
 .filterPanel{
@@ -893,18 +900,19 @@ select {
 
 .responseCountContainerParent{
     align-self: center;
+    text-align: center;
 }
 .responseCountContainer{
     /*position: absolute;*/
     /*top: 16px;*/
     /*right: 16px;*/
     display: inline-flex;
-    float: right;
+    /*float: right;*/
 }
 
-#weSectionNetwork{
-    height: 500px;
-    width: 100%;
+#relationshipNetwork{
+    height: 300px;
+    /*width: 100%;*/
     /*height: 100%;*/
     /*position: absolute;*/
     top: 0px;
@@ -913,11 +921,13 @@ select {
 
 .sectionGridLayoutWidth{
     width: 98%;
+    height: 75vh;
+    overflow-y: auto;
 }
 
-.weSection .mdl-cell .mdl-selectfield,
-.openText .mdl-cell .mdl-selectfield,
-.meSection .mdl-cell .mdl-selectfield{
+.relationship .mdl-cell .mdl-selectfield,
+.sentiment .mdl-cell .mdl-selectfield,
+.component .mdl-cell .mdl-selectfield{
     margin: 0;
     width: 100%;
 }
@@ -938,45 +948,69 @@ select {
     display: block;
 }
 
-.openTextImage, openTextWordCloud{
+.sentimentWordCloud{
     display: block;
     background-size: 50% !important;
     height: 100%;
 }
 
-.openTextImage{
-    font-size: 0;
+#sentimentWordCloud, #sentimentDistribution{
+    height: 250px;
 }
 
-.openTextImage.happiest{
-    background: url(../images/emoji-happiest.png) center no-repeat;
-}
-
-.openTextImage.happy{
-    background: url(../images/emoji-happy.png) center no-repeat;
-}
-
-.openTextImage.neutral{
-    background: url(../images/emoji-neutral.png) center no-repeat;
-}
-
-.openTextImage.sad{
-    background: url(../images/emoji-sad.png) center no-repeat;
-}
-
-.openTextImage.saddest{
-    background: url(../images/emoji-saddest.png) center no-repeat;
-}
-
-.openTextTable{
+.sentimentTable{
     height: 15em;
     overflow: auto !important;
 }
 
-.openTextTable .mdl-data-table{
+.sentimentTable .mdl-data-table{
     width: 100%;
 }
 
-.openTextTable .mdl-data-table tbody tr:hover {
+.sentimentTable .mdl-data-table tbody tr:hover {
     background-color: #ffffff;
+}
+
+.mdl-tabs__tab-bar{
+    justify-content: flex-start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: flex-start;
+}
+
+#slider{
+    background: #ffffff;
+    z-index: 2;
+    /*width: 238px !important;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+}
+
+#slider > div{
+    margin: 8px 16px;
+}
+
+#trigger{
+    position: absolute;
+    color: #fff;
+    background-color: inherit;
+    line-height: 54px;
+    display: block;
+    position: absolute;
+    height: 48px;
+    width: 48px;
+    border: 0;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    text-align: center;
+    cursor: pointer;
+    font-size: 26px;
+    line-height: 56px;
+    font-family: Helvetica,Arial,sans-serif;
+    margin: 8px 12px;
+    top: 0;
+    left: 0;
+    color: #fff;
+    z-index: 4;
 }

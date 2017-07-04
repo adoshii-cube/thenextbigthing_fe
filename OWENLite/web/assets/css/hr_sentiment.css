@@ -883,7 +883,7 @@ select {
 }
 
 .filterPanelParent{
-    padding-bottom: 0;
+    /*padding-bottom: 0;*/
 }
 
 #dropdown_sentimentContainer{
@@ -891,15 +891,25 @@ select {
 }
 
 .mdl-cell{
-    margin-top: 0px;
+    /*margin-top: 0px;*/
 }
 
 #HC_Gauge, #HC_StackedBar{
-    height: 200px;
+    /*height: 200px;*/
+    min-height: 0px;
+    /*height: 100%;*/
+/*    width:100%;
+    position:absolute;
+    top: 36px;*/
+}
+
+#HC_Gauge div, #HC_StackedBar div{
+    height: 125px !important;
 }
 
 #HC_Gauge{
-    margin-left: 0px;
+    /*margin-left: 0px;*/
+    margin: 0 auto;
 }
 
 #HC_StackedBar tspan,
@@ -1016,6 +1026,13 @@ td.mdl-data-table__cell--non-numeric.trigram {
 
 .sectionGridLayoutWidth{
     width: 98%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    
+}
+
+.sectionGridLayoutWidth .mdl-cell{
+    margin: 0px;
 }
 
 .weSection .mdl-cell .mdl-selectfield,
