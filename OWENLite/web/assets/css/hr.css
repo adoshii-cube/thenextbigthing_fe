@@ -877,6 +877,7 @@ select {
 
 .mdl-card{
     overflow: visible;
+    min-height: 0px;
 }
 
 .mdl-cell .mdl-selectfield{
@@ -980,6 +981,7 @@ select {
 #slider{
     background: #ffffff;
     z-index: 2;
+    display: none;
     /*width: 238px !important;*/
     /*display: flex;*/
     /*justify-content: center;*/
@@ -1017,4 +1019,38 @@ select {
 
 #relationshipListOfPeople tbody tr:nth-child(1) {
     display: none;
+}
+
+#HC_Table table {
+    /* margin-top: 32px; */
+    display: block;
+}
+
+#HC_Table table thead {
+    display: block;
+    overflow: hidden;
+}
+
+#HC_Table table tbody tr:nth-child(1) {
+    display: none;
+}
+
+#HC_Table table tbody {
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 190px;
+}
+
+#HC_Table table thead tr, #HC_Table table tbody tr {
+    width: 100%;
+    display: inline-table;
+}
+
+#HC_Table table thead th:nth-child(1), #HC_Table table tbody td:nth-child(1) {
+    width: 40%;
+}
+
+#sentimentGauge, #sentimentDistribution{
+    height: 100px;
 }

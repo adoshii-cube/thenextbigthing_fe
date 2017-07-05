@@ -288,69 +288,30 @@
                                             <div class="mdl-card__title">Sentiment Distribution</div>
                                             <div class="mdl-card__supporting-text" id="sentimentDistribution"></div>
                                         </div>
-                                        <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">Word Cloud</div>
                                             <div class="mdl-card__supporting-text sentimentWordCloud" id="sentimentWordCloud">
                                             </div>
                                         </div>
-                                        <!--                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
-                                                                            <div class="mdl-card__title">Word Association (Bigrams)</div>
-                                                                            <div class="mdl-card__supporting-text sentimentTable">
-                                                                                <table class="mdl-data-table mdl-js-data-table">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th class="mdl-data-table__cell--non-numeric">Word</th>
-                                                                                            <th class="mdl-data-table__cell--non-numeric">Bigram Pair</th>
-                                                                                            <th>Value</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric" rowspan="5">Word 1</td>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 1 word 1</td>
-                                                                                            <td>70</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 2 word 1</td>
-                                                                                            <td>60</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 3 word 1</td>
-                                                                                            <td>50</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 4 word 1</td>
-                                                                                            <td>40</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 5 word 1</td>
-                                                                                            <td>30</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric" rowspan="5">Word 2</td>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 1 word 2</td>
-                                                                                            <td>70</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 2 word 2</td>
-                                                                                            <td>60</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 3 word 2</td>
-                                                                                            <td>50</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 4 word 2</td>
-                                                                                            <td>40</td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="mdl-data-table__cell--non-numeric">Bigram 5 word 2</td>
-                                                                                            <td>30</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                        </div>-->
+                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                            <div class="mdl-card__title">Associated Words</div>
+                                            <div class="mdl-card__supporting-text" id="HC_Table">
+                                                <table class="mdl-data-table mdl-js-data-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="mdl-data-table__cell--non-numeric">Key Words</th>
+                                                            <th class="mdl-data-table__cell--non-numeric">Associated Words</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr id="temp">
+                                                            <td class="mdl-data-table__cell--non-numeric word"></td>
+                                                            <td class="mdl-data-table__cell--non-numeric association"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">Action</div>
                                             <div class="mdl-card__supporting-text sentimentAction">
@@ -383,7 +344,7 @@
                                             </div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
-                                            <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="componentResponses">342</div></div>
+                                            <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="componentResponses"></div></div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">Distribution of Scores</div>
@@ -411,6 +372,7 @@
         </div>
         <script src="../assets/js/material.min.js"></script>
         <script src="../assets/js/mdl-selectfield.min.js"></script>
-        <script src="../assets/js/hr/index/hr2.js"></script>
+        <script src="../assets/js/hr/index/wordcloud/wordcloud2.js"></script>
+        <script src="../assets/js/hr/index/hr.js"></script>
     </body>
 </html>
