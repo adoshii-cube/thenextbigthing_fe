@@ -438,7 +438,7 @@ function plotHCStackedBar(containerId, seriesData) {
 }
 
 function plotHCTable(jsonData) {
-    var length = jsonData.length;
+    var length = Object.keys(jsonData).length;
 
     $("#relationshipListOfPeople tbody td").empty();
     $(".hiddenRow").css("display", "none");

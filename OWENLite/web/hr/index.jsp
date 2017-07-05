@@ -41,6 +41,10 @@
         <link href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
         <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/2.7.0/cytoscape-qtip.js"></script>
 
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
         <link rel='shortcut icon' type='image/x-icon' href='../assets/images/OWEN_Favicon.ico'/>
 
         <!-- Chrome, Firefox OS and Opera -->
@@ -177,7 +181,7 @@
                             <label class="mdl-selectfield__label" for="myselect">LOCATION</label>
                             <span class="mdl-selectfield__error">Please select a location</span>
                         </div>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="go()">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="fetchData(false)">
                             GO
                         </button>
                     </div>
@@ -192,21 +196,30 @@
                                     <a href="#panelComponent" class="mdl-tabs__tab">Component</a>
                                 </div>
 
+                                <%
+                                    RelationshipHelper rh = new RelationshipHelper();
+                                    Map<Integer, List<Relationship>> relMap = rh.getRelationshipValues(comId);
+                                %>
+
                                 <div class="mdl-tabs__panel is-active" id="panelRelationship">
                                     <div class="mdl-grid sectionGridLayoutWidth">
                                         <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                 <select id="dropdown_relationship" name="relationshipQuestion" class="mdl-selectfield__select" required>
-                                                    <option value="1">Option 1</option>
-                                                    <option value="2">Option 2</option>
-                                                    <option value="3">Option 3</option>
+                                                    <%
+                                                        List<Relationship> list = relMap.get(1);
+                                                        for (int i = 0; i < list.size(); i++) {
+                                                            Relationship r = list.get(i);
+                                                    %>
+                                                    <option value="<%=r.getRelationshipId()%>"><%=r.getRelationshipName()%></option>
+                                                    <%}%>
                                                 </select>
                                                 <label class="mdl-selectfield__label" for="relationshipQuestion">Relationship Type</label>
                                                 <span class="mdl-selectfield__error">Please select a relationship type</span>
                                             </div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
-                                            <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="relationshipResponses">243</div></div>
+                                            <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="relationshipResponses"></div></div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">Network Diagram</div>
@@ -214,32 +227,20 @@
                                         </div>
                                         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">Index Value</div>
-                                            <div class="mdl-card__supporting-text" id="relationshipIndex">4.32</div>
+                                            <div class="mdl-card__supporting-text" id="relationshipIndex"></div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">List of Key People</div>
                                             <div class="mdl-card__supporting-text">
                                                 <table class="mdl-data-table mdl-js-data-table" id="relationshipListOfPeople">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="mdl-data-table__cell--non-numeric">People</th>
-                                                        </tr>
-                                                    </thead>
+                                                    <!--                                                    <thead>
+                                                                                                            <tr>
+                                                                                                                <th class="mdl-data-table__cell--non-numeric">People</th>
+                                                                                                            </tr>
+                                                                                                        </thead>-->
                                                     <tbody>
                                                         <tr id="template">
-                                                            <td class="mdl-data-table__cell--non-numeric">People 1</td>
-                                                        </tr>
-                                                        <tr id="template">
-                                                            <td class="mdl-data-table__cell--non-numeric">People 2</td>
-                                                        </tr>
-                                                        <tr id="template">
-                                                            <td class="mdl-data-table__cell--non-numeric">People 3</td>
-                                                        </tr>
-                                                        <tr id="template">
-                                                            <td class="mdl-data-table__cell--non-numeric">People 4</td>
-                                                        </tr>
-                                                        <tr id="template">
-                                                            <td class="mdl-data-table__cell--non-numeric">People 5</td>
+                                                            <td class="mdl-data-table__cell--non-numeric people"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -248,15 +249,13 @@
                                         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title relationshipAction">Action</div>
                                             <div class="mdl-card__supporting-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                                <p id="relationshipAction"></p>
                                             </div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title relationshipAction">Explanation</div>
+                                            <div class="mdl-card__title relationshipExplanation">Explanation</div>
                                             <div class="mdl-card__supporting-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                                <p id="relationshipExplanation"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -266,9 +265,13 @@
                                         <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                 <select id="dropdown_sentiment" name="sentimentQuestion" class="mdl-selectfield__select" required>
-                                                    <option value="1">Option 1</option>
-                                                    <option value="2">Option 2</option>
-                                                    <option value="3">Option 3</option>
+                                                    <%
+                                                        List<Relationship> list2 = relMap.get(2);
+                                                        for (int i = 0; i < list2.size(); i++) {
+                                                            Relationship r = list2.get(i);
+                                                    %>
+                                                    <option value="<%=r.getRelationshipId()%>"><%=r.getRelationshipName()%></option>
+                                                    <%}%>
                                                 </select>
                                                 <label class="mdl-selectfield__label" for="sentimentQuestion">Sentiment Type</label>
                                                 <span class="mdl-selectfield__error">Please select a sentiment type</span>
@@ -351,15 +354,13 @@
                                         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">Action</div>
                                             <div class="mdl-card__supporting-text sentimentAction">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                                <p id="sentimentAction"></p>
                                             </div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">Explanation</div>
                                             <div class="mdl-card__supporting-text sentimentExplanation">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                                <p id="sentimentExplanation"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -369,9 +370,13 @@
                                         <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                 <select id="dropdown_component" name="componentQuestion" class="mdl-selectfield__select" required>
-                                                    <option value="1">Option 1</option>
-                                                    <option value="2">Option 2</option>
-                                                    <option value="3">Option 3</option>
+                                                    <%
+                                                        List<Relationship> list3 = relMap.get(3);
+                                                        for (int i = 0; i < list3.size(); i++) {
+                                                            Relationship r = list3.get(i);
+                                                    %>
+                                                    <option value="<%=r.getRelationshipId()%>"><%=r.getRelationshipName()%></option>
+                                                    <%}%>
                                                 </select>
                                                 <label class="mdl-selectfield__label" for="componentQuestion">Component Type</label>
                                                 <span class="mdl-selectfield__error">Please select a Component type</span>
@@ -387,15 +392,13 @@
                                         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">Action</div>
                                             <div class="mdl-card__supporting-text componentAction">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                                <p id="componentAction"></p>
                                             </div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-card__title">Explanation</div>
                                             <div class="mdl-card__supporting-text componentExplanation">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                                <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                                <p id="componentExplanation"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -408,6 +411,6 @@
         </div>
         <script src="../assets/js/material.min.js"></script>
         <script src="../assets/js/mdl-selectfield.min.js"></script>
-        <script src="../assets/js/hr/index/hr.js"></script>
+        <script src="../assets/js/hr/index/hr2.js"></script>
     </body>
 </html>

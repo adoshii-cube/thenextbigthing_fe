@@ -3,15 +3,7 @@ var mQuestionAnswered = 0;
 var wQuestionAnswered = 0;
 var oQuestionAnswered = 0;
 $(document).ready(function () {
-    $('.collapse.in').prev('.panelHeading').addClass('active');
-    $('#accordion, #bs-collapse')
-            .on('show.bs.collapse', function (a) {
-                $(a.target).prev('.panelHeading').addClass('active');
-            })
-            .on('hide.bs.collapse', function (a) {
-                $(a.target).prev('.panelHeading').removeClass('active');
-            });
-
+    
     $(".question").hover(function () {
         $(this).toggleClass("mdl-shadow--3dp");
     });

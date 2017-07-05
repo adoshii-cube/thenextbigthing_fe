@@ -921,7 +921,7 @@ select {
 
 .sectionGridLayoutWidth{
     width: 98%;
-    height: 75vh;
+    /*height: 75vh;*/
     overflow-y: auto;
 }
 
@@ -1013,4 +1013,8 @@ select {
     left: 0;
     color: #fff;
     z-index: 4;
+}
+
+#relationshipListOfPeople tbody tr:nth-child(1) {
+    display: none;
 }
