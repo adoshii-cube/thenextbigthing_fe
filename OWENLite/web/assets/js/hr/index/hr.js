@@ -50,11 +50,16 @@ $(document).ready(function () {
             setTimeout(function () {
                 plotRelationshipCharts(false);
             }, 10);
-        } else if (selectedTab === "#panelSentiment") {
-            plotSentimentCharts(false);
         }
     });
     $("#slider").css("display", "block");
+
+    setTimeout(function () {
+//Check if wordcloud is empty. If yes, then plot all sentiment charts all over again
+        if ($("#sentimentWordCloud").is(':empty')) {
+            plotSentimentCharts(true);
+        }
+    }, 1000);
 
 });
 
@@ -212,7 +217,7 @@ function plotHCTable(jsonData) {
     var length = Object.keys(jsonData).length;
 
     $("#relationshipListOfPeople tbody td").empty();
-    $(".hiddenRow").css("display", "none");
+    $("#relationshipListOfPeople .hiddenRow").css("display", "none");
     var j = 1;
     for (var i = 0; i < length; i++) {
         var clone = $('#template').clone(true).attr('class', 'hiddenRow');
@@ -417,7 +422,7 @@ function plotWordAssociation(jsonData) {
     var length = jsonData.length;
 
     $("#HC_Table tbody td").empty();
-    $(".hiddenRow").css("display", "none");
+    $("#HC_Table .hiddenRow").css("display", "none");
     for (var i = 0; i < length; i++) {
         var clone = $('#temp').clone(true).attr('class', 'hiddenRow');
         clone.find('.word').html(jsonData[i]['word']);
@@ -551,6 +556,3 @@ function plotStackedComponent(containerId, seriesData) {
         series: seriesData
     });
 }
-
-
-

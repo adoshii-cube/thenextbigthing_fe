@@ -959,6 +959,10 @@ select {
     height: 250px;
 }
 
+#sentimentWordCloud{
+    width: 250px;
+}
+
 .sentimentTable{
     height: 15em;
     overflow: auto !important;
