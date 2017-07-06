@@ -51,7 +51,7 @@ $(document).ready(function () {
             setTimeout(function () {
                 plotRelationshipCharts(false);
             }, 10);
-        } else if(selectedTab === "#panelSentiment" && flag){
+        } else if (selectedTab === "#panelSentiment" && flag) {
             plotSentimentCharts(true);
             flag = false;
         }
@@ -169,8 +169,16 @@ function plotCytoNetwork(chartId, selectedRelationship) {
     }
     var cy = cytoscape({
         container: container,
+        minZoom: 0.5,
+        maxZoom: 2,
+        zoomingEnabled: true,
+        userZoomingEnabled: true,
+        panningEnabled: true,
+        userPanningEnabled: true,
+        hideEdgesOnViewport: false,
+        hideLabelsOnViewport: true,
         layout: {
-            name: 'circle'
+            name: 'grid'
         },
         style: [
             {
