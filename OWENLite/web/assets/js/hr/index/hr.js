@@ -14,6 +14,7 @@ var keyPeople;
 var selfPerception;
 var sentimentDistribution;
 var wordCloud;
+var flag = true;
 
 $(document).ready(function () {
     var slider = $("#slider").slideReveal({
@@ -50,6 +51,9 @@ $(document).ready(function () {
             setTimeout(function () {
                 plotRelationshipCharts(false);
             }, 10);
+        } else if(selectedTab === "#panelSentiment" && flag){
+            plotSentimentCharts(true);
+            flag = false;
         }
     });
     $("#slider").css("display", "block");
@@ -166,7 +170,7 @@ function plotCytoNetwork(chartId, selectedRelationship) {
     var cy = cytoscape({
         container: container,
         layout: {
-            name: 'grid'
+            name: 'circle'
         },
         style: [
             {
