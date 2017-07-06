@@ -132,68 +132,68 @@
             <button class="mdl-button mdl-js-button mdl-button--icon" id="trigger">
                 <i class="material-icons">menu</i>
             </button>
-            <main class="android-content mdl-layout__content">
-                <div id="slider">
-                    <div class="android-card-container mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
-                            <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
-                                <select id="dropdown_function" name="function" class="mdl-selectfield__select" required>
-                                    <%
-                                        FilterHelper fh = new FilterHelper();
-                                        Filter function = fh.getFilterValues(comId, "Function");
-                                        Map<Integer, String> filterValues = function.getFilterValues();
-                                        for (Map.Entry<Integer, String> entry : filterValues.entrySet()) {
-                                            int id = entry.getKey();
-                                            String value = entry.getValue();
-                                    %>
-                                    <option value="<%=id%>"><%=value%></option>
-                                    <%}%>
-                                </select>
-                                <label class="mdl-selectfield__label" for="myselect">FUNCTION</label>
-                                <span class="mdl-selectfield__error">Please select a function</span>
-                            </div>
-                        </div>
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
-                            <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
-                                <select id="dropdown_position" name="position" class="mdl-selectfield__select" required>
-                                    <%
-                                        Filter position = fh.getFilterValues(comId, "Position");
-                                        Map<Integer, String> positionValues = position.getFilterValues();
-                                        for (Map.Entry<Integer, String> entry : positionValues.entrySet()) {
-                                            int id = entry.getKey();
-                                            String value = entry.getValue();
-                                    %>
-                                    <option value="<%=id%>"><%=value%></option>
-                                    <%}%>
-                                </select>
-                                <label class="mdl-selectfield__label" for="myselect">POSITION</label>
-                                <span class="mdl-selectfield__error">Please select a position</span>
-                            </div>
-                        </div>
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
-                            <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
-                                <select id="dropdown_location" name="location" class="mdl-selectfield__select" required>
-                                    <%
-                                        Filter location = fh.getFilterValues(comId, "Location");
-                                        Map<Integer, String> locationValues = location.getFilterValues();
-                                        for (Map.Entry<Integer, String> entry : locationValues.entrySet()) {
-                                            int id = entry.getKey();
-                                            String value = entry.getValue();
-                                    %>
-                                    <option value="<%=id%>"><%=value%></option>
-                                    <%}%>
-                                </select>
-                                <label class="mdl-selectfield__label" for="myselect">LOCATION</label>
-                                <span class="mdl-selectfield__error">Please select a location</span>
-                            </div>
-                        </div>
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="fetchData(false)">
-                                GO
-                            </button>
+            <div id="slider">
+                <div class="android-card-container mdl-grid">
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+                        <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
+                            <select id="dropdown_function" name="function" class="mdl-selectfield__select" required>
+                                <%
+                                    FilterHelper fh = new FilterHelper();
+                                    Filter function = fh.getFilterValues(comId, "Function");
+                                    Map<Integer, String> filterValues = function.getFilterValues();
+                                    for (Map.Entry<Integer, String> entry : filterValues.entrySet()) {
+                                        int id = entry.getKey();
+                                        String value = entry.getValue();
+                                %>
+                                <option value="<%=id%>"><%=value%></option>
+                                <%}%>
+                            </select>
+                            <label class="mdl-selectfield__label" for="myselect">FUNCTION</label>
+                            <span class="mdl-selectfield__error">Please select a function</span>
                         </div>
                     </div>
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                        <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
+                            <select id="dropdown_position" name="position" class="mdl-selectfield__select" required>
+                                <%
+                                    Filter position = fh.getFilterValues(comId, "Position");
+                                    Map<Integer, String> positionValues = position.getFilterValues();
+                                    for (Map.Entry<Integer, String> entry : positionValues.entrySet()) {
+                                        int id = entry.getKey();
+                                        String value = entry.getValue();
+                                %>
+                                <option value="<%=id%>"><%=value%></option>
+                                <%}%>
+                            </select>
+                            <label class="mdl-selectfield__label" for="myselect">POSITION</label>
+                            <span class="mdl-selectfield__error">Please select a position</span>
+                        </div>
+                    </div>
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                        <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
+                            <select id="dropdown_location" name="location" class="mdl-selectfield__select" required>
+                                <%
+                                    Filter location = fh.getFilterValues(comId, "Location");
+                                    Map<Integer, String> locationValues = location.getFilterValues();
+                                    for (Map.Entry<Integer, String> entry : locationValues.entrySet()) {
+                                        int id = entry.getKey();
+                                        String value = entry.getValue();
+                                %>
+                                <option value="<%=id%>"><%=value%></option>
+                                <%}%>
+                            </select>
+                            <label class="mdl-selectfield__label" for="myselect">LOCATION</label>
+                            <span class="mdl-selectfield__error">Please select a location</span>
+                        </div>
+                    </div>
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="fetchData(false)">
+                            GO
+                        </button>
+                    </div>
                 </div>
+            </div>
+            <main class="android-content mdl-layout__content">
                 <div class="hr-page-content">
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
