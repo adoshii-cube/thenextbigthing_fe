@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
+
 body {
     margin: 0;
-    font-family: 'Roboto', Arial, sans-serif;
-    /*font-family: 'Roboto', 'sans-serif';*/
+    /*font-family: 'Roboto', Arial, sans-serif;*/
+    font-family: 'Roboto', 'sans-serif';
 }
 
 /* Disable ugly boxes around images in IE10 */
