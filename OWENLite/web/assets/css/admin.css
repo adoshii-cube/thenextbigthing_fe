@@ -1182,10 +1182,12 @@ button[disabled], html input[disabled]{
     bottom: 0px;
 }
 
-form .mdl-textfield{
+div .mdl-textfield{
     padding: 0;
     padding-left: 16px;
+    top: 4px;
 }
+
 .role-container{
     display: flex;
     margin: 8px;

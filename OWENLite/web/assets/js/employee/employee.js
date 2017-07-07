@@ -3,7 +3,7 @@ var mQuestionAnswered = 0;
 var wQuestionAnswered = 0;
 var oQuestionAnswered = 0;
 $(document).ready(function () {
-    
+
     $(".question").hover(function () {
         $(this).toggleClass("mdl-shadow--3dp");
     });
@@ -83,7 +83,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".listOfPeople .mdl-list__item").on("click", function () {
+    $(".listOfPeople").on("click", ".mdl-list__item", function () {
         var id = $(this).parent().attr("id").split("-");
         var qId = id[1];
 
@@ -149,18 +149,19 @@ $(document).ready(function () {
 
 
         //HIDE listOfSelectedPeopleContainer if number of people liked = 0
-        if ($("#smartList-" + qId + ":has(.liked)").length === 0) {
-            //FIRST EMPTY/CLEAR OUT LIST
-            $("#listOfSelectedPeople-" + qId).empty();
-            //THEN HIDE LIST
-            $("#listOfSelectedPeople-" + qId).parent().css("visibility", "hidden");
-            $("#listOfSelectedId-" + qId).css("visibility", "hidden");
+        if ($("#listOfSelectedId-" + qId).is(':empty')) {
             if (answeredQuestions.length > 0 && answeredQuestions.includes(qId)) {
                 answeredQuestions.pop(qId);
                 wQuestionAnswered--;
                 $("#wQuestionCounter").text('');
                 $("#wQuestionCounter").text(wQuestionAnswered + "/" + $("#wQListSize").val());
+
                 $(this).parent().parent().parent().removeClass("answered");
+                //FIRST EMPTY/CLEAR OUT LIST
+                $("#listOfSelectedPeople-" + qId).empty();
+                //THEN HIDE LIST
+                $("#listOfSelectedPeople-" + qId).parent().css("visibility", "hidden");
+                $("#listOfSelectedId-" + qId).css("visibility", "hidden");
                 if (wQuestionAnswered !== parseInt($("#wQListSize").val())) {
                     $(".sectionWe").removeClass("completed");
                 }
@@ -190,6 +191,10 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    $('.quicksearch').on('input', function () {
+        fetchOrgnizationSearch($(this).val(), $(this).attr('id'));
     });
 });
 
@@ -330,3 +335,43 @@ function doneTyping() {
     });
 }
 
+function fetchOrgnizationSearch(q, ques) {
+    var questionId = ques.split("-");
+    var query = "q=" + q + "&ques=" + questionId[1];
+    var currentRequest = null;
+    var url = "../employee/searchOrgList.jsp";
+
+    currentRequest = jQuery.ajax({
+        type: "POST",
+        url: url,
+        data: query,
+        dataType: 'HTML',
+        beforeSend: function () {
+            if (currentRequest !== null) {
+                currentRequest.abort();
+            }
+        },
+        success: function (resp) {
+            $('.overlay_form').hide();
+            $('#listOfPeople-' + questionId[1]).html(resp);
+            componentHandler.upgradeDom('MaterialButton');
+            componentHandler.upgradeDom('MaterialRipple');
+            displayRatings();
+        }
+    });
+}
+
+function displayRatings() {
+    $("div[id^='listOfSelectedId']").each(function () {
+        if ($(this).length > 0) {
+            var id = $(this).attr("id").split("-");
+            var qIdNumber = id[1];
+            var values = $(this).text().split(",");
+            jQuery.each(values, function (k, v) {
+                var targetEmployeeId = v;
+                var qId = $("#wQuestion-" + qIdNumber);
+                qId.find(".mdl-list__item[targetempid='" + targetEmployeeId + "']").addClass("liked");
+            });
+        }
+    });
+}

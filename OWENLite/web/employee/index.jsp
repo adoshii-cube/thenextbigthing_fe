@@ -63,7 +63,7 @@ Author     : adoshi
                     <!--</nav>-->
                     <!--</div>-->
                     <!-- Right aligned menu below button -->
-                    
+
                     <button id="switch-role-menu"
                             class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">account_circle</i>
@@ -290,7 +290,7 @@ Author     : adoshi
                                                                 if (empId == employee.getEmployeeId()) {
                                                                     continue;
                                                                 }%>
-                                                        <li class="mdl-list__item mdl-list__item--three-line people" id="people-<%=q.getQuestionId()%>">
+                                                        <li class="mdl-list__item mdl-list__item--three-line people" id="people-<%=q.getQuestionId()%>" targetempid="<%=employee.getEmployeeId()%>">
                                                             <span class="mdl-list__item-primary-content">
                                                                 <div class="mdl-list__item-avatar" ><%= employee.getFirstName().substring(0, 1) + employee.getLastName().substring(0, 1)%></div>
                                                                 <span><%= employee.getFirstName() + " " + employee.getLastName()%></span>

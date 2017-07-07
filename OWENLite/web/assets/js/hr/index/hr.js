@@ -53,6 +53,7 @@ $(document).ready(function () {
             }, 10);
         } else if (selectedTab === "#panelSentiment" && flag) {
             plotSentimentCharts(true);
+            plotWordCloud("sentimentWordCloud", wordCloud[fetchOptionValue(flag, "dropdown_sentiment")]);
             flag = false;
         }
     });
@@ -104,16 +105,20 @@ function fetchData(isFirstTime) {
     });
 }
 
-function plotRelationshipCharts(isFirstTime) {
-    var optionValue;
+function fetchOptionValue(isFirstTime, dropdownName) {
+    var optionValue = "";
     if (isFirstTime) {
-        optionValue = parseInt($("#dropdown_relationship").find("option:first-child").val());
+        optionValue = parseInt($("#" + dropdownName).find("option:first-child").val());
     } else {
-        var selectedOption = $("#dropdown_relationship").parent().find(".mdl-selectfield__box-value").text();
-        optionValue = parseInt($('#dropdown_relationship option').filter(function () {
+        var selectedOption = $("#" + dropdownName).parent().find(".mdl-selectfield__box-value").text();
+        optionValue = parseInt($('#' + dropdownName + ' option').filter(function () {
             return $(this).html() === selectedOption;
         }).val());
     }
+    return optionValue;
+}
+function plotRelationshipCharts(isFirstTime) {
+    var optionValue = fetchOptionValue(isFirstTime, "dropdown_relationship");
 
     // response count
     $("#relationshipResponses").empty();
@@ -240,15 +245,7 @@ function plotHCTable(jsonData) {
 }
 
 function plotSentimentCharts(isFirstTime) {
-    var optionValue;
-    if (isFirstTime) {
-        optionValue = parseInt($("#dropdown_sentiment").find("option:first-child").val());
-    } else {
-        var selectedOption = $("#dropdown_sentiment").parent().find(".mdl-selectfield__box-value").text();
-        optionValue = parseInt($('#dropdown_sentiment option').filter(function () {
-            return $(this).html() === selectedOption;
-        }).val());
-    }
+    var optionValue = fetchOptionValue(isFirstTime, "dropdown_sentiment");
 
     // response count
     $("#sentimentResponses").empty();
@@ -463,7 +460,7 @@ function plotWordCloud(chartId, words) {
         weightFactor: 7,
         clearCanvas: true,
         drawOutOfBound: false,
-        wait: 15,
+        wait: 0,
         shuffle: false,
 //        color: '#9e9e9e'
         color: function (word, weight, fontSize, distance, theta, sentiment) {
@@ -479,22 +476,13 @@ function plotWordCloud(chartId, words) {
 }
 
 function plotComponentCharts(isFirstTime) {
-    var optionValue;
-    if (isFirstTime) {
-        optionValue = parseInt($("#dropdown_component").find("option:first-child").val());
-    } else {
-        var selectedOption = $("#dropdown_component").parent().find(".mdl-selectfield__box-value").text();
-        optionValue = parseInt($('#dropdown_component option').filter(function () {
-            return $(this).html() === selectedOption;
-        }).val());
-    }
+    var optionValue = fetchOptionValue(isFirstTime, "dropdown_component");
 
     // response count
     $("#componentResponses").empty();
     $("#componentResponses").append(selfPerception[optionValue].responseCount);
 
     plotStackedComponent("componentDistribution", selfPerception[optionValue].series);
-
 
     // action
     $("#componentAction").empty();
