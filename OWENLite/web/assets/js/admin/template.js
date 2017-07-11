@@ -25,18 +25,19 @@ $(document).ready(function () {
                 contentType: false,
                 cache: false,
                 processData: false,
-                success: function () {
-                    snackbarMsg(2);
+                success: function (resp) {
+                    snackbarMsg(parseInt(resp.trim()));
                 },
                 error: function () {
-                    snackbarMsg(3);
+                    snackbarMsg(4);
                 }
             });
         }
     });
 
     $('#btnExport').on('click', function () {
-        download("firstName, lastName, address", "template.csv", "text/plain");
+        var templateHeader = $("#templateHeader").val();
+        download(templateHeader, "template.csv", "text/plain");
     });
 
 });
@@ -48,6 +49,8 @@ function snackbarMsg(flag) {
     } else if (flag === 2) {
         var data = {message: 'File uploaded successfully'};
     } else if (flag === 3) {
+        var data = {message: 'Invalid file contents. Please try again'};
+    }else if (flag === 4) {
         var data = {message: 'Failed to upload file. Please try again'};
     }
     'use strict';

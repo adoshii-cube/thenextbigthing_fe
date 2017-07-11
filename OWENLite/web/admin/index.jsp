@@ -142,6 +142,7 @@
                                     </div>
                                     <div class="mdl-card__actions mdl-card--border">
                                         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="#" id="btnExport" >DOWNLOAD</a>
+                                        <input type="hidden" id="templateHeader" value="<%=templateHeader%>"/>
                                     </div>
                                 </div>
                                 <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp upload">
@@ -160,7 +161,7 @@
                                             <input class="mdl-textfield__input" placeholder="Upload file here" type="text" id="uploadFile"  readonly/>
                                             <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">
                                                 <i class="material-icons">attach_file</i>
-                                                <input type="file" name = "file" id="uploadBtn" accept=".xls,.xlsx,.csv">
+                                                <input type="file" name = "file" id="uploadBtn" accept=".csv">
                                             </div>
                                         </div>
                                         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type = "submit" id="uploadSubmit">Upload File</a>

@@ -8,6 +8,7 @@
     boolean isAdmin = false;
     boolean isHR = false;
     boolean isEmployee = false;
+    String templateHeader = "firstName, lastName, address";
     if (session.getAttribute("empId") != null && session.getAttribute("comId") != null) {
         empId = (Integer) session.getAttribute("empId");
         comId = (Integer) session.getAttribute("comId");

@@ -12,13 +12,15 @@
 <%@ page import = "org.apache.commons.fileupload.servlet.*" %>
 <%@ page import = "org.apache.commons.io.output.*" %>
 <%@ page import = "org.owen.helper.UtilHelper" %>
+<%@include file="../common.jsp" %>
+
 
 <%
     File file;
     int maxFileSize = 5000 * 1024;
     int maxMemSize = 5000 * 1024;
     String filePath = UtilHelper.getConfigProperty("uploaded_emp_master");
-
+    System.out.println("File Path :::::::::::::::::::: " + filePath);
     // Verify the content type
     String contentType = request.getContentType();
 
@@ -42,48 +44,33 @@
 
             // Process the uploaded file items
             Iterator i = fileItems.iterator();
-
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>JSP File upload</title>");
-            out.println("</head>");
-            out.println("<body>");
-
             while (i.hasNext()) {
                 FileItem fi = (FileItem) i.next();
-                if (!fi.isFormField()) {
-                    // Get the uploaded file parameters
-                    String fieldName = fi.getFieldName();
-                    String fileName = fi.getName();
-                    boolean isInMemory = fi.isInMemory();
-                    long sizeInBytes = fi.getSize();
+                if (fi.getString().startsWith(templateHeader)) {
+                    if (!fi.isFormField()) {
+                        // Get the uploaded file parameters
+                        String fileName = fi.getName();
 
-                    // Write the file
-                    if (fileName.lastIndexOf("\\") >= 0) {
-                        file = new File(filePath
-                                + fileName.substring(fileName.lastIndexOf("\\")));
-                    } else {
-                        file = new File(filePath
-                                + fileName.substring(fileName.lastIndexOf("\\") + 1));
+                        // Write the file
+                        if (fileName.lastIndexOf("\\") >= 0) {
+                            file = new File(filePath
+                                    + fileName.substring(fileName.lastIndexOf("\\")));
+                        } else {
+                            file = new File(filePath
+                                    + fileName.substring(fileName.lastIndexOf("\\") + 1));
+                        }
+                        fi.write(file);
+                        out.println(2);
                     }
-                    fi.write(file);
-                    out.println("Uploaded Filename: " + filePath
-                            + fileName + "<br>");
+                } else {
+                    out.println(3);
                 }
             }
-            out.println("</body>");
-            out.println("</html>");
         } catch (Exception ex) {
             System.out.println(ex);
+            out.println(4);
         }
     } else {
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Servlet upload</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<p>No file uploaded</p>");
-        out.println("</body>");
-        out.println("</html>");
+        out.println(4);
     }
 %>
