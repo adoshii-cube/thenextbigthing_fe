@@ -823,6 +823,12 @@ div .mdl-textfield__label:after {
         position: relative !important;
         top: 0px !important;
     }
+
+    .emptyDashboard .image,
+    .emptyPanel .image,
+    .emptyCharts .image{
+        height: 4em !important;
+    }
 }
 
 /*HR*/
@@ -880,6 +886,7 @@ select {
 .mdl-card{
     overflow: visible;
     min-height: 0px;
+    z-index: initial;
 }
 
 .mdl-cell .mdl-selectfield{
@@ -890,6 +897,10 @@ select {
 
 .mdl-selectfield--floating-label.is-dirty .mdl-selectfield__label, .mdl-selectfield--floating-label.is-focused .mdl-selectfield__label{
     /*color: #ff9800;*/
+}
+
+.mdl-selectfield__select {
+    visibility: hidden;
 }
 
 .filterPanel{
@@ -915,17 +926,63 @@ select {
 
 #relationshipNetwork{
     height: 300px;
+    padding-bottom: 0px;
     /*width: 100%;*/
     /*height: 100%;*/
     /*position: absolute;*/
-    top: 0px;
-    left: 0px;
+    /*top: 0px;*/
+    /*left: 0px;*/
 }
 
+#relationshipNetworkLegend{
+    padding: 0px;
+}
+
+
+.legendContainer{
+    display: flex;
+    justify-content: center;
+}
+
+/* basic positioning */
+.legend {
+    list-style: none;
+    display: flex;
+}
+
+.legend li {
+    display: inline-flex;
+    margin-right: 16px;
+    align-items: center;
+}
+
+
+.legend .nodes span { 
+    /*border: 1px solid #ccc;*/ 
+    float: left; 
+    width: 16px; 
+    height: 16px; 
+    margin: 8px;
+    border-radius: 9px;
+}
+
+.legend .edges span{
+    float: left;
+    width: 16px;
+    height: 4px;
+    margin: 8px;
+}
+
+/* your colors */
+.legend .nodeColor1 { background-color: #303f9f; }
+.legend .nodeColor2 { background-color: #00ffff; }
+.legend .edgeColor1 { background-color: #303f9f; }
+.legend .edgeColor2 { background-color: #000000; }
+
 .sectionGridLayoutWidth{
-    width: 98%;
+    /*width: 98%;*/
     /*height: 75vh;*/
-    overflow-y: auto;
+    /*overflow-y: auto;*/
 }
 
 .relationship .mdl-cell .mdl-selectfield,
@@ -995,6 +1052,7 @@ select {
 
 #slider > div{
     margin: 8px 16px;
+    justify-content: center;
 }
 
 #trigger{
@@ -1059,4 +1117,71 @@ select {
 
 #sentimentGauge, #sentimentDistribution{
     height: 100px;
+}
+
+/*Empty State*/
+.emptyDashboard,
+.emptyPanel,
+.emptyCharts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.emptyDashboard div{
+    background: #f5f5f5;    
+}
+
+.emptyDashboard div,
+.emptyPanel div,
+.emptyCharts div{
+    text-align: center;
+    min-height: inherit;
+    width: inherit;
+}
+
+.emptyDashboard h2,
+.emptyPanel h2,
+.emptyCharts h2{
+    color: #9e9e9e;
+    font-size: 24px;
+    margin: 8px;
+    line-height: 24px;
+}
+
+
+.emptyDashboard .image{
+    background: url(../images/worker.png) no-repeat center;
+}
+
+.emptyPanel .image{
+    background: url(../images/calendar-clock.png) no-repeat center;
+}
+
+.emptyCharts .image{
+    background: url(../images/clipboard-alert.png) no-repeat center;
+}
+
+.emptyDashboard .image,
+.emptyPanel .image,
+.emptyCharts .image{
+    background-size: contain;
+    height: 10em;
+}
+
+.emptyDashboard .message,
+.emptyPanel .message,
+.emptyCharts .message{
+    display: inline;
+    width: 80%;
+    margin: 0 auto;
+    color: #9e9e9e;
+}
+
+.chartsContainer{
+    width: 100%;
+}
+
+.mdl-layout__header--waterfall.is-casting-shadow {
+    z-index: 2;
 }

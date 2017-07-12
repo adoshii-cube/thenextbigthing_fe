@@ -36,6 +36,7 @@
         <script src="../assets/js/hr/index/jquery.slidereveal.min.js"></script>
 
         <script src="../assets/js/hr/index/cytoscape.min.js"></script>
+        <!--<script src="../assets/js/hr/index/ogma.min.js"></script>-->
 
         <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
         <link href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
@@ -186,15 +187,35 @@
                             <span class="mdl-selectfield__error">Please select a location</span>
                         </div>
                     </div>
-                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="fetchData(false)">
+                    <!--<div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">-->
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="goFilterDataButton">
                             GO
                         </button>
-                    </div>
+                    <!--</div>-->
                 </div>
             </div>
             <main class="android-content mdl-layout__content">
                 <div class="hr-page-content">
+
+                    <!--Empty State Msg GLOBAL start-->
+                    <div class="android-card-container mdl-grid emptyDashboard" style="display: none;">
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
+                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                <h2>Dashboard under construction</h2>
+                            </div>
+                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card message">
+                                <p>
+                                    Your dashboard will be ready as soon as you go live with a survey.
+                                    <%if (isAdmin) {%>
+                                    Go to the <a href="../admin/questions.jsp">admin</a> page to start your first survey now.
+                                    <%}%>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Empty State Msg GLOBAL end-->
+
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
@@ -210,6 +231,23 @@
                                 %>
 
                                 <div class="mdl-tabs__panel is-active" id="panelRelationship">
+
+                                    <!--Empty State Msg PANEL RELATIONSHIP start-->
+                                    <div class="android-card-container mdl-grid emptyPanel" style="display: none;">
+                                        <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <h2>Awaiting survey responses</h2>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card message">
+                                                <p>
+                                                    Looks like people are yet to respond to the survey.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Empty State Msg PANEL RELATIONSHIP end-->
+
                                     <div class="mdl-grid sectionGridLayoutWidth">
                                         <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
@@ -227,48 +265,94 @@
                                             </div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
-                                            <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="relationshipResponses"></div></div>
+                                            <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="relationshipResponses">0</div></div>
                                         </div>
-                                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Network Diagram</div>
-                                            <div class="mdl-card__supporting-text" id="relationshipNetwork"></div>
-                                        </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Index Value</div>
-                                            <div class="mdl-card__supporting-text" id="relationshipIndex"></div>
-                                        </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">List of Key People</div>
-                                            <div class="mdl-card__supporting-text">
-                                                <table class="mdl-data-table mdl-js-data-table" id="relationshipListOfPeople">
-                                                    <!--                                                    <thead>
-                                                                                                            <tr>
-                                                                                                                <th class="mdl-data-table__cell--non-numeric">People</th>
-                                                                                                            </tr>
-                                                                                                        </thead>-->
-                                                    <tbody>
-                                                        <tr id="template">
-                                                            <td class="mdl-data-table__cell--non-numeric people"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+
+                                        <!--Empty State Msg CHARTS RELATIONSHIP Start-->
+                                        <div class="android-card-container mdl-grid emptyCharts" style="display: none;">
+                                            <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                    <h2>No questions set</h2>
+                                                </div>
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card message">
+                                                    <p>
+                                                        You have not set any questions in your survey 
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title relationshipAction">Action</div>
-                                            <div class="mdl-card__supporting-text">
-                                                <p id="relationshipAction"></p>
+                                        <!--Empty State Msg CHARTS RELATIONSHIP End-->
+
+                                        <div class="chartsContainer mdl-grid">
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Network Diagram</div>
+                                                <div class="mdl-card__supporting-text" id="relationshipNetwork"></div>
+                                                <div class="mdl-card__actions" id="relationshipNetworkLegend">
+                                                    <div class="legendContainer">
+                                                        <ul class="legend">
+                                                            <li class="nodes"><span class="nodeColor1"></span>Node Color 1</li>
+                                                            <li class="nodes"><span class="nodeColor2"></span>Node Color 2</li>
+                                                            <li class="edges"><span class="edgeColor1"></span>Edge Color 1</li>
+                                                            <li class="edges"><span class="edgeColor2"></span>Edge Color 2</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title relationshipExplanation">Explanation</div>
-                                            <div class="mdl-card__supporting-text">
-                                                <p id="relationshipExplanation"></p>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Index Value</div>
+                                                <div class="mdl-card__supporting-text" id="relationshipIndex"></div>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">List of Key People</div>
+                                                <div class="mdl-card__supporting-text">
+                                                    <table class="mdl-data-table mdl-js-data-table" id="relationshipListOfPeople">
+                                                        <!--<thead>
+                                                                <tr>
+                                                                    <th class="mdl-data-table__cell--non-numeric">People</th>
+                                                                </tr>
+                                                            </thead>-->
+                                                        <tbody>
+                                                            <tr id="template">
+                                                                <td class="mdl-data-table__cell--non-numeric people"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title relationshipAction">Action</div>
+                                                <div class="mdl-card__supporting-text">
+                                                    <p id="relationshipAction"></p>
+                                                </div>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title relationshipExplanation">Explanation</div>
+                                                <div class="mdl-card__supporting-text">
+                                                    <p id="relationshipExplanation"></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mdl-tabs__panel" id="panelSentiment">
+
+                                    <!--Empty State Msg PANEL SENTIMENT start-->
+                                    <div class="android-card-container mdl-grid emptyPanel" style="display: none;">
+                                        <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <h2>Awaiting survey responses</h2>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card message">
+                                                <p>
+                                                    Looks like people are yet to respond to the survey.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Empty State Msg PANEL SENTIMENT end-->
+
                                     <div class="mdl-grid sectionGridLayoutWidth">
                                         <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
@@ -288,53 +372,90 @@
                                         <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
                                             <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="sentimentResponses">432</div></div>
                                         </div>
-                                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Sentiment Gauge</div>
-                                            <div class="mdl-card__supporting-text" id="sentimentGauge"></div>
-                                        </div>
-                                        <div class="mdl-cell mdl-cell--8-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Sentiment Distribution</div>
-                                            <div class="mdl-card__supporting-text" id="sentimentDistribution"></div>
-                                        </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Word Cloud</div>
-                                            <div class="mdl-card__supporting-text sentimentWordCloud" id="sentimentWordCloud">
+
+
+                                        <!--Empty State Msg CHARTS SENTIMENT Start-->
+                                        <div class="android-card-container mdl-grid emptyCharts" style="display: none;">
+                                            <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                    <h2>No questions set</h2>
+                                                </div>
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card message">
+                                                    <p>
+                                                        You have not set any questions in your survey 
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Associated Words</div>
-                                            <div class="mdl-card__supporting-text" id="HC_Table">
-                                                <table class="mdl-data-table mdl-js-data-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="mdl-data-table__cell--non-numeric">Key Words</th>
-                                                            <th class="mdl-data-table__cell--non-numeric">Associated Words</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr id="temp">
-                                                            <td class="mdl-data-table__cell--non-numeric word"></td>
-                                                            <td class="mdl-data-table__cell--non-numeric association"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                        <!--Empty State Msg CHARTS SENTIMENT End-->
+
+                                        <div class="chartsContainer mdl-grid">
+                                            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Sentiment Gauge</div>
+                                                <div class="mdl-card__supporting-text" id="sentimentGauge"></div>
                                             </div>
-                                        </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Action</div>
-                                            <div class="mdl-card__supporting-text sentimentAction">
-                                                <p id="sentimentAction"></p>
+                                            <div class="mdl-cell mdl-cell--8-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Sentiment Distribution</div>
+                                                <div class="mdl-card__supporting-text" id="sentimentDistribution"></div>
                                             </div>
-                                        </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Explanation</div>
-                                            <div class="mdl-card__supporting-text sentimentExplanation">
-                                                <p id="sentimentExplanation"></p>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Word Cloud</div>
+                                                <div class="mdl-card__supporting-text sentimentWordCloud" id="sentimentWordCloud">
+                                                </div>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Associated Words</div>
+                                                <div class="mdl-card__supporting-text" id="HC_Table">
+                                                    <table class="mdl-data-table mdl-js-data-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="mdl-data-table__cell--non-numeric">Key Words</th>
+                                                                <th class="mdl-data-table__cell--non-numeric">Associated Words</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr id="temp">
+                                                                <td class="mdl-data-table__cell--non-numeric word"></td>
+                                                                <td class="mdl-data-table__cell--non-numeric association"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Action</div>
+                                                <div class="mdl-card__supporting-text sentimentAction">
+                                                    <p id="sentimentAction"></p>
+                                                </div>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Explanation</div>
+                                                <div class="mdl-card__supporting-text sentimentExplanation">
+                                                    <p id="sentimentExplanation"></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mdl-tabs__panel" id="panelComponent">
+
+                                    <!--Empty State Msg PANEL COMPONENT start-->
+                                    <div class="android-card-container mdl-grid emptyPanel" style="display: none;">
+                                        <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <h2>Awaiting survey responses</h2>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card message">
+                                                <p>
+                                                    Looks like people are yet to respond to the survey.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Empty State Msg PANEL COMPONENT end-->
+
                                     <div class="mdl-grid sectionGridLayoutWidth">
                                         <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
@@ -354,20 +475,39 @@
                                         <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
                                             <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="componentResponses"></div></div>
                                         </div>
-                                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Distribution of Scores</div>
-                                            <div class="mdl-card__supporting-text " id="componentDistribution"></div>
-                                        </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Action</div>
-                                            <div class="mdl-card__supporting-text componentAction">
-                                                <p id="componentAction"></p>
+
+                                        <!--Empty State Msg CHARTS COMPONENT Start-->
+                                        <div class="android-card-container mdl-grid emptyCharts" style="display: none;">
+                                            <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                    <h2>No questions set</h2>
+                                                </div>
+                                                <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card message">
+                                                    <p>
+                                                        You have not set any questions in your survey 
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                            <div class="mdl-card__title">Explanation</div>
-                                            <div class="mdl-card__supporting-text componentExplanation">
-                                                <p id="componentExplanation"></p>
+                                        <!--Empty State Msg CHARTS COMPONENT End-->
+
+                                        <div class="chartsContainer mdl-grid">
+                                            <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Distribution of Scores</div>
+                                                <div class="mdl-card__supporting-text " id="componentDistribution"></div>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Action</div>
+                                                <div class="mdl-card__supporting-text componentAction">
+                                                    <p id="componentAction"></p>
+                                                </div>
+                                            </div>
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                <div class="mdl-card__title">Explanation</div>
+                                                <div class="mdl-card__supporting-text componentExplanation">
+                                                    <p id="componentExplanation"></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

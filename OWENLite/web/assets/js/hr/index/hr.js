@@ -45,26 +45,32 @@ $(document).ready(function () {
         plotComponentCharts(false);
     });
 
-    $(".mdl-tabs__tab-bar").on("click", function () {
-        var selectedTab = $(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href");
-        if (selectedTab === "#panelRelationship") {
-            setTimeout(function () {
-                plotRelationshipCharts(false);
-            }, 10);
-        } else if (selectedTab === "#panelSentiment" && flag) {
-            plotSentimentCharts(true);
-            plotWordCloud("sentimentWordCloud", wordCloud[fetchOptionValue(flag, "dropdown_sentiment")]);
-            flag = false;
-        }
+    $("#goFilterDataButton").on("click", function () {
+        setTimeout(function () {
+            fetchData(false);
+        }, 10);
     });
+
+//    $(".mdl-tabs__tab-bar").on("click", function () {
+//        var selectedTab = $(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href");
+//        if (selectedTab === "#panelRelationship") {
+//            setTimeout(function () {
+//                plotRelationshipCharts(false);
+//            }, 10);
+//        } else if (selectedTab === "#panelSentiment") {
+////            plotSentimentCharts(true);
+//            plotWordCloud("sentimentWordCloud", wordCloud[fetchOptionValue(false, "dropdown_sentiment")]);
+////            flag = false;
+//        }
+//    });
     $("#slider").css("display", "block");
 
-    setTimeout(function () {
-//Check if wordcloud is empty. If yes, then plot all sentiment charts all over again
-        if ($("#sentimentWordCloud").is(':empty')) {
-            plotSentimentCharts(true);
-        }
-    }, 1000);
+//    setTimeout(function () {
+////Check if wordcloud is empty. If yes, then plot all sentiment charts all over again
+//        if ($("#sentimentWordCloud").is(':empty')) {
+//            plotSentimentCharts(true);
+//        }
+//    }, 1000);
 
 });
 
@@ -117,6 +123,7 @@ function fetchOptionValue(isFirstTime, dropdownName) {
     }
     return optionValue;
 }
+
 function plotRelationshipCharts(isFirstTime) {
     var optionValue = fetchOptionValue(isFirstTime, "dropdown_relationship");
 
@@ -155,7 +162,7 @@ function plotCytoNetwork(chartId, selectedRelationship) {
         }
     });
 
-//Create array of nodes
+    //Create array of nodes
     var arrNodes = [];
     for (var i = 0; i < nodes.length; i++) {
         arrNodes.push({
@@ -164,7 +171,7 @@ function plotCytoNetwork(chartId, selectedRelationship) {
         });
     }
 
-//Create array of edges, based on filtered edges
+    //Create array of edges, based on filtered edges
     var arrEdges = [];
     for (var i = 0; i < filteredEdges.length; i++) {
         arrEdges.push({
@@ -172,10 +179,24 @@ function plotCytoNetwork(chartId, selectedRelationship) {
             data: filteredEdges[i]
         });
     }
+
+    //Set minZoomValue ,maxZoomValue
+    var minZoomValue, maxZoomValue;
+    if (arrNodes.length < 50) {
+        minZoomValue = 0.5;
+        maxZoomValue = 2;
+    }else if (arrNodes.length < 100 && arrNodes.length > 50) {
+        minZoomValue = 0.3;
+        maxZoomValue = 2;
+    }else if (arrNodes.length > 500) {
+        minZoomValue = 1e-1;
+        maxZoomValue = 2;
+    }
+
     var cy = cytoscape({
         container: container,
-        minZoom: 0.5,
-        maxZoom: 2,
+        minZoom: minZoomValue,
+        maxZoom: maxZoomValue,
         zoomingEnabled: true,
         userZoomingEnabled: true,
         panningEnabled: true,
@@ -183,15 +204,33 @@ function plotCytoNetwork(chartId, selectedRelationship) {
         hideEdgesOnViewport: false,
         hideLabelsOnViewport: true,
         layout: {
-            name: 'grid'
+            name: 'cose'
         },
+        animate: true,
+        // The layout animates only after this many milliseconds
+        // (prevents flashing on fast runs)
+        animationThreshold: 250,
+        // Number of iterations between consecutive screen positions update
+        // (0 -> only updated on the end)
+        refresh: 20,
+        // Whether to fit the network view after when done
+        fit: true,
+        // Padding on fit
+        padding: 30,
         style: [
             {
                 selector: 'node',
                 style: {
 //                    shape: 'hexagon',
 //                    'background-color': 'red',
-                    content: 'data(firstName)'
+                    content: 'data(firstName)',
+                    height: function (ele) {
+//                        console.log(ele._private.data.firstName + " ::: " + ele.indegree());
+                        return ele.indegree() * 2;
+                    },
+                    width: function (ele) {
+                        return ele.indegree() * 2;
+                    }
                 }
             }, {
                 selector: 'edge',
@@ -227,7 +266,15 @@ function plotCytoNetwork(chartId, selectedRelationship) {
             }
         }
     });
-    cy.resize();
+
+    var ccn = cy.elements().closenessCentralityNormalized({/* my options */});
+
+    cy.nodes().forEach(n => {
+        n.data({
+            ccn: ccn.closeness(n)
+        });
+    });
+//    cy.resize();
 }
 
 function plotHCTable(jsonData) {
@@ -449,7 +496,7 @@ function plotWordCloud(chartId, words) {
         var array = [val.word, val.frequency, val.sentiment];
         list.push(array);
     }
-    WordCloud(document.getElementById(chartId), {
+    WordCloud(($("#" + chartId)[0]), {
         list: list,
         fontFamily: 'Roboto',
         backgroundColor: '#ffffff',
@@ -457,7 +504,7 @@ function plotWordCloud(chartId, words) {
 //        shape: 'pentagon',
         gridSize: 5,
 //        minSize: 1,
-        weightFactor: 7,
+//        weightFactor: 7,
         clearCanvas: true,
         drawOutOfBound: false,
         wait: 0,
