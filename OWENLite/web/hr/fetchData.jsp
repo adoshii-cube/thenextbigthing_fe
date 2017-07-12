@@ -6,9 +6,6 @@
 
 <%@page import="org.owen.hr.Edge"%>
 <%@page import="org.owen.hr.Node"%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="org.owen.relationship.Relationship"%>
-<%@page import="org.owen.relationship.RelationshipHelper"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@page import="org.owen.hr.HrDashboardHelper"%>
@@ -19,8 +16,9 @@
 
 <%
     JSONObject result = new JSONObject();
-    RelationshipHelper rh = new RelationshipHelper();
-
+    boolean relationshipTab = false;
+    boolean sentimentTab = false;
+    boolean componentTab = false;
     JSONObject jsonObj = new JSONObject(request.getParameter("jsonObj"));
     int functionId = UtilHelper.getIntValue(jsonObj.getString("funcId"));
     int positionId = UtilHelper.getIntValue(jsonObj.getString("posId"));
@@ -38,10 +36,25 @@
     result.put("edges", edges);
     result.put("indexValue", indexValue);
     result.put("keyPeople", keyPeople);
+    if (!nodes.isEmpty() && !edges.isEmpty() && !indexValue.isEmpty() && !keyPeople.isEmpty()) {
+        relationshipTab = true;
+    }
+
     result.put("wordCloud", wordCloud);
     result.put("sentimentScore", sentimentScore);
     result.put("sentimentDistribution", sentimentDistribution);
+    if (!wordCloud.isEmpty() && !sentimentScore.isEmpty() && !sentimentDistribution.isEmpty()) {
+        sentimentTab = true;
+    }
+
     result.put("selfPerception", selfPerception);
+    if (!selfPerception.isEmpty()) {
+        componentTab = true;
+    }
+
+    result.put("relationshipTab", relationshipTab);
+    result.put("sentimentTab", sentimentTab);
+    result.put("componentTab", componentTab);
     response.setContentType("text/html");
     response.getWriter().println(result);
 %>

@@ -1179,9 +1179,15 @@ select {
 }
 
 .chartsContainer{
-    width: 100%;
+   width: 100%;
+   padding: 0px;
 }
 
 .mdl-layout__header--waterfall.is-casting-shadow {
     z-index: 2;
+}
+
+.dashboard, .emptyDashboard,
+.panel, .emptyPanel{
+    display: none;
 }

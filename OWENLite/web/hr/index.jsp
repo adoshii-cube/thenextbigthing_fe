@@ -130,7 +130,7 @@
                     <%}%>
                 </div>
             </header>
-            <button class="mdl-button mdl-js-button mdl-button--icon" id="trigger">
+            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="trigger">
                 <i class="material-icons">menu</i>
             </button>
             <div id="slider">
@@ -188,9 +188,9 @@
                         </div>
                     </div>
                     <!--<div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">-->
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="goFilterDataButton">
-                            GO
-                        </button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="goFilterDataButton">
+                        GO
+                    </button>
                     <!--</div>-->
                 </div>
             </div>
@@ -198,7 +198,7 @@
                 <div class="hr-page-content">
 
                     <!--Empty State Msg GLOBAL start-->
-                    <div class="android-card-container mdl-grid emptyDashboard" style="display: none;">
+                    <div class="android-card-container mdl-grid emptyDashboard">
                         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -216,7 +216,7 @@
                     </div>
                     <!--Empty State Msg GLOBAL end-->
 
-                    <div class="android-card-container mdl-grid">
+                    <div class="android-card-container mdl-grid dashboard">
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                                 <div class="mdl-tabs__tab-bar">
@@ -233,7 +233,7 @@
                                 <div class="mdl-tabs__panel is-active" id="panelRelationship">
 
                                     <!--Empty State Msg PANEL RELATIONSHIP start-->
-                                    <div class="android-card-container mdl-grid emptyPanel" style="display: none;">
+                                    <div class="android-card-container mdl-grid emptyPanel" id="relationshipPanelEmptyState">
                                         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -248,7 +248,7 @@
                                     </div>
                                     <!--Empty State Msg PANEL RELATIONSHIP end-->
 
-                                    <div class="mdl-grid sectionGridLayoutWidth">
+                                    <div class="mdl-grid sectionGridLayoutWidth" id="relationshipPanel">
                                         <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                 <select id="dropdown_relationship" name="relationshipQuestion" class="mdl-selectfield__select" required>
@@ -269,7 +269,7 @@
                                         </div>
 
                                         <!--Empty State Msg CHARTS RELATIONSHIP Start-->
-                                        <div class="android-card-container mdl-grid emptyCharts" style="display: none;">
+                                        <div class="android-card-container mdl-grid emptyCharts" id="relationshipChartsEmptyState">
                                             <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
                                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -284,7 +284,7 @@
                                         </div>
                                         <!--Empty State Msg CHARTS RELATIONSHIP End-->
 
-                                        <div class="chartsContainer mdl-grid">
+                                        <div class="chartsContainer mdl-grid" id="relationshipCharts">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Network Diagram</div>
                                                 <div class="mdl-card__supporting-text" id="relationshipNetwork"></div>
@@ -338,7 +338,7 @@
                                 <div class="mdl-tabs__panel" id="panelSentiment">
 
                                     <!--Empty State Msg PANEL SENTIMENT start-->
-                                    <div class="android-card-container mdl-grid emptyPanel" style="display: none;">
+                                    <div class="android-card-container mdl-grid emptyPanel" id="sentimentPanelEmptyState">
                                         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -353,7 +353,7 @@
                                     </div>
                                     <!--Empty State Msg PANEL SENTIMENT end-->
 
-                                    <div class="mdl-grid sectionGridLayoutWidth">
+                                    <div class="mdl-grid sectionGridLayoutWidth" id="sentimentPanel">
                                         <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                 <select id="dropdown_sentiment" name="sentimentQuestion" class="mdl-selectfield__select" required>
@@ -375,7 +375,7 @@
 
 
                                         <!--Empty State Msg CHARTS SENTIMENT Start-->
-                                        <div class="android-card-container mdl-grid emptyCharts" style="display: none;">
+                                        <div class="android-card-container mdl-grid emptyCharts" id="sentimentChartsEmptyState">
                                             <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
                                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -390,7 +390,7 @@
                                         </div>
                                         <!--Empty State Msg CHARTS SENTIMENT End-->
 
-                                        <div class="chartsContainer mdl-grid">
+                                        <div class="chartsContainer mdl-grid" id="sentimentCharts">
                                             <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Sentiment Gauge</div>
                                                 <div class="mdl-card__supporting-text" id="sentimentGauge"></div>
@@ -401,7 +401,8 @@
                                             </div>
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Word Cloud</div>
-                                                <div class="mdl-card__supporting-text sentimentWordCloud" id="sentimentWordCloud">
+                                                <div class="mdl-card__supporting-text sentimentWordCloud">
+                                                    <canvas id="sentimentWordCloud" width="760" height="500" style="width: 380px; height: 250px"></canvas>
                                                 </div>
                                             </div>
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -441,7 +442,7 @@
                                 <div class="mdl-tabs__panel" id="panelComponent">
 
                                     <!--Empty State Msg PANEL COMPONENT start-->
-                                    <div class="android-card-container mdl-grid emptyPanel" style="display: none;">
+                                    <div class="android-card-container mdl-grid emptyPanel" id="componentPanelEmptyState">
                                         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -456,7 +457,7 @@
                                     </div>
                                     <!--Empty State Msg PANEL COMPONENT end-->
 
-                                    <div class="mdl-grid sectionGridLayoutWidth">
+                                    <div class="mdl-grid sectionGridLayoutWidth" id="componentPanel">
                                         <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--2-col-phone">
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                 <select id="dropdown_component" name="componentQuestion" class="mdl-selectfield__select" required>
@@ -477,7 +478,7 @@
                                         </div>
 
                                         <!--Empty State Msg CHARTS COMPONENT Start-->
-                                        <div class="android-card-container mdl-grid emptyCharts" style="display: none;">
+                                        <div class="android-card-container mdl-grid emptyCharts" id="componentChartsEmptyState">
                                             <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card image"></div>
                                                 <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -492,7 +493,7 @@
                                         </div>
                                         <!--Empty State Msg CHARTS COMPONENT End-->
 
-                                        <div class="chartsContainer mdl-grid">
+                                        <div class="chartsContainer mdl-grid" id="componentCharts">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Distribution of Scores</div>
                                                 <div class="mdl-card__supporting-text " id="componentDistribution"></div>
