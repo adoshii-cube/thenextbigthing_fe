@@ -4,6 +4,7 @@
     Author     : adoshi
 --%>
 
+<%@page import="org.json.JSONObject"%>
 <%@page import="java.lang.String"%>
 <%@page import="java.lang.Integer"%>
 <%@page import="java.util.Map"%>
@@ -141,14 +142,18 @@
                                 <%
                                     FilterHelper fh = new FilterHelper();
                                     Filter function = fh.getFilterValues(comId, "Function");
-                                    Map<Integer, String> filterValues = function.getFilterValues();
-                                    for (Map.Entry<Integer, String> entry : filterValues.entrySet()) {
+                                    Map<Integer, String> functionValues = function.getFilterValues();
+                                    JSONObject fJsonObj = new JSONObject();
+                                    for (Map.Entry<Integer, String> entry : functionValues.entrySet()) {
                                         int id = entry.getKey();
                                         String value = entry.getValue();
+                                        if (value != "All") {
+                                            fJsonObj.put(String.valueOf(id), value);
+                                        }
                                 %>
                                 <option value="<%=id%>"><%=value%></option>
-                                <%}%>
-                            </select>
+                                <%}%>                            </select>
+                            <input hidden="text" id="functionValues" value='<%=fJsonObj.toString()%>'>
                             <label class="mdl-selectfield__label" for="myselect">FUNCTION</label>
                             <span class="mdl-selectfield__error">Please select a function</span>
                         </div>
@@ -159,13 +164,18 @@
                                 <%
                                     Filter position = fh.getFilterValues(comId, "Position");
                                     Map<Integer, String> positionValues = position.getFilterValues();
+                                    JSONObject pJsonObj = new JSONObject();
                                     for (Map.Entry<Integer, String> entry : positionValues.entrySet()) {
                                         int id = entry.getKey();
                                         String value = entry.getValue();
+                                        if (value != "All") {
+                                            pJsonObj.put(String.valueOf(id), value);
+                                        }
                                 %>
                                 <option value="<%=id%>"><%=value%></option>
                                 <%}%>
                             </select>
+                            <input hidden="text" id="positionValues" value='<%=pJsonObj.toString()%>'>
                             <label class="mdl-selectfield__label" for="myselect">POSITION</label>
                             <span class="mdl-selectfield__error">Please select a position</span>
                         </div>
@@ -176,13 +186,18 @@
                                 <%
                                     Filter location = fh.getFilterValues(comId, "Location");
                                     Map<Integer, String> locationValues = location.getFilterValues();
+                                    JSONObject lJsonObj = new JSONObject();
                                     for (Map.Entry<Integer, String> entry : locationValues.entrySet()) {
                                         int id = entry.getKey();
                                         String value = entry.getValue();
+                                        if (value != "All") {
+                                            lJsonObj.put(String.valueOf(id), value);
+                                        }
                                 %>
                                 <option value="<%=id%>"><%=value%></option>
                                 <%}%>
                             </select>
+                            <input hidden="text" id="locationValues" value='<%=lJsonObj.toString()%>'>
                             <label class="mdl-selectfield__label" for="myselect">LOCATION</label>
                             <span class="mdl-selectfield__error">Please select a location</span>
                         </div>
@@ -302,18 +317,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="legendContainer">
-                                                            <ul class="legend">
-                                                                <li class="nodes"><span class="nodeColor1"></span>Node Color 1</li>
-                                                                <li class="nodes"><span class="nodeColor2"></span>Node Color 2</li>
-                                                                <li class="nodes"><span class="nodeColor3"></span>Node Color 2</li>
-                                                                <li class="nodes"><span class="nodeColor4"></span>Node Color 2</li>
-                                                                <li class="nodes"><span class="nodeColor5"></span>Node Color 2</li>
-                                                                <li class="nodes"><span class="nodeColor6"></span>Node Color 2</li>
-                                                                <li class="nodes"><span class="nodeColor7"></span>Node Color 2</li>
-                                                                <li class="nodes"><span class="nodeColor8"></span>Node Color 2</li>
-                                                                <li class="nodes"><span class="nodeColor9"></span>Node Color 2</li>
-                                                                <li class="nodes"><span class="nodeColor10"></span>Node Color 2</li>
-                                                            </ul>
+                                                            <ul class="legend"></ul>
                                                         </div>
                                                     </div>
                                                 </div>

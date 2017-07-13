@@ -16,7 +16,6 @@ var flag = true;
 var cy;
 var arrNodes = [];
 var arrEdges = [];
-
 $(document).ready(function () {
     var slider = $("#slider").slideReveal({
         trigger: $("#trigger"),
@@ -33,7 +32,6 @@ $(document).ready(function () {
 //            $("#slider").css("display", "none");
         }
     });
-
     fetchData(true);
 
     $("#dropdown_relationship").on("change", function () {
@@ -45,19 +43,15 @@ $(document).ready(function () {
     $("#dropdown_component").on("change", function () {
         plotComponentCharts(false);
     });
-
     $("#dropdown_relationship_color").on("change", function () {
-        plotRelationshipCharts(false);
+        plotLegend();
     });
-
     $("#goFilterDataButton").on("click", function () {
         setTimeout(function () {
             fetchData(false);
         }, 10);
     });
-
     $("#slider").css("display", "block");
-
     $(".mdl-tabs__tab-bar").on("click", function () {
         var selectedTab = $(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href");
         if (selectedTab === "#panelRelationship") {
@@ -73,8 +67,8 @@ $(document).ready(function () {
 //        }
     });
 
-});
 
+});
 function fetchData(isFirstTime) {
     var funcId = $('#dropdown_function option:selected').val();
     var posId = $('#dropdown_position option:selected').val();
@@ -92,11 +86,9 @@ function fetchData(isFirstTime) {
         async: false,
         success: function (resp) {
             var response = JSON.parse(resp);
-
             var relationshipTab = JSON.parse(response.relationshipTab);
             var sentimentTab = JSON.parse(response.sentimentTab);
             var componentTab = JSON.parse(response.componentTab);
-
             if (!relationshipTab && !sentimentTab && !componentTab) {
                 // show dashboard empty state message
                 $(".dashboard").css("display", "none");
@@ -161,33 +153,29 @@ function fetchOptionValue(isFirstTime, dropdownName) {
 function plotRelationshipCharts(isFirstTime) {
     var optionValue = fetchOptionValue(isFirstTime, "dropdown_relationship");
     var colorByValue = fetchOptionValue(isFirstTime, "dropdown_relationship_color");
-        
     if (indexValue[optionValue] === undefined) {
         $("#relationshipChartsEmptyState").css("display", "flex");
         $("#relationshipCharts").css("display", "none");
     } else {
         $("#relationshipChartsEmptyState").css("display", "none");
         $("#relationshipCharts").css("display", "flex");
-
         // response count
         $("#relationshipResponses").empty();
         $("#relationshipResponses").append(indexValue[optionValue].responseCount);
-
         // network diagram
 //        if ($(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href") === "#panelRelationship") {
         plotCytoNetwork("relationshipNetwork", optionValue, colorByValue);
+        plotLegend();
+
 //        }
         // index value
         $("#relationshipIndex").empty();
         $("#relationshipIndex").append(indexValue[optionValue].indexValue);
-
         // key people
         plotHCTable(keyPeople[optionValue]);
-
         // action
         $("#relationshipAction").empty();
         $("#relationshipAction").append(indexValue[optionValue].action);
-
         // explanation
         $("#relationshipExplanation").empty();
         $("#relationshipExplanation").append(indexValue[optionValue].explanation);
@@ -196,7 +184,6 @@ function plotRelationshipCharts(isFirstTime) {
 
 function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
     var container = document.getElementById(chartId);
-
 //Filter Edges for selectedRelationshipType
     var filteredEdges = [];
     $.each(edges, function () {
@@ -204,17 +191,28 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
             filteredEdges.push(this);
         }
     });
-
+//Filter nodes by color
+    var filteredNodes = [];
+    $.each(nodes, function () {
+        if (colorByValue === 1) {
+            this.color = '#' + this.fColor;
+        } else if (colorByValue === 2) {
+            this.color = '#' + this.pColor;
+        } else if (colorByValue === 3) {
+            this.color = '#' + this.lColor;
+        }
+        filteredNodes.push(this);
+    });
     //Create array of nodes
     arrNodes = [];
-    for (var i = 0; i < nodes.length; i++) {
+    for (var i = 0; i < filteredNodes.length; i++) {
         arrNodes.push({
             group: "nodes",
-            data: nodes[i]
+            data: filteredNodes[i]
         });
     }
 
-    //Create array of edges, based on filtered edge
+//Create array of edges, based on filtered edge
     arrEdges = [];
     for (var i = 0; i < filteredEdges.length; i++) {
         arrEdges.push({
@@ -223,7 +221,7 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
         });
     }
 
-    //Set minZoomValue ,maxZoomValue
+//Set minZoomValue ,maxZoomValue
     var minZoomValue, maxZoomValue;
     if (arrNodes.length < 50) {
         minZoomValue = 0.5;
@@ -235,7 +233,7 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
         minZoomValue = 1e-1;
         maxZoomValue = 2;
     }
-    
+
     cy = cytoscape({
         container: container,
         minZoom: minZoomValue,
@@ -265,7 +263,7 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
                 selector: 'node',
                 style: {
 //                    shape: 'hexagon',
-                    'background-color': 'red',
+                    'background-color': 'data(color)',
                     content: 'data(firstName)',
                     height: function (ele) {
 //                        console.log(ele._private.data.firstName + " ::: " + ele.indegree());
@@ -291,7 +289,6 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
             edges: arrEdges
         }
     });
-
     cy.elements("node").qtip({
         content: function () {
 //            return 'Example qTip on ele ' + this.id();
@@ -309,13 +306,44 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
             }
         }
     });
-
     cy.resize();
+}
+
+function plotLegend() {
+    var colorByValue = fetchOptionValue(false, "dropdown_relationship_color");
+    var functionValues = JSON.parse($('#functionValues').val());
+    var positionValues = JSON.parse($('#positionValues').val());
+    var locationValues = JSON.parse($('#locationValues').val());
+
+    $(".legend").empty();
+
+    if (colorByValue === 1) {
+        var count = 1;
+        for (var key in functionValues) {
+            $(".legend").append('<li class="nodes"><span class="nodeColor' + count + '"></span>' + functionValues[key] + '</li>');
+            count++;
+        }
+    } else if (colorByValue === 2) {
+        var count = 1;
+        for (var key in positionValues) {
+            $(".legend").append('<li class="nodes"><span class="nodeColor' + count + '"></span>' + positionValues[key] + '</li>');
+            count++;
+        }
+    }
+    if (colorByValue === 3) {
+        var count = 1;
+        for (var key in locationValues) {
+            $(".legend").append('<li class="nodes"><span class="nodeColor' + count + '"></span>' + locationValues[key] + '</li>');
+            count++;
+        }
+    }
+
+    var optionValue = fetchOptionValue(false, "dropdown_relationship");
+    plotCytoNetwork("relationshipNetwork", optionValue, colorByValue);
 }
 
 function plotHCTable(jsonData) {
     var length = Object.keys(jsonData).length;
-
     $("#relationshipListOfPeople tbody td").empty();
     $("#relationshipListOfPeople .hiddenRow").css("display", "none");
     var j = 1;
@@ -329,36 +357,28 @@ function plotHCTable(jsonData) {
 
 function plotSentimentCharts(isFirstTime) {
     var optionValue = fetchOptionValue(isFirstTime, "dropdown_sentiment");
-
     if (sentimentScore[optionValue] === undefined) {
-        //show empty state message
+//show empty state message
         $("#sentimentChartsEmptyState").css("display", "flex");
         $("#sentimentCharts").css("display", "none");
     } else {
         $("#sentimentChartsEmptyState").css("display", "none");
         $("#sentimentCharts").css("display", "flex");
-
         // response count
         $("#sentimentResponses").empty();
         $("#sentimentResponses").append(sentimentScore[optionValue].responseCount);
-
         // sentiment gauge
         var data = [sentimentScore[optionValue].metricValue];
         plotHCGauge(data);
-
         // sentiment distribution
         plotStackedSentiment("sentimentDistribution", sentimentDistribution[optionValue]);
-
         // word cloud
         plotWordCloud("sentimentWordCloud", wordCloud[optionValue]);
-
         //Word association
         plotWordAssociation(wordCloud[optionValue]);
-
         // action
         $("#sentimentAction").empty();
         $("#sentimentAction").append(sentimentScore[optionValue].action);
-
         // explanation
         $("#sentimentExplanation").empty();
         $("#sentimentExplanation").append(sentimentScore[optionValue].explanation);
@@ -425,7 +445,6 @@ function plotHCGauge(dataValue) {
             }
         }
     };
-
     var chartSpeed = Highcharts.chart('sentimentGauge', Highcharts.merge(gaugeOptions, {
         yAxis: {
             min: 0,
@@ -521,7 +540,6 @@ function plotStackedSentiment(containerId, seriesData) {
 
 function plotWordAssociation(jsonData) {
     var length = jsonData.length;
-
     $("#HC_Table tbody td").empty();
     $("#HC_Table .hiddenRow").css("display", "none");
     for (var i = 0; i < length; i++) {
@@ -569,24 +587,19 @@ function plotWordCloud(chartId, words) {
 
 function plotComponentCharts(isFirstTime) {
     var optionValue = fetchOptionValue(isFirstTime, "dropdown_component");
-
     if (selfPerception[optionValue] === undefined) {
         $("#componentChartsEmptyState").css("display", "flex");
         $("#componentCharts").css("display", "none");
     } else {
         $("#componentChartsEmptyState").css("display", "none");
         $("#componentCharts").css("display", "flex");
-
         // response count
         $("#componentResponses").empty();
         $("#componentResponses").append(selfPerception[optionValue].responseCount);
-
         plotStackedComponent("componentDistribution", selfPerception[optionValue].series);
-
         // action
         $("#componentAction").empty();
         $("#componentAction").append(selfPerception[optionValue].action);
-
         // explanation
         $("#componentExplanation").empty();
         $("#componentExplanation").append(selfPerception[optionValue].explanation);
