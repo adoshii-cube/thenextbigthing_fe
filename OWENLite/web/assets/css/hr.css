@@ -524,7 +524,7 @@ textarea{
 }
 
 .android-card-container .mdl-card__supporting-text {
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     /*height: auto;*/
     /*color: black;*/
     /*padding-bottom: 56px;*/
@@ -926,7 +926,7 @@ select {
 
 #relationshipNetwork{
     height: 300px;
-    padding-bottom: 0px;
+    margin: 0px;
     /*width: 100%;*/
     /*height: 100%;*/
     /*position: absolute;*/
@@ -938,6 +938,10 @@ select {
     padding: 0px;
 }
 
+#relationshipCharts .mdl-card__supporting-text{
+    margin: 0;
+    width: 98%;
+}
 
 .legendContainer{
     display: flex;
@@ -947,13 +951,19 @@ select {
 /* basic positioning */
 .legend {
     list-style: none;
-    display: flex;
+    /* display: flex; */
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+/*    max-height: 150px;
+    overflow-y: overlay;*/
 }
 
 .legend li {
     display: inline-flex;
-    margin-right: 16px;
+    /* margin-right: 16px; */
     align-items: center;
+    width: 100%;
 }
 
 
@@ -973,9 +983,27 @@ select {
     margin: 8px;
 }
 
+#legendColorByContainer, 
+#colorByContainer{
+    margin-top: 0;
+}
+
+#legendContainer{
+    max-height: 220px;
+    overflow-y: overlay;
+}
+
 /* your colors */
-.legend .nodeColor1 { background-color: #303f9f; }
-.legend .nodeColor2 { background-color: #00ffff; }
+.legend .nodeColor1 { background-color: #f44336; }
+.legend .nodeColor2 { background-color: #E91E63; }
+.legend .nodeColor3 { background-color: #9C27B0; }
+.legend .nodeColor4 { background-color: #673AB7; }
+.legend .nodeColor5 { background-color: #3F51B5; }
+.legend .nodeColor6 { background-color: #2196F3; }
+.legend .nodeColor7 { background-color: #00BCD4; }
+.legend .nodeColor8 { background-color: #009688; }
+.legend .nodeColor9 { background-color: #4CAF50; }
+.legend .nodeColor10 { background-color: #CDDC39; }
 .legend .edgeColor1 { background-color: #303f9f; }
 .legend .edgeColor2 { background-color: #000000; }
 
@@ -1179,8 +1207,8 @@ select {
 }
 
 .chartsContainer{
-   width: 100%;
-   padding: 0px;
+    width: 100%;
+    padding: 0px;
 }
 
 .mdl-layout__header--waterfall.is-casting-shadow {
