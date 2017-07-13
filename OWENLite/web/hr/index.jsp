@@ -287,17 +287,39 @@
                                         <div class="chartsContainer mdl-grid" id="relationshipCharts">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Network Diagram</div>
-                                                <div class="mdl-card__supporting-text" id="relationshipNetwork"></div>
-                                                <div class="mdl-card__actions" id="relationshipNetworkLegend">
-                                                    <div class="legendContainer">
-                                                        <ul class="legend">
-                                                            <li class="nodes"><span class="nodeColor1"></span>Node Color 1</li>
-                                                            <li class="nodes"><span class="nodeColor2"></span>Node Color 2</li>
-                                                            <li class="edges"><span class="edgeColor1"></span>Edge Color 1</li>
-                                                            <li class="edges"><span class="edgeColor2"></span>Edge Color 2</li>
-                                                        </ul>
+                                                <div class="mdl-card__supporting-text mdl-grid">
+                                                    <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetwork"></div>
+                                                    <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="legendColorByContainer">
+                                                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="colorByContainer">
+                                                            <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
+                                                                <select id="dropdown_relationship_color" name="relationshipColor" class="mdl-selectfield__select" required>
+                                                                    <option value="function">Function</option>
+                                                                    <option value="position">Position</option>
+                                                                    <option value="location">Location</option>
+                                                                </select>
+                                                                <label class="mdl-selectfield__label" for="relationshipColor">Color by</label>
+                                                                <span class="mdl-selectfield__error">Please select an option</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="legendContainer">
+                                                            <ul class="legend">
+                                                                <li class="nodes"><span class="nodeColor1"></span>Node Color 1</li>
+                                                                <li class="nodes"><span class="nodeColor2"></span>Node Color 2</li>
+                                                                <li class="nodes"><span class="nodeColor3"></span>Node Color 2</li>
+                                                                <li class="nodes"><span class="nodeColor4"></span>Node Color 2</li>
+                                                                <li class="nodes"><span class="nodeColor5"></span>Node Color 2</li>
+                                                                <li class="nodes"><span class="nodeColor6"></span>Node Color 2</li>
+                                                                <li class="nodes"><span class="nodeColor7"></span>Node Color 2</li>
+                                                                <li class="nodes"><span class="nodeColor8"></span>Node Color 2</li>
+                                                                <li class="nodes"><span class="nodeColor9"></span>Node Color 2</li>
+                                                                <li class="nodes"><span class="nodeColor10"></span>Node Color 2</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <!--<div class="mdl-card__actions" id="relationshipNetworkLegend">-->
+
+                                                <!--</div>-->
                                             </div>
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Index Value</div>
@@ -474,7 +496,7 @@
                                             </div>
                                         </div>
                                         <div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone responseCountContainerParent">
-                                            <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="componentResponses"></div></div>
+                                            <div class="responseCountContainer">Responses:&nbsp;<div class="responseCount" id="componentResponses">0</div></div>
                                         </div>
 
                                         <!--Empty State Msg CHARTS COMPONENT Start-->
