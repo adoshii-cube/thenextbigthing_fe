@@ -253,7 +253,7 @@ console.log("maxZoomValue :::" + maxZoomValue);
         // (0 -> only updated on the end)
         refresh: 20,
         // Whether to fit the network view after when done
-        fit: true,
+//        fit: true,
         // Padding on fit
         padding: 30,
         style: [
