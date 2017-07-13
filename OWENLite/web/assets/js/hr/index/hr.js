@@ -46,6 +46,10 @@ $(document).ready(function () {
         plotComponentCharts(false);
     });
 
+    $("#dropdown_relationship_color").on("change", function () {
+        plotRelationshipCharts(false);
+    });
+
     $("#goFilterDataButton").on("click", function () {
         setTimeout(function () {
             fetchData(false);
@@ -59,7 +63,7 @@ $(document).ready(function () {
         if (selectedTab === "#panelRelationship") {
 //            setTimeout(function () {
 //                plotRelationshipCharts(false);
-                cy.resize();
+            cy.resize();
 //            }, 10);
         }
 //        else if (selectedTab === "#panelSentiment") {
@@ -156,7 +160,8 @@ function fetchOptionValue(isFirstTime, dropdownName) {
 
 function plotRelationshipCharts(isFirstTime) {
     var optionValue = fetchOptionValue(isFirstTime, "dropdown_relationship");
-
+    var colorByValue = fetchOptionValue(isFirstTime, "dropdown_relationship_color");
+        
     if (indexValue[optionValue] === undefined) {
         $("#relationshipChartsEmptyState").css("display", "flex");
         $("#relationshipCharts").css("display", "none");
@@ -170,7 +175,7 @@ function plotRelationshipCharts(isFirstTime) {
 
         // network diagram
 //        if ($(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href") === "#panelRelationship") {
-            plotCytoNetwork("relationshipNetwork", optionValue);
+        plotCytoNetwork("relationshipNetwork", optionValue, colorByValue);
 //        }
         // index value
         $("#relationshipIndex").empty();
@@ -189,7 +194,7 @@ function plotRelationshipCharts(isFirstTime) {
     }
 }
 
-function plotCytoNetwork(chartId, selectedRelationship) {
+function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
     var container = document.getElementById(chartId);
 
 //Filter Edges for selectedRelationshipType
@@ -201,7 +206,7 @@ function plotCytoNetwork(chartId, selectedRelationship) {
     });
 
     //Create array of nodes
-arrNodes = [];
+    arrNodes = [];
     for (var i = 0; i < nodes.length; i++) {
         arrNodes.push({
             group: "nodes",
@@ -230,8 +235,7 @@ arrNodes = [];
         minZoomValue = 1e-1;
         maxZoomValue = 2;
     }
-console.log("minZoomValue :::" + minZoomValue);
-console.log("maxZoomValue :::" + maxZoomValue);
+    
     cy = cytoscape({
         container: container,
         minZoom: minZoomValue,
@@ -245,23 +249,23 @@ console.log("maxZoomValue :::" + maxZoomValue);
         layout: {
             name: 'cose'
         },
-        animate: true,
-        // The layout animates only after this many milliseconds
-        // (prevents flashing on fast runs)
-        animationThreshold: 250,
-        // Number of iterations between consecutive screen positions update
-        // (0 -> only updated on the end)
-        refresh: 20,
-        // Whether to fit the network view after when done
-//        fit: true,
-        // Padding on fit
-        padding: 30,
+//        animate: true,
+//        // The layout animates only after this many milliseconds
+//        // (prevents flashing on fast runs)
+//        animationThreshold: 250,
+//        // Number of iterations between consecutive screen positions update
+//        // (0 -> only updated on the end)
+//        refresh: 20,
+//        // Whether to fit the network view after when done
+////        fit: true,
+//        // Padding on fit
+//        padding: 30,
         style: [
             {
                 selector: 'node',
                 style: {
 //                    shape: 'hexagon',
-//                    'background-color': 'red',
+                    'background-color': 'red',
                     content: 'data(firstName)',
                     height: function (ele) {
 //                        console.log(ele._private.data.firstName + " ::: " + ele.indegree());

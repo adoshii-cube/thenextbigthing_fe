@@ -293,9 +293,9 @@
                                                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="colorByContainer">
                                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                                 <select id="dropdown_relationship_color" name="relationshipColor" class="mdl-selectfield__select" required>
-                                                                    <option value="function">Function</option>
-                                                                    <option value="position">Position</option>
-                                                                    <option value="location">Location</option>
+                                                                    <option value="1">Function</option>
+                                                                    <option value="2">Position</option>
+                                                                    <option value="3">Location</option>
                                                                 </select>
                                                                 <label class="mdl-selectfield__label" for="relationshipColor">Color by</label>
                                                                 <span class="mdl-selectfield__error">Please select an option</span>
