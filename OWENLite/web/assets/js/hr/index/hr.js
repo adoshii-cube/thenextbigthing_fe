@@ -13,6 +13,9 @@ var selfPerception;
 var sentimentDistribution;
 var wordCloud;
 var flag = true;
+var cy;
+var arrNodes = [];
+var arrEdges = [];
 
 $(document).ready(function () {
     var slider = $("#slider").slideReveal({
@@ -51,18 +54,20 @@ $(document).ready(function () {
 
     $("#slider").css("display", "block");
 
-//    $(".mdl-tabs__tab-bar").on("click", function () {
-//        var selectedTab = $(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href");
-//        if (selectedTab === "#panelRelationship") {
+    $(".mdl-tabs__tab-bar").on("click", function () {
+        var selectedTab = $(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href");
+        if (selectedTab === "#panelRelationship") {
 //            setTimeout(function () {
 //                plotRelationshipCharts(false);
+                cy.resize();
 //            }, 10);
-//        } else if (selectedTab === "#panelSentiment") {
+        }
+//        else if (selectedTab === "#panelSentiment") {
 ////            plotSentimentCharts(true);
 //            plotWordCloud("sentimentWordCloud", wordCloud[fetchOptionValue(false, "dropdown_sentiment")]);
 ////            flag = false;
 //        }
-//    });
+    });
 
 });
 
@@ -164,9 +169,9 @@ function plotRelationshipCharts(isFirstTime) {
         $("#relationshipResponses").append(indexValue[optionValue].responseCount);
 
         // network diagram
-        if ($(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href") === "#panelRelationship") {
+//        if ($(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href") === "#panelRelationship") {
             plotCytoNetwork("relationshipNetwork", optionValue);
-        }
+//        }
         // index value
         $("#relationshipIndex").empty();
         $("#relationshipIndex").append(indexValue[optionValue].indexValue);
@@ -196,7 +201,7 @@ function plotCytoNetwork(chartId, selectedRelationship) {
     });
 
     //Create array of nodes
-    var arrNodes = [];
+arrNodes = [];
     for (var i = 0; i < nodes.length; i++) {
         arrNodes.push({
             group: "nodes",
@@ -204,8 +209,8 @@ function plotCytoNetwork(chartId, selectedRelationship) {
         });
     }
 
-    //Create array of edges, based on filtered edges
-    var arrEdges = [];
+    //Create array of edges, based on filtered edge
+    arrEdges = [];
     for (var i = 0; i < filteredEdges.length; i++) {
         arrEdges.push({
             group: "edges",
@@ -225,8 +230,9 @@ function plotCytoNetwork(chartId, selectedRelationship) {
         minZoomValue = 1e-1;
         maxZoomValue = 2;
     }
-
-    var cy = cytoscape({
+console.log("minZoomValue :::" + minZoomValue);
+console.log("maxZoomValue :::" + maxZoomValue);
+    cy = cytoscape({
         container: container,
         minZoom: minZoomValue,
         maxZoom: maxZoomValue,
@@ -300,14 +306,7 @@ function plotCytoNetwork(chartId, selectedRelationship) {
         }
     });
 
-    var ccn = cy.elements().closenessCentralityNormalized({/* my options */});
-
-    cy.nodes().forEach(n => {
-        n.data({
-            ccn: ccn.closeness(n)
-        });
-    });
-//    cy.resize();
+    cy.resize();
 }
 
 function plotHCTable(jsonData) {
