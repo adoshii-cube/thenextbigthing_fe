@@ -994,27 +994,31 @@ select {
 }
 
 /* your colors */
-.legend .nodeColor1 { background-color: #e53935; }
-.legend .nodeColor2 { background-color: #D81B60; }
-.legend .nodeColor3 { background-color: #8E24AA; }
-.legend .nodeColor4 { background-color: #5E35B1; }
-.legend .nodeColor5 { background-color: #3949AB; }
-.legend .nodeColor6 { background-color: #1E88E5; }
-.legend .nodeColor7 { background-color: #039BE5; }
-.legend .nodeColor8 { background-color: #00ACC1; }
-.legend .nodeColor9 { background-color: #00897B; }
-.legend .nodeColor10 { background-color: #43A047; }
-.legend .nodeColor11 { background-color: #7CB342; }
-
-
-.legend .nodeColor12 { background-color: #43A047; }
-.legend .nodeColor13 { background-color: #43A047; }
-.legend .nodeColor14 { background-color: #43A047; }
-.legend .nodeColor15 { background-color: #43A047; }
-.legend .nodeColor16 { background-color: #43A047; }
-.legend .nodeColor17 { background-color: #43A047; }
-.legend .nodeColor18 { background-color: #43A047; }
-.legend .nodeColor19 { background-color: #43A047; }
+.legend .nodeColor1 { background-color: #f44336; }
+.legend .nodeColor2 { background-color: #E91E63; }
+.legend .nodeColor3 { background-color: #9C27B0; }
+.legend .nodeColor4 { background-color: #3F51B5; }
+.legend .nodeColor5 { background-color: #2196F3; }
+.legend .nodeColor6 { background-color: #009688; }
+.legend .nodeColor7 { background-color: #4CAF50; }
+.legend .nodeColor8 { background-color: #8BC34A; }
+.legend .nodeColor9 { background-color: #CDDC39; }
+.legend .nodeColor10 { background-color: #FFEB3B; }
+.legend .nodeColor11 { background-color: #FFC107; }
+.legend .nodeColor12 { background-color: #FF9800; }
+.legend .nodeColor13 { background-color: #FF5722; }
+.legend .nodeColor14 { background-color: #ef9a9a; }
+.legend .nodeColor15 { background-color: #F48FB1; }
+.legend .nodeColor16 { background-color: #CE93D8; }
+.legend .nodeColor17 { background-color: #9FA8DA; }
+.legend .nodeColor18 { background-color: #81D4FA; }
+.legend .nodeColor19 { background-color: #80CBC4; }
+.legend .nodeColor20 { background-color: #A5D6A7; }
+.legend .nodeColor21 { background-color: #C5E1A5; }
+.legend .nodeColor22 { background-color: #E6EE9C; }
+.legend .nodeColor23 { background-color: #FFF59D; }
+.legend .nodeColor24 { background-color: #FFCC80; }
+.legend .nodeColor25 { background-color: #FFAB91; }
 
 .sectionGridLayoutWidth{
     /*width: 98%;*/
