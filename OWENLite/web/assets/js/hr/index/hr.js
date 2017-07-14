@@ -199,59 +199,59 @@ function plotRelationshipCharts(isFirstTime) {
 
 function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
     var container = document.getElementById(chartId);
-
-    arrNodes = [];
-    $.each(nodes, function () {
-        if (colorByValue === 1) {
-            this.color = this.fColor;
-        } else if (colorByValue === 2) {
-            this.color = this.pColor;
-        } else if (colorByValue === 3) {
-            this.color = this.lColor;
-        }
-        arrNodes.push({
-            group: "nodes",
-            data: this
-        });
-    });
-
-    arrEdges = [];
-    $.each(edges, function () {
-        if (this.relId === selectedRelationship) {
-            arrEdges.push({
-                group: "edges",
+    $.when().then(function () {
+        arrNodes = [];
+        $.each(nodes, function () {
+            if (colorByValue === 1) {
+                this.color = this.fColor;
+            } else if (colorByValue === 2) {
+                this.color = this.pColor;
+            } else if (colorByValue === 3) {
+                this.color = this.lColor;
+            }
+            arrNodes.push({
+                group: "nodes",
                 data: this
             });
+        });
 
-        }
-    });
+        arrEdges = [];
+        $.each(edges, function () {
+            if (this.relId === selectedRelationship) {
+                arrEdges.push({
+                    group: "edges",
+                    data: this
+                });
+
+            }
+        });
 
 //Set minZoomValue ,maxZoomValue
-    var minZoomValue, maxZoomValue;
-    if (arrNodes.length < 50) {
-        minZoomValue = 0.5;
-        maxZoomValue = 2;
-    } else if (arrNodes.length < 100 && arrNodes.length > 50) {
-        minZoomValue = 0.3;
-        maxZoomValue = 2;
-    } else if (arrNodes.length > 500) {
-        minZoomValue = 1e-1;
-        maxZoomValue = 2;
-    }
+        var minZoomValue, maxZoomValue;
+        if (arrNodes.length < 50) {
+            minZoomValue = 0.5;
+            maxZoomValue = 2;
+        } else if (arrNodes.length < 100 && arrNodes.length > 50) {
+            minZoomValue = 0.3;
+            maxZoomValue = 2;
+        } else if (arrNodes.length > 500) {
+            minZoomValue = 1e-1;
+            maxZoomValue = 2;
+        }
 
-    cy = cytoscape({
-        container: container,
-        minZoom: minZoomValue,
-        maxZoom: maxZoomValue,
-        zoomingEnabled: true,
-        userZoomingEnabled: true,
-        panningEnabled: true,
-        userPanningEnabled: true,
-        hideEdgesOnViewport: false,
-        hideLabelsOnViewport: true,
-        layout: {
-            name: 'cose'
-        },
+        cy = cytoscape({
+            container: container,
+            minZoom: minZoomValue,
+            maxZoom: maxZoomValue,
+            zoomingEnabled: true,
+            userZoomingEnabled: true,
+            panningEnabled: true,
+            userPanningEnabled: true,
+            hideEdgesOnViewport: false,
+            hideLabelsOnViewport: true,
+            layout: {
+                name: 'cose'
+            },
 //        animate: true,
 //        // The layout animates only after this many milliseconds
 //        // (prevents flashing on fast runs)
@@ -263,55 +263,57 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
 ////        fit: true,
 //        // Padding on fit
 //        padding: 30,
-        style: [
-            {
-                selector: 'node',
-                style: {
+            style: [
+                {
+                    selector: 'node',
+                    style: {
 //                    shape: 'hexagon',
-                    'background-color': 'data(color)',
-                    content: 'data(firstName)',
-                    height: function (ele) {
+                        'background-color': 'data(color)',
+                        content: 'data(firstName)',
+                        height: function (ele) {
 //                        console.log(ele._private.data.firstName + " ::: " + ele.indegree());
-                        return ele.indegree() * 2;
-                    },
-                    width: function (ele) {
-                        return ele.indegree() * 2;
+                            return ele.indegree() * 2;
+                        },
+                        width: function (ele) {
+                            return ele.indegree() * 2;
+                        }
                     }
-                }
-            }, {
-                selector: 'edge',
-                style: {
+                }, {
+                    selector: 'edge',
+                    style: {
 //                    'background-color': 'red',
-                    'curve-style': 'bezier',
-                    'target-arrow-shape': 'triangle',
-                    'source-arrow-shape': 'circle',
-                    'opacity': 0.666,
-                    'width': 'data(weight)'
-                }
-            }],
-        elements: {
-            nodes: arrNodes,
-            edges: arrEdges
-        }
-    });
-    cy.elements("node").qtip({
-        content: function () {
-//            return 'Example qTip on ele ' + this.id();
-            return this.data().lastName;
-        },
-        position: {
-            my: 'top center',
-            at: 'bottom center'
-        },
-        style: {
-            classes: 'qtip-bootstrap',
-            tip: {
-                width: 16,
-                height: 8
+                        'curve-style': 'bezier',
+                        'target-arrow-shape': 'triangle',
+                        'source-arrow-shape': 'circle',
+                        'opacity': 0.666,
+                        'width': 'data(weight)'
+                    }
+                }],
+            elements: {
+                nodes: arrNodes,
+                edges: arrEdges
             }
-        }
+        });
+        cy.elements("node").qtip({
+            content: function () {
+//            return 'Example qTip on ele ' + this.id();
+                return this.data().lastName;
+            },
+            position: {
+                my: 'top center',
+                at: 'bottom center'
+            },
+            style: {
+                classes: 'qtip-bootstrap',
+                tip: {
+                    width: 16,
+                    height: 8
+                }
+            }
+        });
+        cy.resize();
+
     });
-    cy.resize();
 }
 
 function plotLegend(isFirstTime) {
