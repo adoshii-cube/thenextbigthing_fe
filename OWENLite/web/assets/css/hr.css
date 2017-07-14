@@ -875,6 +875,7 @@ select {
 
 .android-content{
     background-color: #f5f5f5;
+    overflow-y: scroll;
     /*height: 1000vh;*/
 }
 
@@ -940,6 +941,9 @@ select {
 
 #relationshipCharts .mdl-card__supporting-text{
     margin: 0;
+}
+
+.percent98width{
     width: 98%;
 }
 
@@ -1160,6 +1164,21 @@ select {
     height: 100px;
 }
 
+.pageLoaderContainer{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 70vh;
+}
+
+.pageLoaderContainer .mdl-cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /*Empty State*/
 .emptyDashboard,
 .emptyPanel,
@@ -1231,4 +1250,12 @@ select {
 .dashboard, .emptyDashboard,
 .panel, .emptyPanel{
     display: none;
+}
+
+#relationshipChartsLoader,
+#sentimentChartsLoader,
+#componentChartsLoader{
+    width: 95%;
+    margin: 0 auto;
+    visibility: hidden;
 }

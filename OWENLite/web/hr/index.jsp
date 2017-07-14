@@ -49,6 +49,9 @@
 
         <link rel='shortcut icon' type='image/x-icon' href='../assets/images/OWEN_Favicon.ico'/>
 
+        <!--Calling here for loader-->
+        <script src="../assets/js/material.min.js"></script>
+
         <!-- Chrome, Firefox OS and Opera -->
         <meta name="theme-color" content="#ff9800">
         <!-- Windows Phone -->
@@ -211,7 +214,13 @@
             </div>
             <main class="android-content mdl-layout__content">
                 <div class="hr-page-content">
-
+                    <div class="android-card-container mdl-grid pageLoaderContainer">
+                        <div class="mdl-layout-spacer"></div>
+                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+                            <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                        </div>                        
+                        <div class="mdl-layout-spacer"></div>
+                    </div>
                     <!--Empty State Msg GLOBAL start-->
                     <div class="android-card-container mdl-grid emptyDashboard">
                         <div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -298,11 +307,11 @@
                                             </div>
                                         </div>
                                         <!--Empty State Msg CHARTS RELATIONSHIP End-->
-
+                                        <div id="relationshipChartsLoader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
                                         <div class="chartsContainer mdl-grid" id="relationshipCharts">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Network Diagram</div>
-                                                <div class="mdl-card__supporting-text mdl-grid">
+                                                <div class="mdl-card__supporting-text mdl-grid percent98width">
                                                     <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetwork"></div>
                                                     <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="legendColorByContainer">
                                                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="colorByContainer">
@@ -415,7 +424,7 @@
                                             </div>
                                         </div>
                                         <!--Empty State Msg CHARTS SENTIMENT End-->
-
+                                        <div id="sentimentChartsLoader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
                                         <div class="chartsContainer mdl-grid" id="sentimentCharts">
                                             <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Sentiment Gauge</div>
@@ -518,7 +527,7 @@
                                             </div>
                                         </div>
                                         <!--Empty State Msg CHARTS COMPONENT End-->
-
+                                        <div id="componentChartsLoader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
                                         <div class="chartsContainer mdl-grid" id="componentCharts">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Distribution of Scores</div>
