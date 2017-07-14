@@ -4,8 +4,6 @@
     Author     : rashmi
 --%>
 
-<%@page import="org.owen.hr.Edge"%>
-<%@page import="org.owen.hr.Node"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@page import="org.owen.hr.HrDashboardHelper"%>
