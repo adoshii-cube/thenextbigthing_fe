@@ -117,6 +117,30 @@ function fetchData(isFirstTime) {
                 indexValue = JSON.parse(response.indexValue);
                 keyPeople = JSON.parse(response.keyPeople);
                 plotRelationshipCharts(isFirstTime);
+                // FETCH API CODE
+//                var empId = $('#empId').val();
+//                var comId = $('#comId').val();
+//                var jsonDataFile = "../hr/jsonDataFiles/networkData_" + comId + "_" + empId + ".json";
+//                var request = new Request(jsonDataFile, {
+//                    method: 'POST',
+//                    mode: 'no-cors',
+//                    redirect: 'follow',
+//                    headers: new Headers({
+////                        'Content-Type': 'text/plain',
+//                        'Accept': 'application/json',
+//                        'Content-Type': 'text/json',
+//                        'cache-control': 'no-cache'
+//                    })
+//                });
+//
+//
+//                fetch(request)
+//                        .then(function (res) {
+//                            return res.json();
+//                        })
+//                        .then(function (data) {
+//                            plotRelationshipCharts(isFirstTime, data);
+//                        });
             } else {
                 $("#relationshipPanel").css("display", "none");
                 $("#relationshipPanelEmptyState").css("display", "flex");

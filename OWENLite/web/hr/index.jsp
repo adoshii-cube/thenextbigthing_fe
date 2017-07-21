@@ -137,6 +137,8 @@
             <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="trigger">
                 <i class="material-icons">menu</i>
             </button>
+            <input type="hidden" id="comId" value="<% out.print(comId);%>" /> 
+            <input type="hidden" id="empId" value="<% out.print(empId);%>" /> 
             <div id="slider">
                 <div class="android-card-container mdl-grid">
                     <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">

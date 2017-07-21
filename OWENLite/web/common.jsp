@@ -1,3 +1,4 @@
+<%@page import="org.owen.helper.UtilHelper"%>
 <%
     response.setHeader("Cache-Control", "no-cache");
     response.setHeader("Cache-Control", "no-store");
@@ -8,6 +9,8 @@
     boolean isAdmin = false;
     boolean isHR = false;
     boolean isEmployee = false;
+//    String jsonDataFilePath = "";
+
     String templateHeader = "firstName, lastName, address";
     if (session.getAttribute("empId") != null && session.getAttribute("comId") != null) {
         empId = (Integer) session.getAttribute("empId");
@@ -15,8 +18,10 @@
         isAdmin = (Boolean) session.getAttribute("admin");
         isHR = (Boolean) session.getAttribute("hr");
         isEmployee = (Boolean) session.getAttribute("employee");
+//        jsonDataFilePath = UtilHelper.getConfigProperty("jsonDataFilePath") + "networkData_" + comId + "_" + empId + ".json";
     }
     if (empId == 0 || comId == 0) {
         response.sendRedirect("../index.jsp");
         return;
-    }%>
+    }
+%>
