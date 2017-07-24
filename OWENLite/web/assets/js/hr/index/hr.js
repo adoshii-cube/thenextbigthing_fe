@@ -17,21 +17,33 @@ var cy;
 var arrNodes = [];
 var arrEdges = [];
 $(document).ready(function () {
+    $("select#dropdown_function option").filter(function () {
+        return $(this).val() == "1";
+    }).prop('selected', true);
+
     var slider = $("#slider").slideReveal({
         trigger: $("#trigger"),
         position: "left",
 //        width: "18%",
-        push: false,
+        push: true,
         top: 64,
         show: function (slider, trigger) {
             $("#trigger i").text("close");
+            $(".hr-page-content").css("margin", "0");
+            $(".hr-page-content, main").css("max-width", "" + $(window).width() - $("#slider").width() + "px");
 //            $("#slider").css("display", "block");
         },
         hide: function (slider, trigger) {
             $("#trigger i").text("menu");
+            $(".hr-page-content").css("margin", "auto");
+            $(".hr-page-content, main").css("max-width", "100%");
 //            $("#slider").css("display", "none");
         }
     });
+
+    slider.slideReveal("show");
+
+
     fetchData(true);
 
     $("#dropdown_relationship").on("change", function () {
@@ -110,14 +122,18 @@ function fetchData(isFirstTime) {
                 $("#slider").css("display", "block");
             }
 
-            if (relationshipTab) {
-                nodes = JSON.parse(response.nodes);
-                edges = JSON.parse(response.edges);
-                sentimentScore = JSON.parse(response.sentimentScore);
-                indexValue = JSON.parse(response.indexValue);
-                keyPeople = JSON.parse(response.keyPeople);
-                plotRelationshipCharts(isFirstTime);
-                // FETCH API CODE
+            var relationship = function () {
+                var defer = $.Deferred();
+
+                console.log('a() called');
+                if (relationshipTab) {
+                    nodes = JSON.parse(response.nodes);
+                    edges = JSON.parse(response.edges);
+                    sentimentScore = JSON.parse(response.sentimentScore);
+                    indexValue = JSON.parse(response.indexValue);
+                    keyPeople = JSON.parse(response.keyPeople);
+                    plotRelationshipCharts(isFirstTime);
+                    // FETCH API CODE
 //                var empId = $('#empId').val();
 //                var comId = $('#comId').val();
 //                var jsonDataFile = "../hr/jsonDataFiles/networkData_" + comId + "_" + empId + ".json";
@@ -141,29 +157,78 @@ function fetchData(isFirstTime) {
 //                        .then(function (data) {
 //                            plotRelationshipCharts(isFirstTime, data);
 //                        });
+                } else {
+                    $("#relationshipPanel").css("display", "none");
+                    $("#relationshipPanelEmptyState").css("display", "flex");
+                }
+
+
+                setTimeout(function () {
+                    defer.resolve(); // When this fires, the code in a().then(/..../); is executed.
+                }, 5000);
+
+                return defer;
+            };
+
+            var sentiment = function () {
+                var defer = $.Deferred();
+
+                console.log('b() called');
+                if (sentimentTab) {
+                    sentimentDistribution = JSON.parse(response.sentimentDistribution);
+                    wordCloud = JSON.parse(response.wordCloud);
+                    plotSentimentCharts(isFirstTime);
+                } else {
+                    $("#sentimentPanel").css("display", "none");
+                    $("#sentimentPanelEmptyState").css("display", "flex");
+                }
+
+                setTimeout(function () {
+                    defer.resolve();
+                }, 5000);
+
+                return defer;
+            };
+
+            var component = function () {
+                var defer = $.Deferred();
+
+                console.log('c() called');
+                if (componentTab) {
+                    selfPerception = JSON.parse(response.selfPerception);
+                    plotComponentCharts(isFirstTime);
+                } else {
+                    $("#componentPanel").css("display", "none");
+                    $("#componentPanelEmptyState").css("display", "flex");
+                }
+
+                setTimeout(function () {
+                    defer.resolve();
+                }, 5000);
+
+                return defer;
+            };
+
+
+            if (isFirstTime) {
+                relationship().then(sentiment).then(component);
+
             } else {
-                $("#relationshipPanel").css("display", "none");
-                $("#relationshipPanelEmptyState").css("display", "flex");
+
+                $(".mdl-tabs__tab-bar").find(".mdl-tabs__tab:not(.is-active)").each(function () {
+                    $(this).addClass("mdl-tabs-panel-disabled");
+                })
+                var activeTab = $(".mdl-tabs__tab-bar").find(".is-active").attr("id").replace("panel", "").replace("Label", "").toLowerCase();
+                if (activeTab === "relationship") {
+                    relationship().then(sentiment).then(component);
+
+                } else if (activeTab === "sentiment") {
+                    sentiment().then(relationship).then(component);
+
+                } else {
+                    component().then(sentiment).then(relationship);
+                }
             }
-
-            if (sentimentTab) {
-                sentimentDistribution = JSON.parse(response.sentimentDistribution);
-                wordCloud = JSON.parse(response.wordCloud);
-                plotSentimentCharts(isFirstTime);
-            } else {
-                $("#sentimentPanel").css("display", "none");
-                $("#sentimentPanelEmptyState").css("display", "flex");
-            }
-
-            if (componentTab) {
-                selfPerception = JSON.parse(response.selfPerception);
-                plotComponentCharts(isFirstTime);
-            } else {
-                $("#componentPanel").css("display", "none");
-                $("#componentPanelEmptyState").css("display", "flex");
-            }
-
-
         },
         error: function (resp, err) {
             console.log("unable to fetch data error messsage : " + err);
@@ -174,7 +239,8 @@ function fetchData(isFirstTime) {
 function fetchOptionValue(isFirstTime, dropdownName) {
     var optionValue = "";
     if (isFirstTime) {
-        optionValue = parseInt($("#" + dropdownName).find("option:first-child").val());
+        if (dropdownName)
+            optionValue = parseInt($("#" + dropdownName).find("option:first-child").val());
     } else {
         var selectedOption = $("#" + dropdownName).parent().find(".mdl-selectfield__box-value").text();
         optionValue = parseInt($('#' + dropdownName + ' option').filter(function () {
@@ -185,6 +251,9 @@ function fetchOptionValue(isFirstTime, dropdownName) {
 }
 
 function plotRelationshipCharts(isFirstTime) {
+    if (!(typeof (componentHandler) === 'undefined')) {
+        componentHandler.upgradeAllRegistered();
+    }
     var optionValue = fetchOptionValue(isFirstTime, "dropdown_relationship");
     if (indexValue[optionValue] === undefined) {
         $("#relationshipChartsEmptyState").css("display", "flex");
@@ -193,32 +262,41 @@ function plotRelationshipCharts(isFirstTime) {
         $("#relationshipChartsEmptyState").css("display", "none");
         $("#relationshipCharts").css("display", "flex");
 
-        $("#relationshipChartsLoader").css("visibility", "visible");
 
-        // response count
-        $("#relationshipResponses").empty();
-        $("#relationshipResponses").append(indexValue[optionValue].responseCount);
-        // network diagram
+        $("#relationshipChartsLoader").css("visibility", "visible");
+//        setTimeout(function () {
+
+        $("#relationshipChartsLoader").css("visibility", "visible");
+//        setTimeout(function () {
+
+            // response count
+            $("#relationshipResponses").empty();
+            $("#relationshipResponses").append(indexValue[optionValue].responseCount);
+            // network diagram
 //        if ($(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href") === "#panelRelationship") {
 //        plotCytoNetwork("relationshipNetwork", optionValue, colorByValue);
-        plotLegend(isFirstTime);
+            plotLegend(isFirstTime);
 
 //        }
-        // index value
-        $("#relationshipIndex").empty();
-        $("#relationshipIndex").append(indexValue[optionValue].indexValue);
-        // key people
-        plotHCTable(keyPeople[optionValue]);
-        // action
-        $("#relationshipAction").empty();
-        $("#relationshipAction").append(indexValue[optionValue].action);
-        // explanation
-        $("#relationshipExplanation").empty();
-        $("#relationshipExplanation").append(indexValue[optionValue].explanation);
+            // index value
+            $("#relationshipIndex").empty();
+            $("#relationshipIndex").append(indexValue[optionValue].indexValue);
+            // key people
+            plotHCTable(keyPeople[optionValue]);
+            // action
+            $("#relationshipAction").empty();
+            $("#relationshipAction").append(indexValue[optionValue].action);
+            // explanation
+            $("#relationshipExplanation").empty();
+            $("#relationshipExplanation").append(indexValue[optionValue].explanation);
 
-        $("#relationshipChartsLoader").css("visibility", "hidden");
+            $("#relationshipChartsLoader").css("visibility", "hidden");
 
+
+//        }, 500);
     }
+    $('body').find("#panelRelationshipLabel").removeClass("mdl-tabs-panel-disabled");
+
 }
 
 function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
@@ -293,7 +371,7 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
                     style: {
 //                    shape: 'hexagon',
                         'background-color': 'data(color)',
-                        content: 'data(firstName)',
+//                        content: 'data(firstName)',
                         height: function (ele) {
 //                        console.log(ele._private.data.firstName + " ::: " + ele.indegree());
                             return ele.indegree() * 2;
@@ -318,23 +396,23 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
                 edges: arrEdges
             }
         });
-        cy.elements("node").qtip({
-            content: function () {
-//            return 'Example qTip on ele ' + this.id();
-                return this.data().lastName;
-            },
-            position: {
-                my: 'top center',
-                at: 'bottom center'
-            },
-            style: {
-                classes: 'qtip-bootstrap',
-                tip: {
-                    width: 16,
-                    height: 8
-                }
-            }
-        });
+//        cy.elements("node").qtip({
+//            content: function () {
+////            return 'Example qTip on ele ' + this.id();
+//                return this.data().lastName;
+//            },
+//            position: {
+//                my: 'top center',
+//                at: 'bottom center'
+//            },
+//            style: {
+//                classes: 'qtip-bootstrap',
+//                tip: {
+//                    width: 16,
+//                    height: 8
+//                }
+//            }
+//        });
         cy.resize();
 
     });
@@ -418,6 +496,9 @@ function plotSentimentCharts(isFirstTime) {
         $("#sentimentExplanation").append(sentimentScore[optionValue].explanation);
 
         $("#sentimentChartsLoader").css("visibility", "hidden");
+
+        $('body').find("#panelSentimentLabel").removeClass("mdl-tabs-panel-disabled");
+
     }
 }
 
@@ -646,6 +727,8 @@ function plotComponentCharts(isFirstTime) {
 
         $("#componentChartsLoader").css("visibility", "hidden");
     }
+    $('body').find("#panelComponentLabel").removeClass("mdl-tabs-panel-disabled");
+
 }
 
 function plotStackedComponent(containerId, seriesData) {

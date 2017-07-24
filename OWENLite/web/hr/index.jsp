@@ -28,7 +28,7 @@
 
         <link href="../assets/css/material.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/mdl-selectfield.min.css" rel="stylesheet" type="text/css">
-        <!--<link href="../assets/css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />-->
+        <link href="../assets/css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
         <link href="../assets/css/hr.css" rel="stylesheet" type="text/css">      
@@ -246,9 +246,9 @@
                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                                 <div class="mdl-tabs__tab-bar">
-                                    <a href="#panelRelationship" class="mdl-tabs__tab is-active">Relationship</a>
-                                    <a href="#panelSentiment" class="mdl-tabs__tab">Sentiment</a>
-                                    <a href="#panelComponent" class="mdl-tabs__tab">Component</a>
+                                    <a href="#panelRelationship" class="mdl-tabs__tab is-active" id="panelRelationshipLabel">Relationship</a>
+                                    <a href="#panelSentiment" class="mdl-tabs__tab  mdl-tabs-panel-disabled" id="panelSentimentLabel">Sentiment</a>
+                                    <a href="#panelComponent" class="mdl-tabs__tab  mdl-tabs-panel-disabled" id="panelComponentLabel">Component</a>
                                 </div>
 
                                 <%
@@ -428,11 +428,11 @@
                                         <!--Empty State Msg CHARTS SENTIMENT End-->
                                         <div id="sentimentChartsLoader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
                                         <div class="chartsContainer mdl-grid" id="sentimentCharts">
-                                            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Sentiment Gauge</div>
                                                 <div class="mdl-card__supporting-text" id="sentimentGauge"></div>
                                             </div>
-                                            <div class="mdl-cell mdl-cell--8-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Sentiment Distribution</div>
                                                 <div class="mdl-card__supporting-text" id="sentimentDistribution"></div>
                                             </div>

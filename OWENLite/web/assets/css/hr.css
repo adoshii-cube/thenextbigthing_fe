@@ -655,8 +655,8 @@ div .mdl-textfield__label:after {
 
 .hr-page-content{
     width: auto;
-    margin: auto;
-    max-width: 868px;
+    /*margin: auto;*/
+    max-width: 100%;
 }
 
 .page-body{
@@ -1258,4 +1258,15 @@ select {
     width: 95%;
     margin: 0 auto;
     visibility: hidden;
+}
+
+
+.mdl-tabs-panel-disabled{
+    /*background: rgba(0, 0, 0, 0.12);*/
+    color: rgba(0, 0, 0, .26);
+    border-right: none;
+    border-top-right-radius: 5em;
+    border-bottom-right-radius: 5em;
+    box-shadow: none;
+    pointer-events: none;
 }
