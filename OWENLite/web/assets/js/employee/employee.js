@@ -4,6 +4,15 @@ var wQuestionAnswered = 0;
 var oQuestionAnswered = 0;
 $(document).ready(function () {
 
+    $('.collapse.in').prev().addClass('active');
+    $('#accordion')
+            .on('show.bs.collapse', function (a) {
+                $(a.target).prev().addClass('active');
+            })
+            .on('hide.bs.collapse', function (a) {
+                $(a.target).prev().removeClass('active');
+            });
+
     $(".question").hover(function () {
         $(this).toggleClass("mdl-shadow--3dp");
     });
@@ -26,7 +35,14 @@ $(document).ready(function () {
 
     $("#submit").on("click", function () {
         if (!($("#submit").attr("disabled"))) {
-            submit();
+
+            $(".surveyQuestionsContainer").css("display", "none");
+            $(".submit").css("display", "none");
+            $(".centerSpinner").css("display", "flex");
+            $("#loadingSpinner").css("display", "block");
+            setTimeout(submit, 100);
+
+//            submit();
         }
     });
 

@@ -19,7 +19,7 @@
         <link href="assets/css/material.min.css" rel="stylesheet" type="text/css">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link href="assets/css/styles.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/index.css" rel="stylesheet" type="text/css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -34,13 +34,13 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="#303f9f">
     </head>
     <body>
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <!--<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">-->
 
-            <main class="android-content mdl-layout__content">
-                <div class="page-content login-page">
+            <main class="mdl-layout__content">
+                <div class="login-page-content">
                     <div class="android-card-container mdl-grid">
                         <div class="mdl-layout-spacer"></div>
-                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp login">
+                        <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp login">
                             <div class="mdl-card__title">
                                 <img class="android-logo-image" src="assets/images/OWEN_Logo.png" alt="OWEN Logo">
                             </div>
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="mdl-card__actions">
                                         <div class="mdl-layout-spacer"></div>
-                                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--indigo-500 mdl-color-text--white" type="submit" >LOGIN</button>
+                                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--indigo-500 mdl-color-text--white" type="submit" id="submit">LOGIN</button>
                                     </div>
                                 </form>
                             </div>
@@ -66,13 +66,30 @@
                         <div class="mdl-layout-spacer"></div>
                     </div>
                 </div>
+                <footer class="mdl-mini-footer">
+                    <div class="mdl-mini-footer__left-section">
+                        <div class="mdl-logo">OWEN is best compatible with Internet Explore Edge or Google Chrome 54.0 or above</div>
+                        <!--                        <ul class="mdl-mini-footer__link-list">
+                                                    <li><a href="#">Help</a></li>
+                                                    <li><a href="#">Privacy & Terms</a></li>
+                                                </ul>-->
+                    </div>
+                    <div class="mdl-mini-footer__right-section">
+                        <div class="mdl-logo">© Copyright 2017&nbsp;i-Cube Analytics & Data Services&nbsp;Ver 1.0.0</div>
+                        <!--<ul class="mdl-mini-footer__link-list">-->
+                        <!--<li><a href="#">Help</a></li>-->
+                        <!--<li><a href="#">Privacy & Terms</a></li>-->
+                        <!--</ul>-->
+                    </div>
+                </footer>
             </main>
             <div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
                 <div class="mdl-snackbar__text"></div>
                 <button class="mdl-snackbar__action" type="button"></button>
             </div>
-        </div>
+        <!--</div>-->
         <script src="assets/js/material.min.js"></script>
+        <script src="assets/js/index.js"></script>
         <% if (request.getParameter("loginFailure") != null) {%>
         <script>
             componentHandler.upgradeDom('MaterialSnackbar');

@@ -1427,3 +1427,25 @@ a:hover{
 .score{
     cursor: pointer;
 }
+
+.centerSpinner{
+    margin: auto;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.centerSpinner .android-card-container {
+    margin: 0 auto;
+}
+
+.mdl-spinner {
+    display: none;
+    margin: 0 auto;
+}
+
+.surveyQuestionsContainer{
+    min-height: 0px;
+}

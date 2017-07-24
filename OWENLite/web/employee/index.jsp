@@ -134,9 +134,9 @@ Author     : adoshi
                     <!--<div class="android-screen-section mdl-typography--text-center">-->
                     <!--<div class="android-wear-band-text">-->
                     <div class="android-card-container mdl-grid">
-                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card surveyQuestionsContainer">
 
-                            <div class="panelGroup" id="accordion">
+                            <div class="panelGroup wrap" id="accordion" role="tablist" aria-multiselectable="true">
                                 <%
                                     Question qObj = new Question();
                                     List<Question> qList = qObj.getEmployeeQuestionList(comId, empId);
@@ -165,7 +165,7 @@ Author     : adoshi
                                 <input type="hidden" id="oQListSize" value="<% out.print(oQuestionList.size());%>" />
                                 <%if (mQuestionList.size() > 0) {%>
                                 <div class="panel">
-                                    <div class="panelHeading">
+                                    <div class="panelHeading" role="tab">
 
                                         <div class="panelTitle sectionMe">
                                             <a data-toggle="collapse" href="#one">
@@ -247,7 +247,7 @@ Author     : adoshi
                                 <!-- end of panel -->
                                 <%if (wQuestionList.size() > 0) {%>
                                 <div class="panel">
-                                    <div class="panelHeading">
+                                    <div class="panelHeading" role="tab">
                                         <div class="panelTitle sectionWe">
                                             <a data-toggle="collapse" href="#two">
                                                 <div class="sectionImage"></div>
@@ -323,7 +323,7 @@ Author     : adoshi
                                 <!-- end of panel -->
                                 <%if (oQuestionList.size() > 0) {%>
                                 <div class="panel">
-                                    <div class="panelHeading">
+                                    <div class="panelHeading" role="tab">
                                         <div class="panelTitle sectionOpenText">
                                             <a data-toggle="collapse" href="#three">
                                                 <div class="sectionImage"></div>
@@ -360,15 +360,25 @@ Author     : adoshi
                             </div>
 
                         </div>
-                    </div>
-                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone submit">
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled id="submit">
-                            <i class="material-icons">check</i>
-                            SUBMIT
-                        </button>
-                        <!--                        <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--top" for="submit">
-                                                    Submit your<br>responses
-                                                </div>-->
+
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone submit">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled id="submit">
+                                <i class="material-icons">check</i>
+                                SUBMIT
+                            </button>
+                            <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--top" for="submit">
+                                Submit your<br>responses
+                            </div>
+                        </div>
+
+
+                        <div class="centerSpinner">
+                            <div class="android-card-container mdl-grid">
+                                <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+                                    <div class="mdl-spinner mdl-js-spinner is-active" id="loadingSpinner"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

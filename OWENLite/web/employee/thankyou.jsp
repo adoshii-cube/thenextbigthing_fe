@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="../common.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,17 +36,77 @@
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header mdl-layout__header--waterfall">
                 <div class="mdl-layout__header-row">
-                    <a>
+                    <!-- Title -->
+                    <a id="switchUser">
                         <span class="android-title mdl-layout-title">
                             <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                         </span>
                     </a>
+                    <!-- Add spacer, to align navigation to the right -->
                     <div class="mdl-layout-spacer"></div>
+                    <!-- Navigation -->
+                    <!--<div class="android-navigation-container">-->
+                    <!--<nav class="mdl-navigation">-->
+                    <!--<a class="mdl-navigation__link" href="">Link</a>-->
+                    <!--</nav>-->
+                    <!--</div>-->
+                    <!-- Right aligned menu below button -->
+
+                    <button id="switch-role-menu"
+                            class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">account_circle</i>
+                    </button>
+                    <%if (isAdmin || isHR) {%>
+                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        for="switch-role-menu">
+                        <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
+                            <%if (isAdmin) {%>
+                        <a href="../admin/index.jsp">
+                            <li class="mdl-menu__item">Admin</li>
+                        </a>
+                        <%}
+                            if (isHR) {%>
+                        <a href="../hr/index.jsp">
+                            <li class="mdl-menu__item">HR</li>
+                        </a>
+                        <%}%>
+                    </ul>
+                    <%}%>
+                    <button id="header-menu"
+                            class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">more_vert</i>
+                    </button>
+                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        for="header-menu">
+                        <li class="mdl-menu__item">Help & Feedback</li>
+                        <li class="mdl-menu__item">Settings</li>
+                        <a href="../signout.jsp" id="signOut">
+                            <li class="mdl-menu__item"> 
+                                Sign out
+                            </li>
+                        </a>
+                    </ul>
                     <a>
                         <span class="android-mobile-title mdl-layout-title" id="switchUserMobile">
                             <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                         </span>
                     </a>
+                    <%if (isAdmin || isHR) {%>
+                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                        for="switchUserMobile">
+                        <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
+                            <%if (isAdmin) {%>
+                        <a href="../admin/index.jsp">
+                            <li class="mdl-menu__item">Admin</li>
+                        </a>
+                        <%}
+                            if (isHR) {%>
+                        <a href="../hr/index.jsp">
+                            <li class="mdl-menu__item">HR</li>
+                        </a>
+                        <%}%>
+                    </ul>
+                    <%}%>
                 </div>
             </header>
             <main class="android-content mdl-layout__content">
