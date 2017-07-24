@@ -217,14 +217,12 @@ function fetchData(isFirstTime) {
 
                 $(".mdl-tabs__tab-bar").find(".mdl-tabs__tab:not(.is-active)").each(function () {
                     $(this).addClass("mdl-tabs-panel-disabled");
-                })
+                });
                 var activeTab = $(".mdl-tabs__tab-bar").find(".is-active").attr("id").replace("panel", "").replace("Label", "").toLowerCase();
                 if (activeTab === "relationship") {
                     relationship().then(sentiment).then(component);
-
                 } else if (activeTab === "sentiment") {
                     sentiment().then(relationship).then(component);
-
                 } else {
                     component().then(sentiment).then(relationship);
                 }
@@ -269,28 +267,28 @@ function plotRelationshipCharts(isFirstTime) {
         $("#relationshipChartsLoader").css("visibility", "visible");
 //        setTimeout(function () {
 
-            // response count
-            $("#relationshipResponses").empty();
-            $("#relationshipResponses").append(indexValue[optionValue].responseCount);
-            // network diagram
+        // response count
+        $("#relationshipResponses").empty();
+        $("#relationshipResponses").append(indexValue[optionValue].responseCount);
+        // network diagram
 //        if ($(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href") === "#panelRelationship") {
 //        plotCytoNetwork("relationshipNetwork", optionValue, colorByValue);
-            plotLegend(isFirstTime);
+        plotLegend(isFirstTime);
 
 //        }
-            // index value
-            $("#relationshipIndex").empty();
-            $("#relationshipIndex").append(indexValue[optionValue].indexValue);
-            // key people
-            plotHCTable(keyPeople[optionValue]);
-            // action
-            $("#relationshipAction").empty();
-            $("#relationshipAction").append(indexValue[optionValue].action);
-            // explanation
-            $("#relationshipExplanation").empty();
-            $("#relationshipExplanation").append(indexValue[optionValue].explanation);
+        // index value
+        $("#relationshipIndex").empty();
+        $("#relationshipIndex").append(indexValue[optionValue].indexValue);
+        // key people
+        plotHCTable(keyPeople[optionValue]);
+        // action
+        $("#relationshipAction").empty();
+        $("#relationshipAction").append(indexValue[optionValue].action);
+        // explanation
+        $("#relationshipExplanation").empty();
+        $("#relationshipExplanation").append(indexValue[optionValue].explanation);
 
-            $("#relationshipChartsLoader").css("visibility", "hidden");
+        $("#relationshipChartsLoader").css("visibility", "hidden");
 
 
 //        }, 500);
