@@ -185,6 +185,9 @@ function fetchOptionValue(isFirstTime, dropdownName) {
 }
 
 function plotRelationshipCharts(isFirstTime) {
+    if (!(typeof (componentHandler) === 'undefined')) {
+        componentHandler.upgradeAllRegistered();
+    }
     var optionValue = fetchOptionValue(isFirstTime, "dropdown_relationship");
     if (indexValue[optionValue] === undefined) {
         $("#relationshipChartsEmptyState").css("display", "flex");
@@ -193,31 +196,35 @@ function plotRelationshipCharts(isFirstTime) {
         $("#relationshipChartsEmptyState").css("display", "none");
         $("#relationshipCharts").css("display", "flex");
 
-        $("#relationshipChartsLoader").css("visibility", "visible");
 
-        // response count
-        $("#relationshipResponses").empty();
-        $("#relationshipResponses").append(indexValue[optionValue].responseCount);
-        // network diagram
+        $("#relationshipChartsLoader").css("visibility", "visible");
+//        setTimeout(function () {
+
+            // response count
+            $("#relationshipResponses").empty();
+            $("#relationshipResponses").append(indexValue[optionValue].responseCount);
+            // network diagram
 //        if ($(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href") === "#panelRelationship") {
 //        plotCytoNetwork("relationshipNetwork", optionValue, colorByValue);
-        plotLegend(isFirstTime);
+            plotLegend(isFirstTime);
 
 //        }
-        // index value
-        $("#relationshipIndex").empty();
-        $("#relationshipIndex").append(indexValue[optionValue].indexValue);
-        // key people
-        plotHCTable(keyPeople[optionValue]);
-        // action
-        $("#relationshipAction").empty();
-        $("#relationshipAction").append(indexValue[optionValue].action);
-        // explanation
-        $("#relationshipExplanation").empty();
-        $("#relationshipExplanation").append(indexValue[optionValue].explanation);
+            // index value
+            $("#relationshipIndex").empty();
+            $("#relationshipIndex").append(indexValue[optionValue].indexValue);
+            // key people
+            plotHCTable(keyPeople[optionValue]);
+            // action
+            $("#relationshipAction").empty();
+            $("#relationshipAction").append(indexValue[optionValue].action);
+            // explanation
+            $("#relationshipExplanation").empty();
+            $("#relationshipExplanation").append(indexValue[optionValue].explanation);
 
-        $("#relationshipChartsLoader").css("visibility", "hidden");
+            $("#relationshipChartsLoader").css("visibility", "hidden");
 
+
+//        }, 500);
     }
 }
 

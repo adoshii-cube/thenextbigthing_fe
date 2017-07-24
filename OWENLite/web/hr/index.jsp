@@ -28,7 +28,7 @@
 
         <link href="../assets/css/material.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/mdl-selectfield.min.css" rel="stylesheet" type="text/css">
-        <!--<link href="../assets/css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />-->
+        <link href="../assets/css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
         <link href="../assets/css/hr.css" rel="stylesheet" type="text/css">      
