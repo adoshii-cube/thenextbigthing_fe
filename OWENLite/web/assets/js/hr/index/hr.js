@@ -72,17 +72,17 @@ $(document).ready(function () {
             var indexValueTitle = $("#relationshipIndex").parent().find(".mdl-card__title");
             var keyPeopleTitle = $("#relationshipListOfPeople").parent().parent().find(".mdl-card__title");
             if (dropdownSelected === "Work") {
-                indexValueTitle.text("Work Index");
-                keyPeopleTitle.text("List of High Performers");
+                indexValueTitle.text("Collaboration Index");
+                keyPeopleTitle.text("List of Key Experts");
             } else if (dropdownSelected === "Mentorship") {
                 indexValueTitle.text("Mentorship Index");
                 keyPeopleTitle.text("List of Mentors");
             } else if (dropdownSelected === "Innovation") {
                 indexValueTitle.text("Innovation Index");
-                keyPeopleTitle.text("List of Innovators ???");
+                keyPeopleTitle.text("List of Innovators");
             } else if (dropdownSelected === "Informal") {
-                indexValueTitle.text("Informal Index");
-                keyPeopleTitle.text("List of Informal ???");
+                indexValueTitle.text("Social Cohesion Index");
+                keyPeopleTitle.text("List of Influencers");
             }
         }, 50);
     });

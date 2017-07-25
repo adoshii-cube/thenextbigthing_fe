@@ -352,11 +352,11 @@
                                                 <!--</div>-->
                                             </div>
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                                <div class="mdl-card__title">Index Value</div>
+                                                <div class="mdl-card__title">Collaboration Index</div>
                                                 <div class="mdl-card__supporting-text" id="relationshipIndex"></div>
                                             </div>
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                                <div class="mdl-card__title">List of Key People</div>
+                                                <div class="mdl-card__title">List of Key Experts</div>
                                                 <div class="mdl-card__supporting-text">
                                                     <table class="mdl-data-table mdl-js-data-table" id="relationshipListOfPeople">
                                                         <!--<thead>
