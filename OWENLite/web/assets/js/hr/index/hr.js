@@ -43,6 +43,25 @@ $(document).ready(function () {
 
     slider.slideReveal("show");
 
+    $('#resizeNetwork').magnificPopup({
+        items: {
+            src: '#qwerty',
+            type: 'inline'
+        },
+        midClick: true, // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+        callbacks: {
+            open: function () {
+                $("#relationshipNetwork").css("height", window.innerHeight - 32);
+                $("#legendContainer").css("max-height", window.innerHeight - $("#colorByContainer").height());
+                cy.resize();
+            },
+            close: function () {
+                $("#relationshipNetwork").css("height", "300px");
+                $("#legendContainer").css("max-height", "220px");
+                cy.resize();
+            }
+        }
+    });
 
     fetchData(true);
 

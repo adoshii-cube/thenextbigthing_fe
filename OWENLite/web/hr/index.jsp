@@ -29,6 +29,7 @@
         <link href="../assets/css/material.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/mdl-selectfield.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/materialdesignicons.css" media="all" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/magnific-popup.css" media="all" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
         <link href="../assets/css/hr.css" rel="stylesheet" type="text/css">      
@@ -321,7 +322,10 @@
                                                     <!--<i class="material-icons">mood</i>-->
                                                     <img alt="resize Network Chart" src="../assets/images/arrow-expand.png">
                                                 </button>
-                                                <div class="mdl-card__supporting-text mdl-grid percent98width">
+                                                <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="resizeNetwork">
+                                                    View network in fullscreen
+                                                </div>
+                                                <div class="mdl-card__supporting-text mdl-grid percent98width" id="qwerty">
                                                     <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetwork"></div>
                                                     <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="legendColorByContainer">
                                                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="colorByContainer">
@@ -567,6 +571,7 @@
         <script src="../assets/js/material.min.js"></script>
         <script src="../assets/js/mdl-selectfield.min.js"></script>
         <script src="../assets/js/hr/index/wordcloud/wordcloud2.js"></script>
+        <script src="../assets/js/hr/index/jquery.magnific-popup.js"></script>
         <script src="../assets/js/hr/index/hr.js"></script>
     </body>
 </html>
