@@ -17,9 +17,19 @@ var cy;
 var arrNodes = [];
 var arrEdges = [];
 $(document).ready(function () {
-    $("select#dropdown_function option").filter(function () {
-        return $(this).val() === "1";
-    }).prop('selected', true);
+    //clear any selected option from the dropdown
+    $("#dropdown_function").parent().find(".mdl-selectfield__list-option-box li.is-selected").removeClass("is-selected");
+    //manually select the first option so that it is not ALL for both HTML select and MDL select
+    $("#dropdown_function").parent().find('.mdl-selectfield__list-option-box li').each(function () {
+        if ($(this).attr("data-value") === "1") {
+            $(this).addClass("is-selected");
+        }
+    });
+    $("#dropdown_function option[value='1']").attr('selected', 'selected');
+    // force the text to read the text of value 1
+    var selectedOption = $("#dropdown_function").parent().find(".mdl-selectfield__list-option-box li.is-selected").text();
+    $("#dropdown_function").parent().find(".mdl-selectfield__box-value").text(selectedOption);
+
 
     var slider = $("#slider").slideReveal({
         trigger: $("#trigger2"),
@@ -308,8 +318,9 @@ function plotRelationshipCharts(isFirstTime) {
 
 //        }
         // index value
-        $("#relationshipIndex").empty();
-        $("#relationshipIndex").append(indexValue[optionValue].indexValue);
+//        $("#relationshipIndex").empty();
+//        $("#relationshipIndex").append(indexValue[optionValue].indexValue);
+        plotRelationshipGauge("relationshipIndex", optionValue, indexValue[optionValue].indexValue);
         // key people
         plotHCTable(keyPeople[optionValue]);
         // action
@@ -509,6 +520,168 @@ function plotLegend(isFirstTime) {
     plotCytoNetwork("relationshipNetwork", optionValue, colorByValue);
 //    $("#relationshipNetworkLoaderContainer").css("display", "none");
 //    $("#relationshipNetwork").css("display", "flex");
+}
+
+function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
+    var orgScore;
+
+    if (dropdownOptionValue === 7) {
+        orgScore = 1.09;
+    } else if (dropdownOptionValue === 8) {
+        orgScore = 1.11;
+    } else if (dropdownOptionValue === 9) {
+        orgScore = 1.01;
+    } else if (dropdownOptionValue === 10) {
+        orgScore = 1.20;
+    }
+
+    Highcharts.chart(chartId, {
+
+        chart: {
+            height: null,
+            width: null,
+            type: 'solidgauge',
+            spacingTop: 0,
+            spacingLeft: 0,
+            spacingRight: 0,
+            spacingBottom: 0,
+            margin: [0, 0, 0, 0],
+            events: {
+                load: redrawConnectors,
+                redraw: redrawConnectors
+            },
+            style: {
+                fontFamily: 'Roboto'
+            }
+        },
+        title: {
+            text: null
+        },
+        tooltip: {
+//            enabled: false,
+            borderWidth: 0,
+            backgroundColor: 'none',
+            shadow: false,
+            style: {
+                fontSize: '16px'
+            },
+            pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
+            positioner: function (labelWidth, labelHeight) {
+                return {
+                    x: 230 - labelWidth / 2,
+                    y: 90
+                };
+            }
+        },
+        pane: {
+            startAngle: 0,
+            endAngle: 360,
+            background: [{// Track for Move
+                    outerRadius: '112%',
+                    innerRadius: '88%',
+                    backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
+                    borderWidth: 0
+                }, {// Track for Exercise
+                    outerRadius: '87%',
+                    innerRadius: '63%',
+                    backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[1]).setOpacity(0.3).get(),
+                    borderWidth: 0
+                }]
+        },
+        yAxis: {
+            min: 0,
+            max: 5,
+            lineWidth: 0,
+            tickPositions: []
+        },
+        plotOptions: {
+            solidgauge: {
+                borderWidth: '26px',
+                dataLabels: {
+                    enabled: true,
+//                    color: 'rgba(255,255,255,.54)',
+                    borderWidth: 0,
+//                    shape: 'callout',
+//                    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                    style: {
+//                        color: '#ff9800',
+                        fontSize: '16px',
+                        textOutline: false,
+                        textShadow: false
+                    },
+                    allowOverlap: true,
+                    zIndex: 100,
+                    formatter: function () {
+                        return this.series.name + ": " + this.y;
+                    }
+                },
+                linecap: 'round',
+                stickyTracking: false
+            }
+        },
+        series: [{
+                name: 'Org',
+                borderColor: Highcharts.getOptions().colors[0],
+                data: [{
+                        color: Highcharts.getOptions().colors[0],
+                        radius: '100%',
+                        innerRadius: '100%',
+                        y: orgScore
+                    }],
+                marker: {enabled: false},
+                showInLegend: false
+            },
+            {
+                name: 'Team',
+                borderColor: Highcharts.getOptions().colors[1],
+                data: [{
+                        color: Highcharts.getOptions().colors[1],
+                        radius: '75%',
+                        innerRadius: '75%',
+                        y: teamScore
+                    }],
+                marker: {enabled: false},
+                showInLegend: false
+                        /*dataLabels: {
+                         x: -85,
+                         y: 50,
+                         }*/
+            }],
+        legend: {
+            labelFormatter: function () {
+                return '<span style="text-weight:bold;color:' + this.userOptions.color + '">' + this.name + '</span>';
+            },
+            symbolWidth: 0
+        },
+        credits: {
+            enabled: false
+        }
+    });
+}
+
+function redrawConnectors() {
+    var chart = this,
+            cX, cY,
+            shapeArgs, ang, posX, posY, bBox;
+
+    Highcharts.each(chart.series, function (series, j) {
+        Highcharts.each(series.points, function (point, i) {
+            if (point.dataLabel) {
+                bBox = point.dataLabel.getBBox();
+                shapeArgs = point.shapeArgs;
+                cX = shapeArgs.x,
+                        cY = shapeArgs.y,
+                        ang = shapeArgs.end;
+                posX = cX + shapeArgs.r * Math.cos(ang);
+                posY = cY + shapeArgs.r * Math.sin(ang);
+
+                point.dataLabel.attr({
+                    x: posX - bBox.width / 2,
+                    y: posY - bBox.height / 2
+                });
+            }
+        });
+    });
 }
 
 function plotHCTable(jsonData) {

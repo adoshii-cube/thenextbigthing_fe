@@ -871,14 +871,16 @@ select {
 }
 
 #relationshipIndex {
-    display: -ms-flexbox;
+    height: 250px;
+    margin: 0 auto;
+/*    display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
     height: 140px;
     color: #9E9E9E ;
     justify-content: center;
     align-items: center;
-    font-size: 5rem;
+    font-size: 5rem;*/
 }
 
 .android-content{
@@ -954,7 +956,7 @@ select {
 }
 
 #relationshipCharts .mdl-card__supporting-text{
-    margin: 0;
+    /*margin: 0;*/
 }
 
 .percent98width{
