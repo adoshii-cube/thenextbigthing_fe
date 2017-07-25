@@ -199,10 +199,10 @@
                         </div>
                         <div class="actions-container">
                             <div>
-                                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" id="addQuestions">
+                                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored disabled" id="addQuestions">
                                     <i class="material-icons">add</i>
                                 </button>
-                                <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--right" for="addQuestions">
+                                <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--right" for="addQuestions" id="addQuestions1">
                                     Add questions
                                 </div>
                             </div>
