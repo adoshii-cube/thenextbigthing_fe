@@ -88,7 +88,7 @@
                         <li class="mdl-menu__item">Admin</li>
                     </a>
                     <%}
-                            if (isEmployee) {%>
+                        if (isEmployee) {%>
                     <a href="../employee/index.jsp">
                         <li class="mdl-menu__item">Employee</li>
                     </a>
@@ -168,7 +168,7 @@
 //https://github.com/nicolaskruchten/pivottable
 //https://github.com/nicolaskruchten/pivottable
         $(function () {
-
+            var tpl = $.pivotUtilities.aggregatorTemplates;
             var renderers = $.extend($.pivotUtilities.renderers,
                     $.pivotUtilities.c3_renderers);
             var json = $('#data').val();
@@ -178,6 +178,8 @@
                 renderers: renderers,
                 cols: ["function"], rows: ["relName"],
                 rendererName: "Bar Chart",
+                aggregatorName: "Average",
+                vals: ["indexValue"],
                 rowOrder: "value_z_to_a", colOrder: "value_z_to_a"
 //                    rendererOptions: {
 //                        c3: {data: {colors: {
