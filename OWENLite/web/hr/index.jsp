@@ -325,7 +325,7 @@
                                                 <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="resizeNetwork">
                                                     View network in fullscreen
                                                 </div>
-                                                <div class="mdl-card__supporting-text mdl-grid percent98width" id="qwerty">
+                                                <div class="mdl-card__supporting-text mdl-grid percent98width" id="networkChartLegendColorContainer">
                                                     <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetwork"></div>
                                                     <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="legendColorByContainer">
                                                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="colorByContainer">

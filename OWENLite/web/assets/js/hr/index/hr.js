@@ -45,7 +45,7 @@ $(document).ready(function () {
 
     $('#resizeNetwork').magnificPopup({
         items: {
-            src: '#qwerty',
+            src: '#networkChartLegendColorContainer',
             type: 'inline'
         },
         midClick: true, // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
