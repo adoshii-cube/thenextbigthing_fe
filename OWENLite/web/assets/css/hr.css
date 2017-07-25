@@ -936,12 +936,18 @@ select {
 #relationshipNetwork{
     height: 300px;
     margin: 0px;
+    /*display: none;*/
     /*width: 100%;*/
     /*height: 100%;*/
     /*position: absolute;*/
     /*top: 0px;*/
     /*left: 0px;*/
 }
+
+/*#relationshipNetworkLoaderContainer{
+    display: none;
+    justify-content: center;
+}*/
 
 #relationshipNetworkLegend{
     padding: 0px;

@@ -176,8 +176,8 @@
 
             $("#pivotTable").pivotUI(obj, {
                 renderers: renderers,
-                cols: ["relName"], rows: ["indexValue"],
-                rendererName: "Stacked Bar Chart",
+                cols: ["function"], rows: ["relName"],
+                rendererName: "Bar Chart",
                 rowOrder: "value_z_to_a", colOrder: "value_z_to_a"
 //                    rendererOptions: {
 //                        c3: {data: {colors: {

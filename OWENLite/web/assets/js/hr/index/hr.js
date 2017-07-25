@@ -18,7 +18,7 @@ var arrNodes = [];
 var arrEdges = [];
 $(document).ready(function () {
     $("select#dropdown_function option").filter(function () {
-        return $(this).val() == "1";
+        return $(this).val() === "1";
     }).prop('selected', true);
 
     var slider = $("#slider").slideReveal({
@@ -71,18 +71,18 @@ $(document).ready(function () {
             var dropdownSelected = $("#dropdown_relationship").parent().find(".mdl-selectfield__list-option-box li.is-selected").text();
             var indexValueTitle = $("#relationshipIndex").parent().find(".mdl-card__title");
             var keyPeopleTitle = $("#relationshipListOfPeople").parent().parent().find(".mdl-card__title");
-            if (dropdownSelected === "innovation") {
-                indexValueTitle.text("Innovation Index");
-                keyPeopleTitle.text("List of Innovators");
-            } else if (dropdownSelected === "mentor") {
+            if (dropdownSelected === "Work") {
+                indexValueTitle.text("Work Index");
+                keyPeopleTitle.text("List of High Performers");
+            } else if (dropdownSelected === "Mentorship") {
                 indexValueTitle.text("Mentorship Index");
                 keyPeopleTitle.text("List of Mentors");
-            } else if (dropdownSelected === "social") {
-                indexValueTitle.text("Social Index");
-                keyPeopleTitle.text("List of Social ???");
-            } else if (dropdownSelected === "learning") {
-                indexValueTitle.text("Learning Index");
-                keyPeopleTitle.text("List of Knowledge ???");
+            } else if (dropdownSelected === "Innovation") {
+                indexValueTitle.text("Innovation Index");
+                keyPeopleTitle.text("List of Innovators ???");
+            } else if (dropdownSelected === "Informal") {
+                indexValueTitle.text("Informal Index");
+                keyPeopleTitle.text("List of Informal ???");
             }
         }, 50);
     });
@@ -295,10 +295,6 @@ function plotRelationshipCharts(isFirstTime) {
         $("#relationshipChartsEmptyState").css("display", "none");
         $("#relationshipCharts").css("display", "flex");
 
-
-        $("#relationshipChartsLoader").css("visibility", "visible");
-//        setTimeout(function () {
-
         $("#relationshipChartsLoader").css("visibility", "visible");
 //        setTimeout(function () {
 
@@ -387,6 +383,9 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
             layout: {
                 name: 'cose'
             },
+//            render: function () {
+//                alert("render");
+//            },
 //        animate: true,
 //        // The layout animates only after this many milliseconds
 //        // (prevents flashing on fast runs)
@@ -429,6 +428,21 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
                 edges: arrEdges
             }
         });
+//
+//        cy.on('layoutstart', function (e) {
+////            alert("layout start");
+//            // Notice the layoutstart event with the layout name.
+////            console.log('layoutstart', e.cyTarget.options.name);
+//
+//        });
+//
+//        cy.on('layoutstop', function (e) {
+//
+//            // Notice the layoutstop event with the layout name.
+//            
+////            console.log('layoutstop', e.cyTarget.options.name);
+//
+//        });
 //        cy.elements("node").qtip({
 //            content: function () {
 ////            return 'Example qTip on ele ' + this.id();
@@ -446,12 +460,23 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
 //                }
 //            }
 //        });
-        cy.resize();
 
+//        cy.layout(options);
+//        layout.pon('layoutstop').then(function (event) {
+//            console.log('layoutstop promise fulfilled');
+//        });
+//        layout.on('layoutstop', function () {
+//        $("#relationshipNetworkLoaderContainer").css("display", "none");
+//        $("#relationshipNetwork").css("display", "flex");
+//        });
+
+        cy.resize();
     });
 }
 
 function plotLegend(isFirstTime) {
+//    $("#relationshipNetwork").css("display", "none");
+//    $("#relationshipNetworkLoaderContainer").css("display", "flex");
     var colorByValue = fetchOptionValue(isFirstTime, "dropdown_relationship_color");
     var functionValues = JSON.parse($('#functionValues').val());
     var positionValues = JSON.parse($('#positionValues').val());
@@ -482,6 +507,8 @@ function plotLegend(isFirstTime) {
 
     var optionValue = fetchOptionValue(false, "dropdown_relationship");
     plotCytoNetwork("relationshipNetwork", optionValue, colorByValue);
+//    $("#relationshipNetworkLoaderContainer").css("display", "none");
+//    $("#relationshipNetwork").css("display", "flex");
 }
 
 function plotHCTable(jsonData) {
@@ -717,18 +744,18 @@ function plotWordCloud(chartId, words) {
 //        shape: 'pentagon',
 //        gridSize: 5,
 //        minSize: 1,
-        weightFactor: 3,
+        weightFactor: 1,
         clearCanvas: true,
         drawOutOfBound: false,
         wait: 0,
         shuffle: false,
 //        color: '#9e9e9e'
         color: function (word, weight, fontSize, distance, theta, sentiment) {
-            if (sentiment === "Positive") {
+            if (sentiment === "positive") {
                 return "#00C853";
-            } else if (sentiment === "Neutral") {
+            } else if (sentiment === "neutral") {
                 return "#FFD600";
-            } else if (sentiment === "Negative") {
+            } else if (sentiment === "negative") {
                 return "#DD2C00";
             }
         }

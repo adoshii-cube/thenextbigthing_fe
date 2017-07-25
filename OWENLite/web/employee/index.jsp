@@ -149,7 +149,7 @@ Author     : adoshi
 
                                     for (int i = 0; i < qList.size(); i++) {
                                         Question q = qList.get(i);
-                                        if (q.getQuestionType() == QuestionType.ME || q.getQuestionType() == QuestionType.MOOD) {
+                                        if (q.getQuestionType() == QuestionType.ME) {
                                             mQuestionList.add(q);
                                         } else if (q.getQuestionType() == QuestionType.WE) {
                                             wQuestionList.add(q);
@@ -197,11 +197,7 @@ Author     : adoshi
                                                         <td><label></label></td>
                                                         <td><label>Strongly Agree</label></td>
                                                     </tr>
-                                                    <%if (q.getQuestionType() == QuestionType.ME) {%>
                                                     <tr class="score">
-                                                        <%} else if (q.getQuestionType() == QuestionType.MOOD) {%>
-                                                    <tr class="mood">
-                                                        <%}%>
                                                         <td>1</td>
                                                         <td>2</td>
                                                         <td>3</td>

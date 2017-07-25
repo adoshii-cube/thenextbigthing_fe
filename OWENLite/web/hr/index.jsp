@@ -47,7 +47,7 @@
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/highcharts-more.js"></script>
         <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
 
         <link rel='shortcut icon' type='image/x-icon' href='../assets/images/OWEN_Favicon.ico'/>
 
@@ -253,7 +253,7 @@
                                 <div class="mdl-tabs__tab-bar">
                                     <a href="#panelRelationship" class="mdl-tabs__tab is-active" id="panelRelationshipLabel">Relationship</a>
                                     <a href="#panelSentiment" class="mdl-tabs__tab  mdl-tabs-panel-disabled" id="panelSentimentLabel">Sentiment</a>
-                                    <a href="#panelComponent" class="mdl-tabs__tab  mdl-tabs-panel-disabled" id="panelComponentLabel">Component</a>
+                                    <a href="#panelComponent" class="mdl-tabs__tab  mdl-tabs-panel-disabled" id="panelComponentLabel">Self Perception</a>
                                 </div>
 
                                 <%
@@ -284,7 +284,7 @@
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                 <select id="dropdown_relationship" name="relationshipQuestion" class="mdl-selectfield__select" required>
                                                     <%
-                                                        List<Relationship> list = relMap.get(1);
+                                                        List<Relationship> list = relMap.get(3);
                                                         for (int i = 0; i < list.size(); i++) {
                                                             Relationship r = list.get(i);
                                                     %>
@@ -326,6 +326,9 @@
                                                     View network in fullscreen
                                                 </div>
                                                 <div class="mdl-card__supporting-text mdl-grid percent98width" id="networkChartLegendColorContainer">
+<!--                                                    <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetworkLoaderContainer">
+                                                        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                                                    </div>-->
                                                     <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetwork"></div>
                                                     <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="legendColorByContainer">
                                                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="colorByContainer">
@@ -511,7 +514,7 @@
                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                 <select id="dropdown_component" name="componentQuestion" class="mdl-selectfield__select" required>
                                                     <%
-                                                        List<Relationship> list3 = relMap.get(3);
+                                                        List<Relationship> list3 = relMap.get(1);
                                                         for (int i = 0; i < list3.size(); i++) {
                                                             Relationship r = list3.get(i);
                                                     %>
