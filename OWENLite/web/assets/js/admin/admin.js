@@ -59,8 +59,19 @@ $(document).ready(function () {
     updateStartDate();
     updateEndDate();
 
-});
+    enableDisableAdd();
 
+
+});
+function enableDisableAdd() {
+    var startDate = $("#date-start").val();
+    var endDate = $("#date-end").val();
+    if ((new Date(Date.parse(startDate)) < new Date) && (new Date(Date.parse(endDate)) > new Date)) {
+        $('#addQuestions').prop("disabled", true);
+    } else {
+        $('#addQuestions').prop("disabled", false);
+    }
+}
 // debounce so filtering doesn't happen every millisecond
 function debounce(fn, threshold) {
     var timeout;
@@ -182,10 +193,18 @@ function addQuestions() {
 }
 
 function selectQuestionsToDelete(questionRow) {
-    $(questionRow).find("td:first-child").toggleClass("selectedCell");
-    $(questionRow).toggleClass("selectedRow");
+    var startDate = $("#date-start").val();
+    var endDate = $("#date-end").val();
+
+    if (!(new Date(Date.parse(startDate)) < new Date) && (new Date(Date.parse(endDate)) > new Date)) {
+        $(questionRow).find("td:first-child").toggleClass("selectedCell");
+        $(questionRow).toggleClass("selectedRow");
+    }
+
     if ($(".questionContainer:has(.selectedCell)").length > 0) {
-        $("#deleteQuestions").prop('disabled', false);
+        if (!(new Date(Date.parse(startDate)) < new Date) && (new Date(Date.parse(endDate)) > new Date)) {
+            $("#deleteQuestions").prop('disabled', false);
+        }
     }
     if ($(".questionContainer:has(.selectedCell)").length === 0) {
         $("#deleteQuestions").prop('disabled', true);
@@ -240,7 +259,7 @@ function updateStartDate() {
 
         var minimumDateCalc = new Date(new Date().getTime() + (1 * 24 * 60 * 60 * 1000));
         var minimumDate = minimumDateCalc.getFullYear() + "-" + (minimumDateCalc.getMonth() + 1) + '-' + minimumDateCalc.getDate();
-        
+
         $('#date-start').bootstrapMaterialDatePicker({
             weekStart: 0,
             time: false,
