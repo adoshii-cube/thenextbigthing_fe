@@ -22,21 +22,21 @@ $(document).ready(function () {
     }).prop('selected', true);
 
     var slider = $("#slider").slideReveal({
-        trigger: $("#trigger"),
+        trigger: $("#trigger2"),
         position: "left",
 //        width: "18%",
         push: true,
         top: 64,
         show: function (slider, trigger) {
-            $("#trigger i").text("close");
-            $(".hr-page-content").css("margin", "0");
-            $(".hr-page-content, main").css("max-width", "" + $(window).width() - $("#slider").width() + "px");
+            $("#trigger2 i").text("keyboard_arrow_left");
+//            $(".hr-page-content").css("margin", "0");
+            $("main").css("max-width", "" + $(window).width() - $("#slider").width() + "px");
 //            $("#slider").css("display", "block");
         },
         hide: function (slider, trigger) {
-            $("#trigger i").text("menu");
-            $(".hr-page-content").css("margin", "auto");
-            $(".hr-page-content, main").css("max-width", "100%");
+            $("#trigger2 i").text("keyboard_arrow_right");
+//            $(".hr-page-content").css("margin", "auto");
+            $("main").css("max-width", "100%");
 //            $("#slider").css("display", "none");
         }
     });
@@ -49,6 +49,22 @@ $(document).ready(function () {
     $("#dropdown_relationship").on("change", function () {
         setTimeout(function () {
             plotRelationshipCharts(false);
+            var dropdownSelected = $("#dropdown_relationship").parent().find(".mdl-selectfield__list-option-box li.is-selected").text();
+            var indexValueTitle = $("#relationshipIndex").parent().find(".mdl-card__title");
+            var keyPeopleTitle = $("#relationshipListOfPeople").parent().parent().find(".mdl-card__title");
+            if (dropdownSelected === "innovation") {
+                indexValueTitle.text("Innovation Index");
+                keyPeopleTitle.text("List of Innovators");
+            } else if (dropdownSelected === "mentor") {
+                indexValueTitle.text("Mentorship Index");
+                keyPeopleTitle.text("List of Mentors");
+            } else if (dropdownSelected === "social") {
+                indexValueTitle.text("Social Index");
+                keyPeopleTitle.text("List of Social ???");
+            } else if (dropdownSelected === "learning") {
+                indexValueTitle.text("Learning Index");
+                keyPeopleTitle.text("List of Knowledge ???");
+            }
         }, 50);
     });
     $("#dropdown_sentiment").on("change", function () {

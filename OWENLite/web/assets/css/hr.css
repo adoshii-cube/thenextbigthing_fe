@@ -94,10 +94,18 @@ textarea{
     color: #767777;
 }
 
-.android-header .mdl-navigation__link {
-    color: #757575;
-    font-weight: 700;
-    font-size: 14px;
+.mdl-navigation .mdl-navigation__link {
+    display: inline-block;
+    height: 60px;
+    /*line-height: 68px;*/
+    background-color: transparent !important;
+    border-bottom: 4px solid transparent;
+    opacity: 1;
+}
+
+.mdl-navigation .selected {
+    border-bottom: 4px solid #fff !important;
+    opacity: 1;
 }
 
 .android-navigation-container {
@@ -650,13 +658,13 @@ div .mdl-textfield__label:after {
 .page-content{
     width: auto;
     margin: auto;
-    max-width: 978px;
+    /*max-width: 978px;*/
 }
 
 .hr-page-content{
     width: auto;
     /*margin: auto;*/
-    max-width: 100%;
+    /*max-width: 100%;*/
 }
 
 .page-body{
@@ -1126,6 +1134,22 @@ select {
     z-index: 4;
 }
 
+#trigger2{
+    right: -32px;
+    /* padding: 10px; */
+    position: absolute;
+    top: 0px;
+    width: 20px;
+    cursor: pointer;
+    color: #ffffff;
+    background: #ff4081;
+    border-radius: 0%;
+}
+
+#trigger2 .mdl-button__ripple-container{
+    border-radius: 0%;
+}
+
 #relationshipListOfPeople tbody tr:nth-child(1) {
     display: none;
 }
@@ -1269,4 +1293,15 @@ select {
     border-bottom-right-radius: 5em;
     box-shadow: none;
     pointer-events: none;
+}
+
+#resizeNetwork{
+    display: flex;
+    align-self: flex-end;
+}
+
+#resizeNetwork img{
+    height: 24px;
+    width: 24px;
+    margin: 0 auto;
 }

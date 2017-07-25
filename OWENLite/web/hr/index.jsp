@@ -46,6 +46,7 @@
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/highcharts-more.js"></script>
         <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
         <link rel='shortcut icon' type='image/x-icon' href='../assets/images/OWEN_Favicon.ico'/>
 
@@ -75,7 +76,7 @@
                     <!-- Navigation -->
                     <!--<div class="android-navigation-container">-->
                     <nav class="mdl-navigation">
-                        <a class="mdl-navigation__link" href="index.jsp">Dashboard</a>
+                        <a class="mdl-navigation__link selected" href="">Dashboard</a>
                         <a class="mdl-navigation__link" href="explore.jsp">Explore</a>
                     </nav>
                     <button id="switch-role-menu"
@@ -134,12 +135,15 @@
                     <%}%>
                 </div>
             </header>
-            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="trigger">
-                <i class="material-icons">menu</i>
-            </button>
+            <!--            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="trigger">
+                            <i class="material-icons">menu</i>
+                        </button>-->
             <input type="hidden" id="comId" value="<% out.print(comId);%>" /> 
             <input type="hidden" id="empId" value="<% out.print(empId);%>" /> 
             <div id="slider">
+                <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="trigger2">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                </button>
                 <div class="android-card-container mdl-grid">
                     <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
                         <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
@@ -163,7 +167,7 @@
                             <span class="mdl-selectfield__error">Please select a function</span>
                         </div>
                     </div>
-                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
                         <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                             <select id="dropdown_position" name="position" class="mdl-selectfield__select" required>
                                 <%
@@ -185,7 +189,7 @@
                             <span class="mdl-selectfield__error">Please select a position</span>
                         </div>
                     </div>
-                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
                         <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                             <select id="dropdown_location" name="location" class="mdl-selectfield__select" required>
                                 <%
@@ -313,6 +317,10 @@
                                         <div class="chartsContainer mdl-grid" id="relationshipCharts">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Network Diagram</div>
+                                                <button class="mdl-button mdl-js-button mdl-button--icon" id="resizeNetwork">
+                                                    <!--<i class="material-icons">mood</i>-->
+                                                    <img alt="resize Network Chart" src="../assets/images/arrow-expand.png">
+                                                </button>
                                                 <div class="mdl-card__supporting-text mdl-grid percent98width">
                                                     <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetwork"></div>
                                                     <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="legendColorByContainer">

@@ -6,7 +6,7 @@
 
 
 $(document).ready(function () {
-    var randomNumber = randomIntFromInterval(1, 9);
+    var randomNumber = randomIntFromInterval(1, 7);
     var page = $(".login-page-content");
     if (randomNumber === 1) {
         page.addClass("bg1");

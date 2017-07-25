@@ -73,7 +73,7 @@
                     <!--<a class="mdl-navigation__link" href="index.jsp#sentiment">Sentiment</a>-->
                     <!--<a class="mdl-navigation__link" href="index.jsp#selfPerception">Self Perception</a>-->
                     <a class="mdl-navigation__link" href="index.jsp">Dashboard</a>
-                    <a class="mdl-navigation__link" href="explore.jsp">Explore</a>
+                    <a class="mdl-navigation__link selected" href="">Explore</a>
                 </nav>
                 <button id="switch-role-menu"
                         class="mdl-button mdl-js-button mdl-button--icon">
@@ -147,7 +147,7 @@
         <main class="android-content mdl-layout__content">
             <div class="page-content">
                 <div class="android-card-container mdl-grid explore">
-                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                         <div class="mdl-card__title">Pivot</div>
                         <div class="mdl-card__supporting-text" id="pivotTable">
 

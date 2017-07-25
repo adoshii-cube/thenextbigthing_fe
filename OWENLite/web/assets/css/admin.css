@@ -99,10 +99,22 @@ textarea{
     color: #767777;
 }
 
-.android-header .mdl-navigation__link {
-    color: #757575;
-    font-weight: 700;
-    font-size: 14px;
+.mdl-navigation .mdl-navigation__link {
+    display: inline-block;
+    height: 60px;
+    /*line-height: 68px;*/
+    background-color: transparent !important;
+    border-bottom: 4px solid transparent;
+    opacity: 1;
+}
+
+.mdl-navigation .selected {
+    border-bottom: 4px solid #fff !important;
+    opacity: 1;
+}
+
+#questions .mdl-navigation__link {
+    height: 64px !important;
 }
 
 .android-navigation-container {

@@ -48,7 +48,7 @@
                     <!-- Navigation -->
                     <!--<div class="android-navigation-container">-->
                     <nav class="mdl-navigation">
-                        <a class="mdl-navigation__link" href="">Data</a>
+                        <a class="mdl-navigation__link selected" href="">Data</a>
                         <a class="mdl-navigation__link" href="questions.jsp">Survey</a>
                     </nav>
                     <!--</div>-->

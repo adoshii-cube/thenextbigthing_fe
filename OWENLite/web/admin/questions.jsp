@@ -62,9 +62,9 @@
                     <div class="mdl-layout-spacer"></div>
                     <!-- Navigation -->
                     <!--<div class="android-navigation-container">-->
-                    <nav class="mdl-navigation">
+                    <nav class="mdl-navigation" id="questions">
                         <a class="mdl-navigation__link" href="index.jsp">Data</a>
-                        <a class="mdl-navigation__link" href="">Survey</a>
+                        <a class="mdl-navigation__link selected" href="">Survey</a>
                     </nav>
                     <!--</div>-->
                     <button id="switch-role-menu"
@@ -106,16 +106,23 @@
                             <img class="android-logo-image" src="../assets/images/OWEN_Logo_white.png" alt="OWEN Logo">
                         </span>
                     </a>
+                    <%if (isEmployee || isHR) {%>
                     <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
                         for="switchUserMobile">
                         <li disabled class="mdl-menu__item mdl-menu__item--full-bleed-divider">Switch User</li>
+                            <%if (isHR) {%>
                         <a href="../hr/index.jsp">
                             <li class="mdl-menu__item">HR</li>
                         </a>
+                        <%
+                            }
+                            if (isEmployee) {%>
                         <a href="../employee/index.jsp">
                             <li class="mdl-menu__item">Employee</li>
                         </a>
+                        <%}%>
                     </ul>
+                    <%}%>
                 </div>
             </header>
             <!--            <div class="mdl-layout__drawer">
