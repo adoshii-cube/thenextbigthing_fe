@@ -135,6 +135,15 @@ $(document).ready(function () {
 
 });
 function fetchData(isFirstTime) {
+    nodes = undefined;
+    edges = undefined;
+    sentimentScore = undefined;
+    indexValue = undefined;
+    keyPeople = undefined;
+    selfPerception = undefined;
+    sentimentDistribution = undefined;
+    wordCloud = undefined;
+
     var funcId = $('#dropdown_function option:selected').val();
     var posId = $('#dropdown_position option:selected').val();
     var locId = $('#dropdown_location option:selected').val();
@@ -526,13 +535,13 @@ function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
     var orgScore;
 
     if (dropdownOptionValue === 7) {
-        orgScore = 1.09;
+        orgScore = 3.3;
     } else if (dropdownOptionValue === 8) {
-        orgScore = 1.11;
+        orgScore = 3.3;
     } else if (dropdownOptionValue === 9) {
-        orgScore = 1.01;
+        orgScore = 3.0;
     } else if (dropdownOptionValue === 10) {
-        orgScore = 1.20;
+        orgScore = 3.6;
     }
 
     Highcharts.chart(chartId, {
@@ -541,15 +550,12 @@ function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
             height: null,
             width: null,
             type: 'solidgauge',
+            className: 'resizeCharts',
             spacingTop: 0,
             spacingLeft: 0,
             spacingRight: 0,
             spacingBottom: 0,
             margin: [0, 0, 0, 0],
-            events: {
-                load: redrawConnectors,
-                redraw: redrawConnectors
-            },
             style: {
                 fontFamily: 'Roboto'
             }
@@ -558,30 +564,30 @@ function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
             text: null
         },
         tooltip: {
-//            enabled: false,
-            borderWidth: 0,
+            enabled: false,
+//            borderWidth: 0,
             backgroundColor: 'none',
-            shadow: false,
-            style: {
-                fontSize: '16px'
-            },
-            pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
-            positioner: function (labelWidth, labelHeight) {
-                return {
-                    x: 230 - labelWidth / 2,
-                    y: 90
-                };
-            }
+            shadow: false
+//            style: {
+//                fontSize: '16px'
+//            },
+//            pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
+//            positioner: function (labelWidth, labelHeight) {
+//                return {
+//                    x: 230 - labelWidth / 2,
+//                    y: 90
+//                };
+//            }
         },
         pane: {
             startAngle: 0,
             endAngle: 360,
-            background: [{// Track for Move
+            background: [{// Track for Team
                     outerRadius: '112%',
                     innerRadius: '88%',
                     backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
                     borderWidth: 0
-                }, {// Track for Exercise
+                }, {// Track for Org
                     outerRadius: '87%',
                     innerRadius: '63%',
                     backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[1]).setOpacity(0.3).get(),
@@ -604,11 +610,12 @@ function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
 //                    shape: 'callout',
 //                    backgroundColor: 'rgba(0, 0, 0, 0.75)',
                     style: {
-//                        color: '#ff9800',
-                        fontSize: '16px',
+//                        color: Highcharts.Color(Highcharts.getOptions().colors[0]).get(),
+                        fontSize: '14px',
                         textOutline: false,
                         textShadow: false
                     },
+//                    y: -12,
                     allowOverlap: true,
                     zIndex: 100,
                     formatter: function () {
@@ -629,7 +636,13 @@ function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
                         y: orgScore
                     }],
                 marker: {enabled: false},
-                showInLegend: false
+                showInLegend: false,
+                dataLabels: {
+                    y: -22,
+                    style: {
+                        color: Highcharts.Color(Highcharts.getOptions().colors[0]).get()
+                    }
+                }
             },
             {
                 name: 'Team',
@@ -641,11 +654,17 @@ function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
                         y: teamScore
                     }],
                 marker: {enabled: false},
-                showInLegend: false
-                        /*dataLabels: {
-                         x: -85,
-                         y: 50,
-                         }*/
+                showInLegend: false,
+                dataLabels: {
+                    y: -8,
+                    style: {
+                        color: Highcharts.Color(Highcharts.getOptions().colors[1]).get()
+                    }
+                }
+                /*dataLabels: {
+                 x: -85,
+                 y: 50,
+                 }*/
             }],
         legend: {
             labelFormatter: function () {
@@ -656,31 +675,6 @@ function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
         credits: {
             enabled: false
         }
-    });
-}
-
-function redrawConnectors() {
-    var chart = this,
-            cX, cY,
-            shapeArgs, ang, posX, posY, bBox;
-
-    Highcharts.each(chart.series, function (series, j) {
-        Highcharts.each(series.points, function (point, i) {
-            if (point.dataLabel) {
-                bBox = point.dataLabel.getBBox();
-                shapeArgs = point.shapeArgs;
-                cX = shapeArgs.x,
-                        cY = shapeArgs.y,
-                        ang = shapeArgs.end;
-                posX = cX + shapeArgs.r * Math.cos(ang);
-                posY = cY + shapeArgs.r * Math.sin(ang);
-
-                point.dataLabel.attr({
-                    x: posX - bBox.width / 2,
-                    y: posY - bBox.height / 2
-                });
-            }
-        });
     });
 }
 
@@ -729,16 +723,15 @@ function plotSentimentCharts(isFirstTime) {
         $("#sentimentExplanation").append(sentimentScore[optionValue].explanation);
 
         $("#sentimentChartsLoader").css("visibility", "hidden");
-
-        $('body').find("#panelSentimentLabel").removeClass("mdl-tabs-panel-disabled");
-
     }
+    $('body').find("#panelSentimentLabel").removeClass("mdl-tabs-panel-disabled");
 }
 
 function plotHCGauge(dataValue) {
     var gaugeOptions = {
         chart: {
             type: 'solidgauge',
+            className: 'resizeCharts',
             height: null,
             width: null,
             spacingTop: 0,
@@ -828,7 +821,8 @@ function plotStackedSentiment(containerId, seriesData) {
 //    Highcharts.chart('HCStacked_Bar', {
     Highcharts.chart(containerId, {
         chart: {
-            type: 'bar'
+            type: 'bar',
+            className: 'resizeCharts'
 //            height: 130,
 //            width: 300
         },
@@ -968,7 +962,8 @@ function plotStackedComponent(containerId, seriesData) {
 //    Highcharts.chart('HCStacked_Bar', {
     Highcharts.chart(containerId, {
         chart: {
-            type: 'bar'
+            type: 'bar',
+            className: 'resizeCharts'
 //            height: 130,
 //            width: 300
         },

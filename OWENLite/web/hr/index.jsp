@@ -476,7 +476,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+<!--                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Action</div>
                                                 <div class="mdl-card__supporting-text sentimentAction">
                                                     <p id="sentimentAction"></p>
@@ -487,7 +487,7 @@
                                                 <div class="mdl-card__supporting-text sentimentExplanation">
                                                     <p id="sentimentExplanation"></p>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -550,7 +550,7 @@
                                                 <div class="mdl-card__title">Distribution of Scores</div>
                                                 <div class="mdl-card__supporting-text " id="componentDistribution"></div>
                                             </div>
-                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+<!--                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Action</div>
                                                 <div class="mdl-card__supporting-text componentAction">
                                                     <p id="componentAction"></p>
@@ -561,7 +561,7 @@
                                                 <div class="mdl-card__supporting-text componentExplanation">
                                                     <p id="componentExplanation"></p>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
