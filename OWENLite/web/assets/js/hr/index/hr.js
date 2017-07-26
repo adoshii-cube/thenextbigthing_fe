@@ -164,11 +164,13 @@ function fetchData(isFirstTime) {
             var sentimentTab = JSON.parse(response.sentimentTab);
             var componentTab = JSON.parse(response.componentTab);
             if (!relationshipTab && !sentimentTab && !componentTab) {
-                // show dashboard empty state message
-                $(".pageLoaderContainer").css("display", "none");
-                $(".dashboard").css("display", "none");
-                $(".emptyDashboard").css("display", "block");
-                $("#slider").css("display", "none");
+                if (isFirstTime) {
+                    // show dashboard empty state message
+                    $(".pageLoaderContainer").css("display", "none");
+                    $(".dashboard").css("display", "none");
+                    $(".emptyDashboard").css("display", "block");
+                    $("#slider").css("display", "none");
+                }
             } else {
                 $(".pageLoaderContainer").css("display", "none");
                 $(".dashboard").css("display", "flex");
@@ -181,9 +183,10 @@ function fetchData(isFirstTime) {
 
                 console.log('a() called');
                 if (relationshipTab) {
+                    $("#relationshipPanel").css("display", "flex");
+                    $("#relationshipPanelEmptyState").css("display", "none");
                     nodes = JSON.parse(response.nodes);
                     edges = JSON.parse(response.edges);
-                    sentimentScore = JSON.parse(response.sentimentScore);
                     indexValue = JSON.parse(response.indexValue);
                     keyPeople = JSON.parse(response.keyPeople);
                     plotRelationshipCharts(isFirstTime);
@@ -214,6 +217,7 @@ function fetchData(isFirstTime) {
                 } else {
                     $("#relationshipPanel").css("display", "none");
                     $("#relationshipPanelEmptyState").css("display", "flex");
+                    $('body').find("#panelRelationshipLabel").removeClass("mdl-tabs-panel-disabled");
                 }
 
 
@@ -229,12 +233,16 @@ function fetchData(isFirstTime) {
 
                 console.log('b() called');
                 if (sentimentTab) {
+                    $("#sentimentPanel").css("display", "flex");
+                    $("#sentimentPanelEmptyState").css("display", "none");
+                    sentimentScore = JSON.parse(response.sentimentScore);
                     sentimentDistribution = JSON.parse(response.sentimentDistribution);
                     wordCloud = JSON.parse(response.wordCloud);
-                    plotSentimentCharts(isFirstTime);
+                    plotSentimentCharts(isFirstTime);                    
                 } else {
                     $("#sentimentPanel").css("display", "none");
                     $("#sentimentPanelEmptyState").css("display", "flex");
+                    $('body').find("#panelSentimentLabel").removeClass("mdl-tabs-panel-disabled");
                 }
 
                 setTimeout(function () {
@@ -249,11 +257,14 @@ function fetchData(isFirstTime) {
 
                 console.log('c() called');
                 if (componentTab) {
+                    $("#componentPanel").css("display", "flex");
+                    $("#componentPanelEmptyState").css("display", "none");
                     selfPerception = JSON.parse(response.selfPerception);
                     plotComponentCharts(isFirstTime);
                 } else {
                     $("#componentPanel").css("display", "none");
                     $("#componentPanelEmptyState").css("display", "flex");
+                    $('body').find("#panelComponentLabel").removeClass("mdl-tabs-panel-disabled");
                 }
 
                 setTimeout(function () {

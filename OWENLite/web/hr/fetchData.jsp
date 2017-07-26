@@ -52,7 +52,7 @@
     result.put("edges", edges);
     result.put("indexValue", indexValue);
     result.put("keyPeople", keyPeople);
-    if (!nodes.isEmpty() && !edges.isEmpty() && !indexValue.isEmpty() && !keyPeople.isEmpty()) {
+    if (nodes.length() > 2 && edges.length() > 2 && indexValue.length() > 2 && keyPeople.length() > 2) {
 //    if (!nodesEdgesData.isEmpty()&& !indexValue.isEmpty() && !keyPeople.isEmpty()) {
         relationshipTab = true;
     }
@@ -60,12 +60,12 @@
     result.put("wordCloud", wordCloud);
     result.put("sentimentScore", sentimentScore);
     result.put("sentimentDistribution", sentimentDistribution);
-    if (!wordCloud.isEmpty() && !sentimentScore.isEmpty() && !sentimentDistribution.isEmpty()) {
+    if (wordCloud.length() > 2 && sentimentScore.length() > 2 && sentimentDistribution.length() > 2) {
         sentimentTab = true;
     }
 
     result.put("selfPerception", selfPerception);
-    if (!selfPerception.isEmpty()) {
+    if (selfPerception.length() > 2) {
         componentTab = true;
     }
 
