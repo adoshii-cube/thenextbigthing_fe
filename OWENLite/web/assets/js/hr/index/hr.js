@@ -398,7 +398,7 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
             userZoomingEnabled: true,
             panningEnabled: true,
             userPanningEnabled: true,
-            hideEdgesOnViewport: false,
+            hideEdgesOnViewport: true,
             hideLabelsOnViewport: true,
             layout: {
                 name: 'cose'
@@ -423,22 +423,25 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
                     style: {
 //                    shape: 'hexagon',
                         'background-color': 'data(color)',
-//                        content: 'data(firstName)',
+                        content: 'data(firstName)',
                         height: function (ele) {
 //                        console.log(ele._private.data.firstName + " ::: " + ele.indegree());
-                            return ele.indegree() * 2;
+                            return (ele.indegree() + 1) * 2;
                         },
                         width: function (ele) {
-                            return ele.indegree() * 2;
+                            return (ele.indegree() + 1) * 2;
                         }
                     }
                 }, {
                     selector: 'edge',
                     style: {
 //                    'background-color': 'red',
+                        'line-color': '#bdbdbd',
                         'curve-style': 'bezier',
                         'target-arrow-shape': 'triangle',
+                        'target-arrow-color': '#bdbdbd',
                         'source-arrow-shape': 'circle',
+                        'source-arrow-color': '#bdbdbd',
                         'opacity': 0.666,
                         'width': 'data(weight)'
                     }
@@ -463,23 +466,29 @@ function plotCytoNetwork(chartId, selectedRelationship, colorByValue) {
 ////            console.log('layoutstop', e.cyTarget.options.name);
 //
 //        });
-//        cy.elements("node").qtip({
-//            content: function () {
-////            return 'Example qTip on ele ' + this.id();
+        cy.elements("node").qtip({
+            content: function () {
+//            return 'Example qTip on ele ' + this.id();
 //                return this.data().lastName;
-//            },
-//            position: {
-//                my: 'top center',
-//                at: 'bottom center'
-//            },
-//            style: {
-//                classes: 'qtip-bootstrap',
-//                tip: {
-//                    width: 16,
-//                    height: 8
-//                }
-//            }
-//        });
+                var phrase = " people are ";
+                if (this.indegree() === 1) {
+                    phrase = " person is ";
+                }
+                var tooltip = this.indegree() + phrase + " connected to " + (this.data().firstName).bold();
+                return tooltip;
+            },
+            position: {
+                my: 'top center',
+                at: 'bottom center'
+            },
+            style: {
+                classes: 'qtip-bootstrap',
+                tip: {
+                    width: 16,
+                    height: 8
+                }
+            }
+        });
 
 //        cy.layout(options);
 //        layout.pon('layoutstop').then(function (event) {

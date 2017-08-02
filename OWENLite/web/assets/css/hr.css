@@ -1067,6 +1067,7 @@ select {
 
 #pivotTable{
     display: block;
+    width: 100%;
 }
 
 .sentimentWordCloud{
