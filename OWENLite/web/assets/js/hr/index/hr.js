@@ -30,7 +30,6 @@ $(document).ready(function () {
     var selectedOption = $("#dropdown_function").parent().find(".mdl-selectfield__list-option-box li.is-selected").text();
     $("#dropdown_function").parent().find(".mdl-selectfield__box-value").text(selectedOption);
 
-
     var slider = $("#slider").slideReveal({
         trigger: $("#trigger2"),
         position: "left",
@@ -39,41 +38,52 @@ $(document).ready(function () {
         top: 64,
         show: function (slider, trigger) {
             $("#trigger2 i").text("keyboard_arrow_left");
-//            $(".hr-page-content").css("margin", "0");
             $("main").css("max-width", "" + $(window).width() - $("#slider").width() + "px");
-//            $("#slider").css("display", "block");
         },
         hide: function (slider, trigger) {
             $("#trigger2 i").text("keyboard_arrow_right");
-//            $(".hr-page-content").css("margin", "auto");
             $("main").css("max-width", "100%");
-//            $("#slider").css("display", "none");
+        },
+        shown: function () {
+            resizeHighCharts();
+            if ($(".mdl-tabs__panel.is-active").attr("id") === "panelRelationship") {
+//                $("#relationshipNetwork").css("width", window.innerWidth - $("#legendColorByContainer").width()  - $("#slider").width() - 128);
+            }
+        },
+        hidden: function () {
+            resizeHighCharts();
+            if ($(".mdl-tabs__panel.is-active").attr("id") === "panelRelationship") {
+//                $("#relationshipNetwork").css("width", window.innerWidth - $("#legendColorByContainer").width() - 128);
+            }
         }
     });
-
-    slider.slideReveal("show");
-
+    fetchData(true);
     $('#resizeNetwork').magnificPopup({
         items: {
             src: '#networkChartLegendColorContainer',
             type: 'inline'
         },
+        showCloseBtn: false,
         midClick: true, // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
         callbacks: {
             open: function () {
                 $("#relationshipNetwork").css("height", window.innerHeight - 32);
                 $("#legendContainer").css("max-height", window.innerHeight - $("#colorByContainer").height());
+                $(".hiddenButton").css("display", "flex");
                 cy.resize();
             },
             close: function () {
                 $("#relationshipNetwork").css("height", "300px");
                 $("#legendContainer").css("max-height", "220px");
+                $(".hiddenButton").css("display", "none");
                 cy.resize();
             }
         }
     });
 
-    fetchData(true);
+    $("#resizeNetworkExit").on("click", function () {
+        $.magnificPopup.close();
+    });
 
     $("#dropdown_relationship").on("change", function () {
         setTimeout(function () {
@@ -116,24 +126,90 @@ $(document).ready(function () {
             fetchData(false);
         }, 10);
     });
-    $("#slider").css("display", "block");
     $(".mdl-tabs__tab-bar").on("click", function () {
         var selectedTab = $(".mdl-tabs__tab-bar").find(".mdl-tabs__tab.is-active").attr("href");
         if (selectedTab === "#panelRelationship") {
-//            setTimeout(function () {
-//                plotRelationshipCharts(false);
             cy.resize();
-//            }, 10);
         }
-//        else if (selectedTab === "#panelSentiment") {
-////            plotSentimentCharts(true);
-//            plotWordCloud("sentimentWordCloud", wordCloud[fetchOptionValue(false, "dropdown_sentiment")]);
-////            flag = false;
-//        }
+        resizeHighCharts();
     });
 
+    $(".downloadAsImage").on("click", function () {
+        $(".downloadAsImage").prop("disabled", true);
+        $(".mdl-tooltip").removeClass("is-active");
+        var element;
+        var chartTitle;
+        if (($(this).attr("id") === "downloadNetwork") || ($(this).attr("id") === "downloadNetworkFromPopup")) {
+            element = $("#networkChartLegendColorContainer");
+            chartTitle = "OWENLite-Network";
+        }
+        downloadAsImage(element, chartTitle);
+        setTimeout(function () {
+            $(".downloadAsImage").prop("disabled", false);
+        }, 5000);
+    });
+
+    $(".downloadHcAsImage").on("click", function () {
+        var element;
+        var chartTitle;
+        var downloadButtonClicked = $(this);
+        downloadButtonClicked.prop("disabled", true);
+        $(".mdl-tooltip").removeClass("is-active");
+        if ($(this).attr("id") === "downloadrelationshipIndex") {
+            element = $("#relationshipIndex");
+            chartTitle = "OWENLite-Relationship-Index";
+        } else if ($(this).attr("id") === "downloadSentimentGauge") {
+            element = $("#sentimentGauge");
+            chartTitle = "OWENLite-Sentiment-Gauge";
+        } else if ($(this).attr("id") === "downloadSentimentDistribution") {
+            element = $("#sentimentDistribution");
+            chartTitle = "OWENLite-Sentiment-Distribution";
+        } else if ($(this).attr("id") === "downloadComponentDistribution") {
+            element = $("#componentDistribution");
+            chartTitle = "OWENLite-SelfPerception-Distribution";
+        }
+
+        var svgElements = $(element).find('svg');
+
+        //replace all svgs with a temp canvas
+        svgElements.each(function () {
+            var canvas, xml;
+            // canvg doesn't cope very well with em font sizes so find the calculated size in pixels and replace it in the element.
+            $.each($(this).find('[style*=em]'), function (index, el) {
+                $(this).css('font-size', getStyle(el, 'font-size'));
+            });
+
+            canvas = document.createElement("canvas");
+            canvas.className = "screenShotTempCanvas";
+            //convert SVG into a XML string
+            xml = (new XMLSerializer()).serializeToString(this);
+
+            // Removing the name space as IE throws an error
+            xml = xml.replace(/xmlns=\"http:\/\/www\.w3\.org\/2000\/svg\"/, '');
+
+            //draw the SVG onto a canvas
+            canvg(canvas, xml);
+            $(canvas).insertAfter(this);
+            //hide the SVG element
+            $(this).attr('class', 'tempHide');
+            $(this).hide();
+        });
+
+        downloadAsImage(element, chartTitle);
+
+        $(element).find('.screenShotTempCanvas').remove();
+        $(element).find('.tempHide').show().removeClass('tempHide');
+
+        setTimeout(function () {
+            downloadButtonClicked.prop("disabled", false);
+        }, 5000);
+    });
+
+    $("#slider").css("display", "block");
+    slider.slideReveal("show");
 
 });
+
 function fetchData(isFirstTime) {
     nodes = undefined;
     edges = undefined;
@@ -143,6 +219,9 @@ function fetchData(isFirstTime) {
     selfPerception = undefined;
     sentimentDistribution = undefined;
     wordCloud = undefined;
+    var relationshipTab;
+    var sentimentTab;
+    var componentTab;
 
     var funcId = $('#dropdown_function option:selected').val();
     var posId = $('#dropdown_position option:selected').val();
@@ -160,23 +239,23 @@ function fetchData(isFirstTime) {
         async: false,
         success: function (resp) {
             var response = JSON.parse(resp);
-            var relationshipTab = JSON.parse(response.relationshipTab);
-            var sentimentTab = JSON.parse(response.sentimentTab);
-            var componentTab = JSON.parse(response.componentTab);
-            if (!relationshipTab && !sentimentTab && !componentTab) {
-                if (isFirstTime) {
-                    // show dashboard empty state message
-                    $(".pageLoaderContainer").css("display", "none");
-                    $(".dashboard").css("display", "none");
-                    $(".emptyDashboard").css("display", "block");
-                    $("#slider").css("display", "none");
-                }
-            } else {
-                $(".pageLoaderContainer").css("display", "none");
-                $(".dashboard").css("display", "flex");
-                $(".emptyDashboard").css("display", "none");
-                $("#slider").css("display", "block");
-            }
+            relationshipTab = JSON.parse(response.relationshipTab);
+            sentimentTab = JSON.parse(response.sentimentTab);
+            componentTab = JSON.parse(response.componentTab);
+//            if (!relationshipTab && !sentimentTab && !componentTab) {
+//                if (isFirstTime) {
+//                    // show dashboard empty state message
+//                    $(".pageLoaderContainer").css("display", "none");
+//                    $(".dashboard").css("display", "none");
+//                    $(".emptyDashboard").css("display", "block");
+//                    $("#slider").css("display", "none");
+//                }
+//            } else {
+//                $(".pageLoaderContainer").css("display", "none");
+//                $(".dashboard").css("display", "flex");
+//                $(".emptyDashboard").css("display", "none");
+//                $("#slider").css("display", "block");
+//            }
 
             var relationship = function () {
                 var defer = $.Deferred();
@@ -238,7 +317,7 @@ function fetchData(isFirstTime) {
                     sentimentScore = JSON.parse(response.sentimentScore);
                     sentimentDistribution = JSON.parse(response.sentimentDistribution);
                     wordCloud = JSON.parse(response.wordCloud);
-                    plotSentimentCharts(isFirstTime);                    
+                    plotSentimentCharts(isFirstTime);
                 } else {
                     $("#sentimentPanel").css("display", "none");
                     $("#sentimentPanelEmptyState").css("display", "flex");
@@ -274,12 +353,9 @@ function fetchData(isFirstTime) {
                 return defer;
             };
 
-
             if (isFirstTime) {
                 relationship().then(sentiment).then(component);
-
             } else {
-
                 $(".mdl-tabs__tab-bar").find(".mdl-tabs__tab:not(.is-active)").each(function () {
                     $(this).addClass("mdl-tabs-panel-disabled");
                 });
@@ -295,6 +371,22 @@ function fetchData(isFirstTime) {
         },
         error: function (resp, err) {
             console.log("unable to fetch data error messsage : " + err);
+        },
+        complete: function () {
+            if (!relationshipTab && !sentimentTab && !componentTab) {
+                if (isFirstTime) {
+                    // show dashboard empty state message
+                    $(".pageLoaderContainer").css("display", "none");
+                    $(".dashboard").css("display", "none");
+                    $(".emptyDashboard").css("display", "block");
+                    $("#slider").css("display", "none");
+                }
+            } else {
+                $(".pageLoaderContainer").css("display", "none");
+                $(".dashboard").css("display", "flex");
+                $(".emptyDashboard").css("display", "none");
+//                $("#slider").css("display", "block");
+            }
         }
     });
 }
@@ -622,6 +714,7 @@ function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
         },
         plotOptions: {
             solidgauge: {
+                animation: false,
                 borderWidth: '26px',
                 dataLabels: {
                     enabled: true,
@@ -694,6 +787,28 @@ function plotRelationshipGauge(chartId, dropdownOptionValue, teamScore) {
         },
         credits: {
             enabled: false
+        },
+        navigation: {
+            buttonOptions: {
+                enabled: false
+            }
+        },
+        exporting: {
+            chartOptions: {
+                title: {
+                    text: null
+                }
+            }
+//            buttons: {
+//                contextButton: {
+//                    menuItems: null,
+//                    symbol: 'url(../assets/images/cancel.png)',
+//                    _titleKey: 'popUpBtnTitle',
+//                    onclick: function () {
+//                        this.exportChart();
+//                    }
+//                }
+//            }
         }
     });
 }
@@ -750,6 +865,7 @@ function plotSentimentCharts(isFirstTime) {
 function plotHCGauge(dataValue) {
     var gaugeOptions = {
         chart: {
+            animation: false,
             type: 'solidgauge',
             className: 'resizeCharts',
             height: null,
@@ -800,6 +916,7 @@ function plotHCGauge(dataValue) {
         },
         plotOptions: {
             solidgauge: {
+//                animation: false,
                 dataLabels: {
                     y: -30,
                     borderWidth: 0,
@@ -819,6 +936,11 @@ function plotHCGauge(dataValue) {
         credits: {
             enabled: false
         },
+        navigation: {
+            buttonOptions: {
+                enabled: false
+            }
+        },
         series: [{
 //                name: 'RPM',
                 data: dataValue,
@@ -832,7 +954,14 @@ function plotHCGauge(dataValue) {
                 tooltip: {
 //                    valueSuffix: ' revolutions/min'
                 }
-            }]
+            }],
+        exporting: {
+            chartOptions: {
+                title: {
+                    text: null
+                }
+            }
+        }
 
     }));
 }
@@ -841,6 +970,7 @@ function plotStackedSentiment(containerId, seriesData) {
 //    Highcharts.chart('HCStacked_Bar', {
     Highcharts.chart(containerId, {
         chart: {
+            animation: false,
             type: 'bar',
             className: 'resizeCharts'
 //            height: 130,
@@ -849,6 +979,11 @@ function plotStackedSentiment(containerId, seriesData) {
 //        colors: ['#DD2C00', '#FFD600', '#64DD17'],
         credits: {
             enabled: false
+        },
+        navigation: {
+            buttonOptions: {
+                enabled: false
+            }
         },
         tooltip: {
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
@@ -889,6 +1024,7 @@ function plotStackedSentiment(containerId, seriesData) {
         },
         plotOptions: {
             series: {
+                animation: false,
                 stacking: 'percent',
                 colorByPoint: true,
                 dataLabels: {
@@ -898,7 +1034,30 @@ function plotStackedSentiment(containerId, seriesData) {
                 }
             }
         },
-        series: seriesData
+        series: seriesData,
+        exporting: {
+            chartOptions: {
+                chart: {
+                    events: {
+                        load: function () {
+                            title: null,
+//                                    Highcharts.each(this.series, function (series) {
+//                                        series.update({
+//                                            dataLabels: {
+//                                                enabled: true,
+//                                                style: {
+//                                                    color: '#ff9800',
+//                                                    fontSize: '14px'
+//                                                }
+//                                            }
+////                                        }, false);
+//                                    });
+                                    this.redraw(false);
+                        }
+                    }
+                }
+            }
+        }
     });
 }
 
@@ -947,6 +1106,10 @@ function plotWordCloud(chartId, words) {
             }
         }
     });
+//    $("#" + chartId).on("wordcloudstop", function () {
+//        alert("wordcloud drawn");
+//        zoomOnWordCloud();
+//    });
 }
 
 function plotComponentCharts(isFirstTime) {
@@ -981,6 +1144,7 @@ function plotComponentCharts(isFirstTime) {
 function plotStackedComponent(containerId, seriesData) {
 //    Highcharts.chart('HCStacked_Bar', {
     Highcharts.chart(containerId, {
+        animation: false,
         chart: {
             type: 'bar',
             className: 'resizeCharts'
@@ -995,7 +1159,9 @@ function plotStackedComponent(containerId, seriesData) {
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
             shared: false
         },
-        title: null,
+        title: {
+            text: null
+        },
         xAxis: {
             categories: ['Org', 'Team'],
             labels:
@@ -1030,6 +1196,7 @@ function plotStackedComponent(containerId, seriesData) {
         },
         plotOptions: {
             series: {
+//                animation: false,
                 stacking: 'percent',
 //                colorByPoint: true,
                 dataLabels: {
@@ -1039,6 +1206,106 @@ function plotStackedComponent(containerId, seriesData) {
                 }
             }
         },
-        series: seriesData
+        series: seriesData,
+        navigation: {
+            buttonOptions: {
+                enabled: false
+            }
+        },
+        exporting: {
+            chartOptions: {
+                chart: {
+                    events: {
+                        load: function () {
+                            title: null,
+//                                    Highcharts.each(this.series, function (series) {
+//                                        series.update({
+//                                            dataLabels: {
+//                                                enabled: true,
+//                                                style: {
+//                                                    color: '#ff9800',
+//                                                    fontSize: '14px'
+//                                                }
+//                                            }
+////                                        }, false);
+//                                    });
+                                    this.redraw(false);
+                        }
+                    }
+                }
+            }
+        }
     });
+}
+
+function resizeHighCharts() {
+    var chart1 = "";
+    var chart2 = "";
+    if ($(".mdl-tabs__panel.is-active").attr("id") === "panelRelationship") {
+        chart1 = $("#relationshipIndex").highcharts();
+        chart1.setSize(undefined, undefined, false);
+    } else if ($(".mdl-tabs__panel.is-active").attr("id") === "panelSentiment") {
+        chart1 = $("#sentimentGauge").highcharts();
+        chart1.setSize(undefined, undefined, false);
+        chart2 = $("#sentimentDistribution").highcharts();
+        chart2.setSize(undefined, undefined, false);
+    } else if ($(".mdl-tabs__panel.is-active").attr("id") === "panelComponent") {
+        chart1 = $("#componentDistribution").highcharts();
+        chart1.setSize(undefined, undefined, false);
+    }
+//    $(Highcharts.charts).each(function (i, chart) {
+////        var height = chart.renderTo.clientHeight;
+////        var width = chart.renderTo.clientWidth;
+//        chart.setSize(undefined, undefined, false);
+//        chart.reflow();
+//        chart.redraw();
+//    });
+}
+
+function downloadAsImage(element, chartTitle) {
+    html2canvas(element).then(function (canvas) {
+        var imgPathUrl = canvas.toDataURL();
+        //create temporary anchor tag in which url will be stored and clicked to trigger download
+        var link = document.createElement('a');
+        link.setAttribute("href", imgPathUrl);
+        link.setAttribute("download", chartTitle + '.png');
+//            window.open(imgPathUrl);
+        link.click();
+    });
+}
+
+function zoomOnWordCloud() {
+
+// Settings
+    var contentWidth = 380;
+    var contentHeight = 250;
+
+    var content = document.getElementById('sentimentWordCloud');
+    var context = content.getContext('2d');
+//var tiling = new Tiling;
+
+
+// Canvas renderer
+    var render = function (left, top, zoom) {
+
+        // Sync current dimensions with canvas
+        content.width = clientWidth;
+        content.height = clientHeight;
+
+        // Full clearing
+        context.clearRect(0, 0, clientWidth, clientHeight);
+
+    };
+
+// Intialize layout
+    var container = document.getElementById("sentimentWordCloudContainer");
+//var content = document.getElementById("sentimentWordCloud");
+    var clientWidth = 0;
+    var clientHeight = 0;
+
+// Initialize Scroller
+    this.scroller = new Scroller(render, {
+        zooming: true
+    });
+
 }

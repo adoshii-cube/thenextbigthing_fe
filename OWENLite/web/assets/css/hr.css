@@ -527,8 +527,9 @@ textarea{
 }
 
 .android-card-container .mdl-card__title-text {
-    color: black;
-    height: auto;
+    /*color: black;*/
+    /*height: auto;*/
+    overflow: visible;
 }
 
 .android-card-container .mdl-card__supporting-text {
@@ -873,14 +874,14 @@ select {
 #relationshipIndex {
     height: 250px;
     margin: 0 auto;
-/*    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    height: 140px;
-    color: #9E9E9E ;
-    justify-content: center;
-    align-items: center;
-    font-size: 5rem;*/
+    /*    display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        height: 140px;
+        color: #9E9E9E ;
+        justify-content: center;
+        align-items: center;
+        font-size: 5rem;*/
 }
 
 .android-content{
@@ -1307,10 +1308,21 @@ select {
 #resizeNetwork{
     display: flex;
     align-self: flex-end;
+    color: #607D8B;
 }
 
 #resizeNetwork img{
     height: 24px;
     width: 24px;
     margin: 0 auto;
+}
+
+.hiddenButton{
+    display: none;
+    justify-content: flex-end;
+}
+
+.downloadAsImage,
+.downloadHcAsImage{
+    color: #607D8B;
 }

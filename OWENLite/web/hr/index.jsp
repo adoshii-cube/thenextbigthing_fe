@@ -47,7 +47,7 @@
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/highcharts-more.js"></script>
         <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-        <!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
         <link rel='shortcut icon' type='image/x-icon' href='../assets/images/OWEN_Favicon.ico'/>
 
@@ -318,19 +318,44 @@
                                         <div class="chartsContainer mdl-grid" id="relationshipCharts">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Network Diagram</div>
-                                                <button class="mdl-button mdl-js-button mdl-button--icon" id="resizeNetwork">
-                                                    <!--<i class="material-icons">mood</i>-->
-                                                    <img alt="resize Network Chart" src="../assets/images/arrow-expand.png">
-                                                </button>
-                                                <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="resizeNetwork">
-                                                    View network in fullscreen
+                                                <div class="mdl-card__title-text">
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon downloadAsImage" id="downloadNetwork">
+                                                        <i class="material-icons">file_download</i>
+                                                        <!--<img alt="resize Network Chart" src="../assets/images/arrow-expand.png">-->
+                                                    </button>
+                                                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="downloadNetwork">
+                                                        Download image
+                                                    </div>
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon" id="resizeNetwork">
+                                                        <i class="material-icons">fullscreen</i>
+                                                        <!--<img alt="resize Network Chart" src="../assets/images/arrow-expand.png">-->
+                                                    </button>
+                                                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="resizeNetwork">
+                                                        View fullscreen
+                                                    </div>
                                                 </div>
                                                 <div class="mdl-card__supporting-text mdl-grid percent98width" id="networkChartLegendColorContainer">
-<!--                                                    <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetworkLoaderContainer">
-                                                        <div class="mdl-spinner mdl-js-spinner is-active"></div>
-                                                    </div>-->
+                                                    <!--                                                    <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetworkLoaderContainer">
+                                                                                                            <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                                                                                                        </div>-->
                                                     <div class="mdl-cell mdl-cell--9-col mdl-cell--8-col-tablet mdl-cell--4-col-phone"  id="relationshipNetwork"></div>
                                                     <div class="mdl-cell mdl-cell--3-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="legendColorByContainer">
+                                                        <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone hiddenButton">
+                                                            <button class="mdl-button mdl-js-button mdl-button--icon downloadAsImage" id="downloadNetworkFromPopup">
+                                                                <i class="material-icons">file_download</i>
+                                                                <!--<img alt="resize Network Chart" src="../assets/images/arrow-expand.png">-->
+                                                            </button>
+                                                            <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="downloadNetworkFromPopup">
+                                                                Download image
+                                                            </div>
+                                                            <button class="mdl-button mdl-js-button mdl-button--icon" id="resizeNetworkExit">
+                                                                <i class="material-icons">fullscreen_exit</i>
+                                                                <!--<img alt="resize Network Chart" src="../assets/images/arrow-expand.png">-->
+                                                            </button>
+                                                            <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="resizeNetworkExit">
+                                                                Close fullscreen
+                                                            </div>
+                                                        </div>
                                                         <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone" id="colorByContainer">
                                                             <div class="mdl-selectfield mdl-js-selectfield  mdl-selectfield--floating-label">
                                                                 <select id="dropdown_relationship_color" name="relationshipColor" class="mdl-selectfield__select" required>
@@ -353,6 +378,14 @@
                                             </div>
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Collaboration Index</div>
+                                                <div class="mdl-card__title-text">
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon downloadHcAsImage" id="downloadrelationshipIndex">
+                                                        <i class="material-icons">file_download</i>
+                                                    </button>
+                                                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="downloadrelationshipIndex">
+                                                        Download image
+                                                    </div>
+                                                </div>
                                                 <div class="mdl-card__supporting-text" id="relationshipIndex"></div>
                                             </div>
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
@@ -445,15 +478,31 @@
                                         <div class="chartsContainer mdl-grid" id="sentimentCharts">
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Sentiment Gauge</div>
+                                                <div class="mdl-card__title-text">
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon downloadHcAsImage" id="downloadSentimentGauge">
+                                                        <i class="material-icons">file_download</i>
+                                                    </button>
+                                                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="downloadSentimentGauge">
+                                                        Download image
+                                                    </div>
+                                                </div>
                                                 <div class="mdl-card__supporting-text" id="sentimentGauge"></div>
                                             </div>
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Sentiment Distribution</div>
+                                                <div class="mdl-card__title-text">
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon downloadHcAsImage" id="downloadSentimentDistribution">
+                                                        <i class="material-icons">file_download</i>
+                                                    </button>
+                                                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="downloadSentimentDistribution">
+                                                        Download image
+                                                    </div>
+                                                </div>
                                                 <div class="mdl-card__supporting-text" id="sentimentDistribution"></div>
                                             </div>
                                             <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Word Cloud</div>
-                                                <div class="mdl-card__supporting-text sentimentWordCloud">
+                                                <div class="mdl-card__supporting-text sentimentWordCloud" id="sentimentWordCloudContainer">
                                                     <canvas id="sentimentWordCloud" width="760" height="500" style="width: 380px; height: 250px"></canvas>
                                                 </div>
                                             </div>
@@ -476,18 +525,18 @@
                                                     </table>
                                                 </div>
                                             </div>
-<!--                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                                <div class="mdl-card__title">Action</div>
-                                                <div class="mdl-card__supporting-text sentimentAction">
-                                                    <p id="sentimentAction"></p>
-                                                </div>
-                                            </div>
-                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                                <div class="mdl-card__title">Explanation</div>
-                                                <div class="mdl-card__supporting-text sentimentExplanation">
-                                                    <p id="sentimentExplanation"></p>
-                                                </div>
-                                            </div>-->
+                                            <!--                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                                                            <div class="mdl-card__title">Action</div>
+                                                                                            <div class="mdl-card__supporting-text sentimentAction">
+                                                                                                <p id="sentimentAction"></p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                                                            <div class="mdl-card__title">Explanation</div>
+                                                                                            <div class="mdl-card__supporting-text sentimentExplanation">
+                                                                                                <p id="sentimentExplanation"></p>
+                                                                                            </div>
+                                                                                        </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -548,20 +597,28 @@
                                         <div class="chartsContainer mdl-grid" id="componentCharts">
                                             <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-card">
                                                 <div class="mdl-card__title">Distribution of Scores</div>
+                                                <div class="mdl-card__title-text">
+                                                    <button class="mdl-button mdl-js-button mdl-button--icon downloadHcAsImage" id="downloadComponentDistribution">
+                                                        <i class="material-icons">file_download</i>
+                                                    </button>
+                                                    <div class="mdl-tooltip mdl-tooltip--large mdl-tooltip--left" for="downloadComponentDistribution">
+                                                        Download image
+                                                    </div>
+                                                </div>
                                                 <div class="mdl-card__supporting-text " id="componentDistribution"></div>
                                             </div>
-<!--                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                                <div class="mdl-card__title">Action</div>
-                                                <div class="mdl-card__supporting-text componentAction">
-                                                    <p id="componentAction"></p>
-                                                </div>
-                                            </div>
-                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
-                                                <div class="mdl-card__title">Explanation</div>
-                                                <div class="mdl-card__supporting-text componentExplanation">
-                                                    <p id="componentExplanation"></p>
-                                                </div>
-                                            </div>-->
+                                            <!--                                            <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                                                            <div class="mdl-card__title">Action</div>
+                                                                                            <div class="mdl-card__supporting-text componentAction">
+                                                                                                <p id="componentAction"></p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card">
+                                                                                            <div class="mdl-card__title">Explanation</div>
+                                                                                            <div class="mdl-card__supporting-text componentExplanation">
+                                                                                                <p id="componentExplanation"></p>
+                                                                                            </div>
+                                                                                        </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -575,6 +632,11 @@
         <script src="../assets/js/mdl-selectfield.min.js"></script>
         <script src="../assets/js/hr/index/wordcloud/wordcloud2.js"></script>
         <script src="../assets/js/hr/index/jquery.magnific-popup.js"></script>
+        <script src="../assets/js/hr/index/rgbcolor.js"></script>
+        <script src="../assets/js/hr/index/canvg.js"></script>
+        <script src="../assets/js/hr/index/html2canvas.js"></script>
+        <script src="../assets/js/hr/index/wordcloud/Animate.js"></script>
+        <script src="../assets/js/hr/index/wordcloud/Scroller.js"></script>
         <script src="../assets/js/hr/index/hr.js"></script>
     </body>
 </html>
